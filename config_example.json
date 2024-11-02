@@ -1,0 +1,7 @@
+
+{
+  "apiKey": "YOUR_API_KEY",
+  "databaseURL": "https://example.com/database",
+  "port": 3000,
+  "otherConfig": "value"
+}
