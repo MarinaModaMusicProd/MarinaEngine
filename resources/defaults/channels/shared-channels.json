@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Homepage",
+    "slug": "discover",
+    "internal": true,
+    "presetDescription": "Homepage for the site",
+    "config": {
+      "contentType": "manual",
+      "contentModel": "channel",
+      "hideTitle": true,
+      "contentOrder": "channelables.order:asc",
+      "layout": "list",
+      "nestedLayout": "list",
+      "seoTitle": "{{site_name}} - Listen to music for free",
+      "seoDescription": "Find and listen to millions of songs, albums and artists, all completely free on {{SITE_NAME}}.",
+      "presetId": "homepage"
+    },
+    "nestedChannels": [
+      "popular-albums",
+      "popular-tracks",
+      "new-releases",
+      "genres"
+    ]
+  },
+  {
+    "name": "Popular albums",
+    "slug": "popular-albums",
+    "presetDescription": "Lists all albums in the database, sorted by popularity",
+    "config": {
+      "contentType": "listAll",
+      "contentModel": "album",
+      "contentOrder": "popularity:desc",
+      "layout": "grid",
+      "nestedLayout": "carousel",
+      "seoTitle": "Popular Albums",
+      "seoDescription": "Most popular albums from hottest artists today.",
+      "presetId": "popularAlbums"
+    }
+  },
+  {
+    "name": "Genres",
+    "slug": "genres",
+    "presetDescription": "Lists all genres currently in the database",
+    "internal": true,
+    "config": {
+      "contentType": "listAll",
+      "contentModel": "genre",
+      "contentOrder": "popularity:desc",
+      "layout": "grid",
+      "nestedLayout": "grid",
+      "seoTitle": "Popular Genres",
+      "seo_description": "Browse popular genres to discover new music.",
+      "presetId": "genres"
+    }
+  }
+]

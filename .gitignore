@@ -1,23 +1,48 @@
-/vendor/
-node_modules/
-npm-debug.log
-yarn-error.log
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
+node_modules
+vendor
+dist
+dist-ssr
+*.local
 
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
-
-storage/*.key
-.env
-Homestead.yaml
+# misc
+/storage/tntsearch/*.index
+.htaccess
+public/.htaccess
+public/favicon
+public/favicon.ico
+install_files
+/public/hot
+/storage/*.key
 Homestead.json
-/.vagrant
-.phpunit.result.cache
+Homestead.yaml
+.env
+data.ms
+/test-results/
+/playwright-report/
+/playwright/.cache/
+storageState.json
+# translation files (include default "en"), will be created during installation
+resources/lang/*.json
+# manifest file will be created during installation
+public/manifest.json

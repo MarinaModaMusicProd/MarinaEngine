@@ -1,0 +1,55 @@
+[
+  {
+    "name": "{{channel.restriction.display_name}} Artists",
+    "slug": "genre",
+    "internal": true,
+    "presetDescription": "Lists all artists from database for a specific genre",
+    "config": {
+      "restriction": "genre",
+      "restrictionModelId": "urlParam",
+      "lockSlug": true,
+      "contentType": "listAll",
+      "contentModel": "artist",
+      "nestedLayout": "grid",
+      "contentOrder": "popularity:desc",
+      "layout": "grid",
+      "seoTitle": "{{channel.restriction.display_name}} Artists - {{site_name}}",
+      "seoDescription": "Popular {{channel.restriction.display_name}} Artists.",
+      "presetId": "streamingGenreArtists"
+    }
+  },
+  {
+    "name": "New Releases",
+    "slug": "new-releases",
+    "presetDescription": "Periodically imports new releases from Spotify API",
+    "config": {
+      "contentType": "autoUpdate",
+      "autoUpdateMethod": "newAlbums",
+      "autoUpdateProvider": "spotify",
+      "contentModel": "album",
+      "contentOrder": "release_date:desc",
+      "layout": "grid",
+      "nestedLayout": "carousel",
+      "seoTitle": "Latest Releases",
+      "seoDescription": "Browse and listen to newest releases from popular artists.",
+      "presetId": "streamingNewReleases"
+    }
+  },
+  {
+    "name": "Popular Tracks",
+    "slug": "popular-tracks",
+    "presetDescription": "Periodically imports popular tracks from Spotify API",
+    "config": {
+      "contentType": "autoUpdate",
+      "autoUpdateMethod": "topTracks",
+      "autoUpdateProvider": "spotify",
+      "contentModel": "track",
+      "contentOrder": "popularity:desc",
+      "layout": "trackTable",
+      "nestedLayout": "trackTable",
+      "seoTitle": "Popular Tracks",
+      "seoDescription": "Global Top 50 chart of most popular songs.",
+      "presetId": "streamingPopularTracks"
+    }
+  }
+]

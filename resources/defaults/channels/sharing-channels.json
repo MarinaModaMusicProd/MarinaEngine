@@ -1,0 +1,112 @@
+[
+  {
+    "name": "New Releases",
+    "slug": "new-releases",
+    "presetDescription": "Lists all albums in the database, sorted by release date",
+    "config": {
+      "contentType": "listAll",
+      "contentModel": "album",
+      "contentOrder": "created_at:desc",
+      "layout": "grid",
+      "nestedLayout": "carousel",
+      "seoTitle": "Latest Releases",
+      "seoDescription": "Browse and listen to newest releases from popular artists.",
+      "presetId": "sharingNewReleases"
+    }
+  },
+  {
+    "name": "Popular Tracks",
+    "slug": "popular-tracks",
+    "presetDescription": "Lists all tracks in the database, sorted by popularity",
+    "config": {
+      "contentType": "listAll",
+      "contentModel": "track",
+      "contentOrder": "popularity:desc",
+      "layout": "trackTable",
+      "nestedLayout": "trackTable",
+      "seoTitle": "Popular Tracks",
+      "seoDescription": "Global Top 50 chart of most popular songs.",
+      "presetId": "sharingPopularTracks"
+    }
+  },
+  {
+    "name": "{{channel.restriction.display_name}}",
+    "slug": "genre",
+    "internal": true,
+    "presetDescription": "Contains sub-channels for artists, albums and tracks of specific genre",
+    "config": {
+      "restriction": "genre",
+      "restrictionModelId": "urlParam",
+      "lockSlug": true,
+      "contentType": "manual",
+      "contentModel": "channel",
+      "nestedLayout": "grid",
+      "contentOrder": "channelables.order:asc",
+      "seoTitle": "{{channel.restriction.display_name}} - {{site_name}}",
+      "seoDescription": "Popular {{channel.restriction.display_name}} artists, albums and tracks.",
+      "presetId": "sharingGenresParent"
+    },
+    "nestedChannels": [
+      "genre-artists",
+      "genre-albums",
+      "genre-tracks"
+    ]
+  },
+  {
+    "name": "{{channel.restriction.display_name}} Artists",
+    "slug": "genre-artists",
+    "internal": true,
+    "presetDescription": "Lists all artists from database for a specific genre",
+    "config": {
+      "restriction": "genre",
+      "restrictionModelId": "urlParam",
+      "lockSlug": true,
+      "contentType": "listAll",
+      "contentModel": "artist",
+      "nestedLayout": "carousel",
+      "contentOrder": "popularity:desc",
+      "layout": "grid",
+      "seoTitle": "{{channel.restriction.display_name}} Artists - {{site_name}}",
+      "seoDescription": "Popular {{channel.restriction.display_name}} Artists.",
+      "presetId": "sharingGenreArtists"
+    }
+  },
+  {
+    "name": "{{channel.restriction.display_name}} Albums",
+    "slug": "genre-albums",
+    "internal": true,
+    "presetDescription": "Lists all albums from database for a specific genre",
+    "config": {
+      "restriction": "genre",
+      "restrictionModelId": "urlParam",
+      "lockSlug": true,
+      "contentType": "listAll",
+      "contentModel": "album",
+      "nestedLayout": "carousel",
+      "contentOrder": "popularity:desc",
+      "layout": "grid",
+      "seoTitle": "{{channel.restriction.display_name}} Albums - {{site_name}}",
+      "seoDescription": "Popular {{channel.restriction.display_name}} Albums.",
+      "presetId": "sharingGenreAlbums"
+    }
+  },
+  {
+    "name": "{{channel.restriction.display_name}} Tracks",
+    "slug": "genre-tracks",
+    "internal": true,
+    "presetDescription": "Lists all tracks from database for a specific genre",
+    "config": {
+      "restriction": "genre",
+      "restrictionModelId": "urlParam",
+      "lockSlug": true,
+      "contentType": "listAll",
+      "contentModel": "track",
+      "nestedLayout": "trackTable",
+      "contentOrder": "popularity:desc",
+      "layout": "trackTable",
+      "seoTitle": "{{channel.restriction.display_name}} Tracks - {{site_name}}",
+      "seoDescription": "Popular {{channel.restriction.display_name}} Tracks.",
+      "presetId": "sharingGenreTracks"
+    }
+  }
+]
