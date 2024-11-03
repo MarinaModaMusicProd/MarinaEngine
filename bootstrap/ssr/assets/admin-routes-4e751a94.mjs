@@ -4863,7 +4863,7 @@ function SiteUrlSection() {
         invalid: !!isInvalid,
         name: "server.app_url",
         label: /* @__PURE__ */ jsx(Trans, { message: "Primary site url" }),
-        description: /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://support.MarinaModa.com/help-center/articles/35/primary-site-url" })
+        description: /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://marina.rechain.network" })
       }
     ),
     append
@@ -5826,7 +5826,7 @@ function SpotifyFields() {
           name: "server.spotify_secret",
           label: /* @__PURE__ */ jsx(Trans, { message: "Spotify secret" }),
           required: true,
-          description: /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://support.MarinaModa.com/help-center/articles/28/34/165/spotify-credentials" })
+          description: /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://marina.rechain.network" })
         }
       )
     ] }) }),
@@ -5836,7 +5836,7 @@ function SpotifyFields() {
         className: "mb-24",
         name: "server.lastfm_api_key",
         label: /* @__PURE__ */ jsx(Trans, { message: "LastFM Api Key" }),
-        description: /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://support.MarinaModa.com/help-center/articles/28/34/166/lastfm-credentials" })
+        description: /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://marina.rechain.network" })
       }
     )
   ] });
@@ -6285,7 +6285,7 @@ function PaypalSection() {
             LearnMoreLink,
             {
               className: "mt-6",
-              link: "https://support.MarinaModa.com/help-center/articles/147/configuring-paypal"
+              link: "https://marina.rechain.network"
             }
           )
         ] }),
@@ -6349,7 +6349,7 @@ function StripeSection() {
             LearnMoreLink,
             {
               className: "mt-6",
-              link: "https://support.MarinaModa.com/help-center/articles/148/configuring-stripe"
+              link: "https://marina.rechain.network"
             }
           )
         ] }),
@@ -7691,7 +7691,7 @@ function OutgoingMailGroup() {
                 LearnMoreLink,
                 {
                   className: "mt-8",
-                  link: "https://support.MarinaModa.com/help-center/articles/42/44/155/incoming-emails"
+                  link: "https://marina.rechain.network"
                 }
               )
             ] }),
@@ -15039,7 +15039,7 @@ function fetchAnalyticsReport({
   }
   return apiClient.get(Endpoint$1, { params }).then((response) => response.data);
 }
-function MarinaModaAdminReportPage() {
+function MarinaModaMusicProdAdminReportPage() {
   const [dateRange, setDateRange] = useState(() => {
     return DateRangePresets[2].getRangeValue();
   });
@@ -15912,7 +15912,7 @@ function ContentAutoUpdateField({ children, config }) {
             {
               body: /* @__PURE__ */ jsxs(Fragment, { children: [
                 /* @__PURE__ */ jsx("div", { className: "mb-20", children: /* @__PURE__ */ jsx(Trans, { message: "This option will automatically update channel content every 24 hours using the specified method." }) }),
-                /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://support.MarinaModa.com/help-center/articles/28/31/170/channels" })
+                /* @__PURE__ */ jsx(LearnMoreLink, { link: "https://marina.rechain.network" })
               ] })
             }
           )
@@ -16259,7 +16259,7 @@ const AppAdminRoutes = [
   // Reports
   {
     path: "/",
-    element: /* @__PURE__ */ jsx(MarinaModaAdminReportPage, {}),
+    element: /* @__PURE__ */ jsx(MarinaModaMusicProdAdminReportPage, {}),
     children: [
       { index: true, element: /* @__PURE__ */ jsx(AdminInsightsReport, {}) },
       { path: "plays", element: /* @__PURE__ */ jsx(AdminInsightsReport, {}) },

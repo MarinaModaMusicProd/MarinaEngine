@@ -4,11 +4,11 @@ namespace Livechat\Controllers;
 
 use Common\Core\BaseController;
 use Helpdesk\Actions\AssignConversationsToAgent;
-use Helpdesk\Events\ConversationCreated;
 use Helpdesk\Models\Group;
 use Illuminate\Support\Facades\Auth;
 use Livechat\Actions\AssignChatToFirstAvailableAgent;
 use Livechat\Actions\GetWidgetChatData;
+use Livechat\Events\ChatCreated;
 use Livechat\Models\Chat;
 use Livechat\Models\ChatVisitor;
 
@@ -49,36 +49,29 @@ class WidgetChatController extends BaseController
                 'required_without:content.*.fileEntryIds|string',
             'content.*.fileEntryIds' => 'required_without:content.*.body|array',
             'content.*.fileEntryIds.*' => 'int|exists:file_entries,id',
-            'preChatForm' => 'array|nullable',
             'agentId' => 'nullable|int',
-            'visitorId' => 'nullable|int',
         ]);
 
-        if (
-            (isset($data['agentId']) || isset($data['visitorId'])) &&
-            !Auth::user()->isAgent()
-        ) {
+        if (isset($data['agentId']) && !Auth::user()->isAgent()) {
             return $this->error(
-                __('Only agents can re-assign chats.'),
+                'Only agents can assign chats to other agents.',
                 [],
                 403,
             );
         }
 
-        // group selected by customer in pre-chat form
-        if (isset($data['preChatForm'])) {
-            $selectedGroupId = collect($data['preChatForm'])->firstWhere(
-                'name',
-                'group',
-            )['value'];
-        }
+        $visitor = ChatVisitor::getOrCreateForCurrentRequest();
+        $chat = $visitor->chats()->create(['status' => Chat::STATUS_ACTIVE]);
 
-        $visitor = isset($data['visitorId'])
-            ? ChatVisitor::findOrFail($data['visitorId'])
-            : ChatVisitor::getOrCreateForCurrentRequest();
-        $chat = $visitor->chats()->create([
-            'status' => Chat::STATUS_OPEN,
-            'group_id' => $selectedGroupId ?? Group::findDefault()?->id,
+        // assign visits that have not been attached to another chat yet
+        $visitor
+            ->visits()
+            ->whereNull('chat_id')
+            ->update(['chat_id' => $chat->id]);
+
+        $chat->update([
+            // todo: might need to change this after assigning to group via triggers is implemented
+            'group_id' => Group::findDefault()?->id,
         ]);
 
         if (isset($data['agentId'])) {
@@ -91,23 +84,14 @@ class WidgetChatController extends BaseController
             (new AssignChatToFirstAvailableAgent())->execute($chat);
         }
 
-        if (isset($data['preChatForm'])) {
-            $chat->storePreChatFormData($data['preChatForm']);
-        }
-
-        if (isset($data['content'])) {
-            foreach ($data['content'] as $msg) {
-                if ($msg['author'] === 'agent') {
-                    $msg['user_id'] = $chat->assignee?->id;
-                }
-                $chat->createMessage($msg);
+        foreach ($data['content'] as $msg) {
+            if ($msg['author'] === 'agent') {
+                $msg['user_id'] = $chat->assignee?->id;
             }
+            $chat->createMessage($msg);
         }
 
-        ConversationCreated::dispatch($chat, [
-            'createdByAgent' => Auth::user()?->isAgent(),
-            'url' => request()->header('referer'),
-        ]);
+        ChatCreated::dispatch($chat);
 
         return $this->success([
             'chat' => $chat,

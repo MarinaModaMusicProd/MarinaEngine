@@ -3,7 +3,7 @@ import {SimplePaginationResponse} from '@common/http/backend-response/pagination
 import {useInfiniteData} from '@common/ui/infinite-scroll/use-infinite-data';
 
 export function dashboardChatMessagesQueryKey(chatId: number | string) {
-  return ['chats', `${chatId}`, 'messages'];
+  return ['dashboard', 'chats', `${chatId}`, 'messages'];
 }
 interface Props {
   disabled?: boolean;

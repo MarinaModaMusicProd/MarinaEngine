@@ -4,106 +4,58 @@ import {now} from '@internationalized/date';
 import {Trans} from '@ui/i18n/trans';
 import clsx from 'clsx';
 import {VisitorAvatar} from '@livechat/widget/chat/avatars/visitor-avatar';
-import React, {Fragment, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {UseDashboardChatResponse} from '@livechat/dashboard/chats-page/queries/use-dashboard-chat';
 import {GroupIcon} from '@ui/icons/material/Group';
 import {PersonIcon} from '@ui/icons/material/Person';
 import {AgentAvatar} from '@livechat/widget/chat/avatars/agent-avatar';
 import {ChatVisitor} from '@livechat/widget/chat/chat';
 import {Avatar} from '@ui/avatar/avatar';
-import {DialogTrigger} from '@ui/overlays/dialog/dialog-trigger';
-import {TransferChatDialog} from '@livechat/dashboard/chats-page/assign-chat-dialog/transfer-chat-dialog';
-import {useAllDashboardAgents} from '@livechat/dashboard/agents/use-all-dashboard-agents';
-import {useHelpdeskGroupsAutocomplete} from '@helpdesk/groups/requests/use-helpdesk-groups-autocomplete';
-import {BlockIcon} from '@ui/icons/material/Block';
-import {FormattedDuration} from '@ui/i18n/formatted-duration';
 
 interface Props {
   data: UseDashboardChatResponse;
+  className?: string;
 }
-export function ChatGeneralDetails({data}: Props) {
-  // preload agents and groups for assign chat dialog
-  useAllDashboardAgents();
-  useHelpdeskGroupsAutocomplete();
-
+export function ChatGeneralDetails({data, className}: Props) {
   const visitor = data.visitor;
   const agent = data.chat.assignee;
   const group = data.chat.group;
 
+  // todo: maybe show assign to agent and department dialogs when clicking on Assignee and department buttons, see how livechat assigning works
+  // todo: show department when implemented
+
   return (
-    <div className="m-20">
+    <div className={clsx('m-20', className)}>
       <VisitorSidebarHeader visitor={visitor} />
       <DetailLayout
         label={<Trans message="Assignee" />}
         value={
-          <DialogTrigger type="modal">
-            <button>
-              {agent ? (
-                <DetailValue image={<AgentAvatar user={agent} size="xs" />}>
-                  {agent.name}
-                </DetailValue>
-              ) : (
-                <DetailValue image={<PersonIcon size="sm" />}>
-                  <Trans message="Unassigned" />
-                </DetailValue>
-              )}
-            </button>
-            <TransferChatDialog tab="agent" chat={data.chat} />
-          </DialogTrigger>
+          agent ? (
+            <DetailValue image={<AgentAvatar user={agent} size="xs" />}>
+              {agent.name}
+            </DetailValue>
+          ) : (
+            <DetailValue image={<PersonIcon size="sm" />}>
+              <Trans message="Unassigned" />
+            </DetailValue>
+          )
         }
       />
       <DetailLayout
         label={<Trans message="Group" />}
         value={
-          <DialogTrigger type="modal">
-            <button>
-              {group ? (
-                <DetailValue image={<Avatar label={group.name} size="xs" />}>
-                  {group.name}
-                </DetailValue>
-              ) : (
-                <DetailValue image={<GroupIcon size="sm" />}>
-                  <Trans message="Unassigned" />
-                </DetailValue>
-              )}
-            </button>
-            <TransferChatDialog tab="group" chat={data.chat} />
-          </DialogTrigger>
+          group ? (
+            <DetailValue image={<Avatar label={group.name} size="xs" />}>
+              {group.name}
+            </DetailValue>
+          ) : (
+            <DetailValue image={<GroupIcon size="sm" />}>
+              <Trans message="Unassigned" />
+            </DetailValue>
+          )
         }
       />
-      <SuspendedSection visitor={visitor} />
     </div>
-  );
-}
-
-interface SuspendedSectionProps {
-  visitor: ChatVisitor;
-}
-function SuspendedSection({visitor}: SuspendedSectionProps) {
-  if (!visitor.banned_at) {
-    return null;
-  }
-
-  const ban = visitor.bans?.[0];
-
-  return (
-    <Fragment>
-      <div className="mt-12 flex items-center gap-6 text-sm text-danger">
-        <BlockIcon size="sm" />
-        <div>
-          <Trans message="Suspended customer" />
-          {ban?.expired_at && (
-            <Fragment>
-              {' '}
-              ({<FormattedDuration endDate={ban.expired_at} verbose />})
-            </Fragment>
-          )}
-        </div>
-      </div>
-      {ban?.comment && (
-        <div className="mt-6 text-xs text-danger">{ban.comment}</div>
-      )}
-    </Fragment>
   );
 }
 
@@ -111,7 +63,6 @@ interface VisitorSidebarHeaderProps {
   visitor: ChatVisitor;
   className?: string;
 }
-
 export function VisitorSidebarHeader({
   visitor,
   className,
@@ -150,8 +101,8 @@ interface DetailLayoutProps {
 export function DetailLayout({label, value}: DetailLayoutProps) {
   return (
     <div className="flex py-4 text-sm">
-      <div className="w-100 text-muted">{label}</div>
-      <div className="flex-auto">{value}</div>
+      <div className="w-2/5 text-muted">{label}</div>
+      <div className="w-3/5">{value}</div>
     </div>
   );
 }

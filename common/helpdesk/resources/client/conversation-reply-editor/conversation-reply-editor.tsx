@@ -9,6 +9,7 @@ import React, {
   useState,
 } from 'react';
 import {Editor, FocusPosition} from '@tiptap/react';
+import debounce from 'just-debounce-it';
 import {useDroppable} from '@ui/interactions/dnd/use-droppable';
 import {useCallbackRef} from '@ui/utils/hooks/use-callback-ref';
 import {FileEntry} from '@common/uploads/file-entry';
@@ -19,8 +20,7 @@ import {Trans} from '@ui/i18n/trans';
 import {useUploadConversationReplyAttachments} from '@helpdesk/conversation-reply-editor/use-upload-conversation-reply-attachments';
 import {ConversationReplyEditorAttachments} from '@helpdesk/conversation-reply-editor/conversation-reply-editor-attachments';
 import {ConversationReplyEditorMenubar} from '@helpdesk/conversation-reply-editor/conversation-reply-editor-menubar';
-import debounce from 'just-debounce-it';
-import {getConversationReplyEditorBody} from '@helpdesk/conversation-reply-editor/use-conversation-reply-editor-ref';
+import {getConversationReplyEditorBody} from '@app/reply-editor/use-conversation-reply-editor-ref';
 
 const ArticleBodyEditor = React.lazy(
   () => import('@common/article-editor/article-body-editor'),
@@ -117,7 +117,6 @@ export function ConversationReplyEditor(props: Props) {
               onLoad={editor => {
                 editorRef.current = editor;
                 //editor.commands.focus('end');
-
                 editor.on(
                   'update',
                   debounce(() => onChange?.(), 300),

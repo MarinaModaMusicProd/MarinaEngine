@@ -1,7 +1,7 @@
 import {Outlet} from 'react-router-dom';
 import {PlayerContext} from '@common/player/player-context';
 import {playerStoreOptions} from '@app/web-player/state/player-store-options';
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useSettings} from '@ui/settings/use-settings';
 import {Sidenav} from '@app/web-player/layout/sidenav';
 import {QueueSidenav} from '@app/web-player/layout/queue/queue-sidenav';
@@ -16,8 +16,25 @@ import {DashboardLayout} from '@common/ui/dashboard-layout/dashboard-layout';
 import {DashboardSidenav} from '@common/ui/dashboard-layout/dashboard-sidenav';
 import {DashboardContent} from '@common/ui/dashboard-layout/dashboard-content';
 import {useIsTabletMediaQuery} from '@ui/utils/hooks/is-tablet-media-query';
+import WebApp from "@twa-dev/sdk";
+import * as path from "path";
 
 export function WebPlayerLayout() {
+  useEffect(() => {
+    if (!window && !WebApp?.initData) return;
+    WebApp.ready();
+    WebApp.expand();
+    WebApp.BackButton.onClick(() => {
+      router.back();
+    });
+
+    if (path === '/') {
+      WebApp.BackButton.hide();
+    } else {
+      WebApp.BackButton.show();
+    }
+  }, [path]);
+
   const {player} = useSettings();
   const isMobile = useIsTabletMediaQuery();
 

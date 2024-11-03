@@ -29,7 +29,6 @@ import {FilterAltIcon} from '@ui/icons/material/FilterAlt';
 import {FilterListSkeleton} from '@common/datatable/filters/filter-list/filter-list-skeleton';
 import {useBackendFilterUrlParams} from '@common/datatable/filters/backend-filter-url-params';
 import {usePrevious} from '@ui/utils/hooks/use-previous';
-import {InfiniteScrollSentinel} from '@common/ui/infinite-scroll/infinite-scroll-sentinel';
 
 interface Props {
   chatsQuery: ReturnType<typeof useArchivedChats>;
@@ -63,7 +62,7 @@ interface ChatsListProps {
 }
 function ChatsList({chatsQuery, activeChatQuery}: ChatsListProps) {
   const {chatId: activeChatId} = useParams();
-  const allChats = chatsQuery.items;
+  const allChats = chatsQuery.data?.pagination.data ?? [];
   const activeChat = activeChatQuery.data?.chat;
 
   // make sure active chat is always shown in left sidebar,
@@ -103,7 +102,6 @@ function ChatsList({chatsQuery, activeChatQuery}: ChatsListProps) {
             />
           ))}
         </m.div>
-        <InfiniteScrollSentinel query={chatsQuery} />
       </Fragment>
     );
   }

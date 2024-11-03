@@ -13,16 +13,10 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule
-            ->command(UpdateAllChannelsContent::class)
-            ->dailyAt('03:20')
-            ->withoutOverlapping();
+        $schedule->command(UpdateAllChannelsContent::class)->dailyAt('03:20');
 
         if (config('common.site.demo')) {
-            $schedule
-                ->command(ResetDemoAdminAccount::class)
-                ->dailyAt('03:30')
-                ->withoutOverlapping();
+            $schedule->command(ResetDemoAdminAccount::class)->dailyAt('03:30');
         }
     }
 

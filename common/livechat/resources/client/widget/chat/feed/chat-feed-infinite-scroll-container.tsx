@@ -1,56 +1,67 @@
-import {ReactNode, useLayoutEffect, useMemo, useRef} from 'react';
-import {PaginationResponse} from '@common/http/backend-response/pagination-response';
-import {usePrevious} from '@ui/utils/hooks/use-previous';
+import {ReactNode, useEffect, useRef} from 'react';
 import {getScrollParent} from '@react-aria/utils';
 
 interface Props {
+  totalPages: number;
+  index: number;
   children: ReactNode;
   className?: string;
-  data?: {pagination: PaginationResponse<any>}[];
 }
 export function ChatFeedInfiniteScrollContainer({
+  index,
+  totalPages,
   children,
   className,
-  data,
 }: Props) {
-  const elRef = useRef<HTMLDivElement>(null);
+  // if it's the current page that is not lazy loaded, scroll to the bottom whenever height changes
+  const isLastPage = index === totalPages - 1;
+  const lastPageRef = useRef<HTMLDivElement>(null);
+  const prevHeightRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (!lastPageRef.current) return;
 
-  // generate key string from message ids. This will ensure effect only reruns if
-  // there are new ids or order changed, while object reference changes will not have any effect
-  const key = useMemo(
-    () => data?.map(d => d.pagination.data.map(d => d.id)).join(','),
-    [data],
-  );
-  const pageCount = data?.length || 0;
-  const prevKey = usePrevious(key);
-  const prevPageCount = usePrevious(data?.length);
-  const prevHeight = useRef<number>();
+    const el = lastPageRef.current;
+    const scrollParent = getScrollParent(el);
+    const observer = new ResizeObserver(e => {
+      const newHeight = e[0].contentRect.height;
+      if (newHeight !== prevHeightRef.current) {
+        scrollParent.scrollTop = scrollParent.scrollHeight;
+        prevHeightRef.current = newHeight;
+      }
+    });
+    observer.observe(el);
 
-  useLayoutEffect(() => {
-    if (key === prevKey || !pageCount || !elRef.current) return;
+    return () => {
+      observer.unobserve(el);
+    };
+  }, []);
 
-    // if there's more than one page, and page count is different from previous count,
-    // we can assume change was due to lazy loading, and we should adjust scroll position
-    // according to previous height, otherwise change was due to new message
-    // added or initial load, so just scroll to the bottom
-    const isLazyLoad =
-      pageCount > 1 && prevPageCount && prevPageCount < pageCount;
-    const scrollParent = getScrollParent(elRef.current);
-    const scrollHeight = scrollParent.scrollHeight;
-
-    if (isLazyLoad) {
-      scrollParent.scrollTop =
-        elRef.current.getBoundingClientRect().height -
-        (prevHeight.current || 0);
-    } else {
-      scrollParent.scrollTop = scrollHeight;
+  // if it's a lazy-loaded page, adjust scroll position, otherwise it will always stay at 0
+  const isFirstPage = index === 0;
+  const lazyLoadedPageRef = useRef<HTMLDivElement>(null);
+  const alreadyAdjustedScrollAfterLazyLoad = useRef(false);
+  useEffect(() => {
+    if (
+      !lazyLoadedPageRef.current ||
+      totalPages < 2 ||
+      !isFirstPage ||
+      alreadyAdjustedScrollAfterLazyLoad.current
+    ) {
+      return;
     }
 
-    prevHeight.current = scrollHeight;
-  }, [key, prevKey, pageCount, prevPageCount]);
+    const scrollParent = getScrollParent(lazyLoadedPageRef.current);
+
+    scrollParent.scrollTop =
+      lazyLoadedPageRef.current.getBoundingClientRect().height;
+    alreadyAdjustedScrollAfterLazyLoad.current = true;
+  }, [totalPages, isFirstPage]);
 
   return (
-    <div className={className} ref={elRef} id="asdasdd">
+    <div
+      className={className}
+      ref={isLastPage ? lastPageRef : lazyLoadedPageRef}
+    >
       {children}
     </div>
   );

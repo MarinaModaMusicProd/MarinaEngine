@@ -1,12 +1,18 @@
 import {Timeline, TimelineItem} from '@ui/timeline/timeline';
 import {Tooltip} from '@ui/tooltip/tooltip';
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {parseAbsoluteToLocal} from '@internationalized/date';
 import {getCurrentDateTime} from '@ui/i18n/use-current-date-time';
 import {FormattedDuration} from '@ui/i18n/formatted-duration';
-import {usePageVisits} from '@livechat/dashboard/chats-page/visitor-sidebar/use-page-visits';
+import {
+  pageVisitsQueryKey,
+  usePageVisits,
+} from '@livechat/dashboard/chats-page/visitor-sidebar/use-page-visits';
 import {ChatVisit} from '@livechat/widget/chat/chat';
+import {echoStore} from '@livechat/widget/chat/broadcasting/echo-store';
+import {queryClient} from '@common/http/query-client';
 import {ProgressCircle} from '@ui/progress/progress-circle';
+import {chatVisitorChannel} from '@livechat/websockets/chat-visitor-channel';
 
 interface Props {
   initialData?: ChatVisit[];
@@ -14,6 +20,19 @@ interface Props {
 }
 export function PageVisitsPanel({initialData, visitorId}: Props) {
   const {data} = usePageVisits(visitorId, initialData);
+
+  useEffect(() => {
+    return echoStore().listen({
+      channel: chatVisitorChannel.name(visitorId),
+      type: 'public',
+      events: [chatVisitorChannel.events.visits.created],
+      callback: () => {
+        queryClient.invalidateQueries({
+          queryKey: pageVisitsQueryKey(visitorId),
+        });
+      },
+    });
+  }, [visitorId]);
 
   if (!data) {
     return (

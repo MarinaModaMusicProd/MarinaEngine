@@ -1,7 +1,7 @@
 import {UseMostRecentChatResponse} from '@livechat/widget/home/use-most-recent-chat';
 import {useSettings} from '@ui/settings/use-settings';
 import {useTrans} from '@ui/i18n/use-trans';
-import {useAllWidgetAgents} from '@livechat/widget/use-all-widget-agents';
+import {useAllAgents} from '@livechat/widget/use-all-agents';
 import {getCurrentDateTime} from '@ui/i18n/use-current-date-time';
 import {HomeScreenCardLayout} from '@livechat/widget/home/home-screen-card-layout';
 import {Link} from 'react-router-dom';
@@ -13,7 +13,6 @@ import {KeyboardArrowRightIcon} from '@ui/icons/material/KeyboardArrowRight';
 import React from 'react';
 import {ChatContentItem, ChatVisitor} from '@livechat/widget/chat/chat';
 import {VisitorAvatar} from '@livechat/widget/chat/avatars/visitor-avatar';
-import {UnseenMessagesBadge} from '@livechat/dashboard/unseen-chats/unseen-messages-badge';
 
 interface Props {
   data: Required<UseMostRecentChatResponse>;
@@ -35,11 +34,8 @@ export function ResumeChatCard({data}: Props) {
     <HomeScreenCardLayout>
       <div className="px-20 py-16 transition-button hover:bg-hover dark:bg-alt">
         <Link to={`/chats/${data.chat.id}`} className="block">
-          <div className="mb-8 flex items-center justify-between gap-8">
-            <div className="font-semibold">
-              <Trans message="Recent message" />
-            </div>
-            <UnseenMessagesBadge chatId={data.chat.id} className="ml-auto" />
+          <div className="mb-8 font-semibold">
+            <Trans message="Recent message" />
           </div>
           <div className="flex items-center gap-8">
             <MessageAvatar message={lastMsg} visitor={data.visitor} />
@@ -65,7 +61,7 @@ interface MessageAvatarProps {
   visitor: ChatVisitor;
 }
 function MessageAvatar({message, visitor}: MessageAvatarProps) {
-  const agents = useAllWidgetAgents();
+  const agents = useAllAgents();
 
   if (message.author === 'visitor') {
     return <VisitorAvatar visitor={visitor} user={message.user} size="lg" />;
@@ -77,7 +73,7 @@ function MessageAvatar({message, visitor}: MessageAvatarProps) {
 }
 
 function MessageAuthorName({message, visitor}: MessageAvatarProps) {
-  const agents = useAllWidgetAgents();
+  const agents = useAllAgents();
   if (message.author === 'visitor') {
     return <Trans message="You" />;
   }

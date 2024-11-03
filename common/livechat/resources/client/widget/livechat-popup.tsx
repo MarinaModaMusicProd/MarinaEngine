@@ -16,11 +16,27 @@ import {useSettings} from '@ui/settings/use-settings';
 import {useNavigate} from '@common/ui/navigation/use-navigate';
 import {ActiveChatScreen} from '@livechat/widget/chat/active-chat-screen/active-chat-screen';
 import {ConversationsScreen} from '@livechat/widget/conversations/conversations-screen';
+import {echoStore} from '@livechat/widget/chat/broadcasting/echo-store';
+import {helpdeskChannel} from '@helpdesk/websockets/helpdesk-channel';
+import {queryClient} from '@common/http/query-client';
+import {useWidgetBootstrapData} from '@livechat/widget/use-widget-bootstrap-data';
+
+interface ConversationEvent {
+  event: string;
+  conversations: {
+    id: string;
+    status: string;
+    assigned_to: number;
+    user_id: number;
+    visitor_id: number;
+  }[];
+}
 
 export default function LivechatPopup() {
   const ref = useRef<HTMLDivElement>(null!);
   const isInline = useIsWidgetInline();
   const {chatWidget} = useSettings();
+  const {mostRecentChat} = useWidgetBootstrapData();
   const navigate = useNavigate();
   const defaultScreen = chatWidget?.defaultScreen ?? '/';
   const alreadySetDefaultScreen = useRef(false);
@@ -37,6 +53,30 @@ export default function LivechatPopup() {
       alreadySetDefaultScreen.current = true;
     }
   }, [defaultScreen, defaultScreenIsHomepage, navigate]);
+
+  // todo: move this to separate file and create multiple useEffects so no need to use ifs. Check if it doesnt crate multiple listener in echoStore if effects run at the same time
+  useEffect(() => {
+    return echoStore().listen({
+      channel: helpdeskChannel.name,
+      type: 'presence',
+      events: [
+        helpdeskChannel.events.conversations.assigned,
+        helpdeskChannel.events.conversations.statusChanged,
+      ],
+      callback: e => {
+        // todo: add chat created event and navigate to chat screen
+        if (
+          (e.event === helpdeskChannel.events.conversations.assigned ||
+            e.event === helpdeskChannel.events.conversations.statusChanged) &&
+          (e as ConversationEvent).conversations.every(
+            c => c.visitor_id === mostRecentChat.visitor.id,
+          )
+        ) {
+          queryClient.invalidateQueries({queryKey: ['widget', 'chats']});
+        }
+      },
+    });
+  }, [mostRecentChat.visitor.id]);
 
   // prevent home screen from rendering if default screen is not home screen
   if (!defaultScreenIsHomepage && !alreadySetDefaultScreen.current) {

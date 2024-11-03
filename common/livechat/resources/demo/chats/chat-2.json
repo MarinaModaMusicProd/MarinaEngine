@@ -30,11 +30,6 @@
     "content": "Let's check if the email is getting filtered into your spam or junk folder. Could you take a look there?"
   },
   {
-    "type": "event",
-    "author": "system",
-    "content": "group.changed"
-  },
-  {
     "type": "message",
     "author": "visitor",
     "content": "I've checked, and it's not there."
@@ -47,7 +42,7 @@
   {
     "type": "event",
     "author": "system",
-    "content": "agent.changed"
+    "content": "agent.reassigned"
   },
   {
     "type": "message",

@@ -22,7 +22,7 @@ export interface GetArticleResponse extends BackendResponse {
 export function useArticle(loader: 'articlePage' | 'updateArticle') {
   const {categoryId, sectionId, articleId} = useParams();
   return useQuery<GetArticleResponse>({
-    queryKey: ['articles', articleId, categoryId, sectionId, loader],
+    queryKey: ['hc', 'articles', articleId, categoryId, sectionId, loader],
     queryFn: () => fetchArticle(articleId!, loader, categoryId, sectionId),
     initialData: () => {
       const data = getBootstrapData().loaders?.[loader];

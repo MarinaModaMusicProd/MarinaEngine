@@ -9,7 +9,7 @@ interface Response extends BackendResponse {
 
 export function useAgent(agentId: number | string) {
   return useQuery({
-    queryKey: ['users', 'agents', agentId],
+    queryKey: ['helpdesk', 'agents', agentId],
     queryFn: () => fetchAgent(agentId!),
   });
 }

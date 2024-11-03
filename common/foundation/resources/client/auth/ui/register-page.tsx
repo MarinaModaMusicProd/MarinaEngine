@@ -119,7 +119,7 @@ export function RegisterPage({inviteType}: Props) {
         </Button>
         <SocialAuthSection
           dividerMessage={
-            social?.compact_buttons ? (
+            social.compact_buttons ? (
               <Trans message="Or sign up with" />
             ) : (
               <Trans message="OR" />

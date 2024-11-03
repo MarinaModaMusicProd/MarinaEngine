@@ -5,6 +5,7 @@ import {Category, Section} from '@helpdesk/help-center/categories/category';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
 
 export const fetchCategoriesQueryKey = (params: UseCategoriesParams) => [
+  'hc',
   'categories',
   'admin',
   params,

@@ -10,10 +10,7 @@ import {DashboardChatSectionHeader} from '@livechat/dashboard/chats-page/dashboa
 import React, {Fragment, useState} from 'react';
 import {TechnologyPanel} from '@livechat/dashboard/chats-page/visitor-sidebar/technology-panel';
 import {useLocalStorage} from '@ui/utils/hooks/local-storage';
-import {
-  ChatGeneralDetails,
-  DetailLayout,
-} from '@livechat/dashboard/chats-page/visitor-sidebar/chat-general-details';
+import {ChatGeneralDetails} from '@livechat/dashboard/chats-page/visitor-sidebar/chat-general-details';
 import {useDashboardChat} from '@livechat/dashboard/chats-page/queries/use-dashboard-chat';
 import {PageVisitsPanel} from '@livechat/dashboard/chats-page/visitor-sidebar/page-visists-panel';
 import {AnimatePresence, m} from 'framer-motion';
@@ -23,10 +20,6 @@ import {TabList} from '@ui/tabs/tab-list';
 import {Tab} from '@ui/tabs/tab';
 import {Tabs} from '@ui/tabs/tabs';
 import {RecentChatsPanel} from '@livechat/dashboard/chats-page/visitor-sidebar/recent-chats-panel';
-import {useSearchParams} from 'react-router-dom';
-import {ChatSummaryPanel} from '@livechat/dashboard/chats-page/visitor-sidebar/chat-summary-panel/chat-summary-panel';
-import {useSettings} from '@ui/settings/use-settings';
-import {PreChatFormDataPanel} from '@livechat/dashboard/chats-page/visitor-sidebar/pre-chat-form-data-panel';
 
 const tabs = {
   visitor: 0,
@@ -73,8 +66,6 @@ interface VisitorTabProps {
   query: ReturnType<typeof useDashboardChat>;
 }
 function VisitorTab({query}: VisitorTabProps) {
-  const {ai_setup} = useSettings();
-  const [, setSearchParams] = useSearchParams();
   const [expandedItems, setExpendedItems] = useLocalStorage('dash.chat.info', [
     0,
   ]);
@@ -92,22 +83,18 @@ function VisitorTab({query}: VisitorTabProps) {
             mode="multiple"
             key="details-accordion"
           >
-            {query.data?.preChatFormData && (
-              <SidebarAccordionItem label={<Trans message="Pre-chat form" />}>
-                <PreChatFormDataPanel data={query.data.preChatFormData} />
-              </SidebarAccordionItem>
-            )}
             <SidebarAccordionItem label={<Trans message="Visited pages" />}>
               <PageVisitsPanel
                 visitorId={query.data.visitor.id}
                 initialData={query.data.visits}
               />
             </SidebarAccordionItem>
-            {ai_setup && (
-              <SidebarAccordionItem label={<Trans message="Summary" />}>
-                <ChatSummaryPanel initialData={query.data.summary} />
-              </SidebarAccordionItem>
-            )}
+            <SidebarAccordionItem label={<Trans message="Summary" />}>
+              summary
+            </SidebarAccordionItem>
+            <SidebarAccordionItem label={<Trans message="Addition info" />}>
+              info
+            </SidebarAccordionItem>
             <SidebarAccordionItem label={<Trans message="Technology" />}>
               <TechnologyPanel visitor={query.data.visitor} />
             </SidebarAccordionItem>
@@ -115,10 +102,7 @@ function VisitorTab({query}: VisitorTabProps) {
               <RecentChatsPanel
                 visitorId={query.data.visitor.id}
                 onChatSelected={chat => {
-                  setSearchParams(
-                    {previewChatId: `${chat.id}`},
-                    {replace: true},
-                  );
+                  // todo: open chat in popout or modal
                 }}
               />
             </SidebarAccordionItem>
@@ -151,57 +135,33 @@ interface SidebarSkeletonProps {
 }
 function SidebarSkeleton({isLoading}: SidebarSkeletonProps) {
   return (
-    <m.div key="chat-info-sidebar-skeleton" className="m-20">
-      <div className="mb-12 flex items-center gap-12 border-b pb-18">
+    <m.div key="chat-info-sidebar-skeleton" className="mx-12 my-18">
+      <div className="mb-24 flex flex-col items-center">
         <Skeleton
           variant="avatar"
           radius="rounded-full"
-          size="w-64 h-64"
+          size="w-42 h-42"
+          className="mb-10"
           animation={isLoading ? 'wave' : null}
         />
-        <div className="flex-auto">
-          <Skeleton
-            className="mb-2 max-w-80 text-base"
-            animation={isLoading ? 'wave' : null}
-          />
-          <Skeleton
-            className="max-w-200 text-sm"
-            animation={isLoading ? 'wave' : null}
-          />
-          <Skeleton
-            className="max-w-160 text-sm"
-            animation={isLoading ? 'wave' : null}
-          />
-        </div>
+        <Skeleton
+          className="mb-2 max-w-80 text-base"
+          animation={isLoading ? 'wave' : null}
+        />
+        <Skeleton
+          className="mb-2 max-w-200 text-sm"
+          animation={isLoading ? 'wave' : null}
+        />
+        <Skeleton
+          className="max-w-160 text-sm"
+          animation={isLoading ? 'wave' : null}
+        />
       </div>
-      <DetailLayout
-        label={
-          <Skeleton
-            className="min-h-24 max-w-70 text-sm"
-            animation={isLoading ? 'wave' : null}
-          />
-        }
-        value={
-          <Skeleton
-            className="max-w-110"
-            animation={isLoading ? 'wave' : null}
-          />
-        }
-      />
-      <DetailLayout
-        label={
-          <Skeleton
-            className="min-h-24 max-w-50 text-sm"
-            animation={isLoading ? 'wave' : null}
-          />
-        }
-        value={
-          <Skeleton
-            className="max-w-80"
-            animation={isLoading ? 'wave' : null}
-          />
-        }
-      />
+      <div className="mx-12">
+        <Skeleton className="mb-12" animation={isLoading ? 'wave' : null} />
+        <Skeleton className="mb-12" animation={isLoading ? 'wave' : null} />
+        <Skeleton />
+      </div>
     </m.div>
   );
 }

@@ -4,7 +4,6 @@ import {
   ChatMessage,
   ChatVisitor,
   PlaceholderChatMessage,
-  PreChatFormData,
 } from '@livechat/widget/chat/chat';
 import {ChatFeedMessage} from '@livechat/widget/chat/feed/chat-feed-message';
 import {openDialog} from '@ui/overlays/store/dialog-store';
@@ -16,7 +15,6 @@ import {AgentAvatar} from '@livechat/widget/chat/avatars/agent-avatar';
 import {VisitorAvatar} from '@livechat/widget/chat/avatars/visitor-avatar';
 import {ChatFeedDateSeparator} from '@livechat/dashboard/chats-page/chat-feed/chat-feed-date-separator';
 import {useTrans} from '@ui/i18n/use-trans';
-import {ChatFeedFormData} from '@livechat/widget/chat/feed/chat-feed-form-data';
 
 interface Props {
   message: ChatContentItem;
@@ -46,13 +44,6 @@ export function DashboardChatFeedItem({
         </div>
       </div>
     );
-  } else if (message.type === 'preChatFormData') {
-    return (
-      <ChatFeedFormData
-        message={message}
-        avatar={<ChatMessageAvatar message={message} visitor={visitor} />}
-      />
-    );
   } else {
     return (
       <ChatFeedMessage
@@ -71,7 +62,7 @@ export function DashboardChatFeedItem({
 }
 
 interface ChatMessageAvatarProps {
-  message: ChatMessage | PlaceholderChatMessage | PreChatFormData;
+  message: ChatMessage | PlaceholderChatMessage;
   visitor: ChatVisitor;
 }
 function ChatMessageAvatar({message, visitor}: ChatMessageAvatarProps) {
@@ -142,7 +133,7 @@ function EventText({event}: EventTextProps) {
         );
       }
       return <Trans message="Agent left the chat" />;
-    case 'agent.changed':
+    case 'agent.reassigned':
       if (event.body.newAgent) {
         return (
           <Trans
@@ -154,19 +145,6 @@ function EventText({event}: EventTextProps) {
         );
       } else {
         return <Trans message="Chat reassigned" />;
-      }
-    case 'group.changed':
-      if (event.body.newGroup) {
-        return (
-          <Trans
-            message="Transfered to :name group"
-            values={{
-              name: event.body.newGroup,
-            }}
-          />
-        );
-      } else {
-        return <Trans message="Group changed" />;
       }
   }
 }

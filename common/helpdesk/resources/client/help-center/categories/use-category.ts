@@ -16,7 +16,7 @@ export function useCategory(loader: 'categoryPage' | 'updateCategory') {
   const {categoryId, sectionId} = useParams();
   const id = sectionId || categoryId;
   return useQuery<GetCategoryResponse>({
-    queryKey: ['categories', id, loader],
+    queryKey: ['hc', 'categories', id, loader],
     queryFn: () => fetchCategory(id!, loader),
     initialData: () => {
       const data = getBootstrapData().loaders?.[loader];

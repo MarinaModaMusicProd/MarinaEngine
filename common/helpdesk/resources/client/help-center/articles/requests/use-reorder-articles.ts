@@ -44,7 +44,7 @@ export function useReorderArticles() {
       return {previousResponse};
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({queryKey: ['articles']});
+      await queryClient.invalidateQueries({queryKey: ['hc', 'articles']});
     },
     onError: (err, _, context) => {
       showHttpErrorToast(err);

@@ -10,7 +10,7 @@ export interface LandingPageData extends BackendResponse {
 
 export function useHcLandingPageData() {
   return useQuery<LandingPageData>({
-    queryKey: ['articles', 'landing-page'],
+    queryKey: ['hc', 'landing-page'],
     queryFn: () => fetchContent(),
     initialData: getBootstrapData().loaders?.hcLandingPage,
   });

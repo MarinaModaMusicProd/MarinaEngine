@@ -5,7 +5,7 @@ export const appAdminRoutes: RouteObject[] = [
   // Reports
   {
     path: '',
-    lazy: () => lazyAdminRoute('MarinaModaAdminReportPage'),
+    lazy: () => lazyAdminRoute('MarinaModaMusicProdAdminReportPage'),
     children: [
       {index: true, lazy: () => lazyAdminRoute('AdminInsightsReport')},
       {path: 'plays', lazy: () => lazyAdminRoute('AdminInsightsReport')},

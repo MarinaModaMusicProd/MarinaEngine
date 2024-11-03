@@ -147,10 +147,7 @@ export function ManageTagsDialog({
                     tagType,
                   },
                   {
-                    onSuccess: r => {
-                      setQuery('');
-                      onChange?.(r.tag.id);
-                    },
+                    onSuccess: r => onChange?.(r.tag.id),
                   },
                 );
               }}

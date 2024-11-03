@@ -19,7 +19,7 @@ import {
 import {useOutletContext} from 'react-router-dom';
 import {AgentSettings, FullAgent} from '@helpdesk/agents/agent';
 import {Form} from '@ui/forms/form';
-import {useHelpdeskGroupsAutocomplete} from '@helpdesk/groups/requests/use-helpdesk-groups-autocomplete';
+import {useAvailableAgentGroups} from '@livechat/dashboard/agents/use-available-agent-groups';
 
 export function AgentDetailsTab() {
   const agent = useOutletContext() as FullAgent;
@@ -76,7 +76,7 @@ export function AgentDetailsTab() {
 
 function GroupSection() {
   const [query, setQuery] = useState('');
-  const {data} = useHelpdeskGroupsAutocomplete({query});
+  const {data} = useAvailableAgentGroups({query});
   const {hasPermission} = useAuth();
   return (
     <CrupdateResourceSection label={<Trans message="Groups" />} margin="my-44">

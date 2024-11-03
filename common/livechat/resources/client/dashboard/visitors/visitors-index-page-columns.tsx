@@ -153,7 +153,7 @@ function ActionsColumn({visitor, isPlaceholder}: ColumnProps) {
             variant="outline"
             size="xs"
             elementType={Link}
-            to={`/agent/chats/${visitor.chat_id}`}
+            to={`/dashboard/chats/${visitor.chat_id}`}
           >
             <Trans message="View chat" />
           </Button>
@@ -161,13 +161,10 @@ function ActionsColumn({visitor, isPlaceholder}: ColumnProps) {
     }
   }
 
-  return <StartChatButton visitor={visitor} />;
+  return <StartChatButton />;
 }
 
-interface StartChatButtonProps {
-  visitor: VisitorIndexPageModel;
-}
-function StartChatButton({visitor}: StartChatButtonProps) {
+function StartChatButton() {
   const createChat = useCreateChat();
   const {user} = useAuth();
   const navigate = useNavigate();
@@ -182,7 +179,6 @@ function StartChatButton({visitor}: StartChatButtonProps) {
         createChat.mutate(
           {
             agentId: user!.id,
-            visitorId: visitor.id,
             messages: [
               createPlaceholderChatMessage({
                 body: trans({message: chatWidget?.defaultMessage ?? ''}),
@@ -190,7 +186,7 @@ function StartChatButton({visitor}: StartChatButtonProps) {
               }),
             ],
           },
-          {onSuccess: r => navigate(`/agent/chats/${r.chat.id}`)},
+          {onSuccess: r => navigate(`/dashboard/chats/${r.chat.id}`)},
         );
       }}
     >

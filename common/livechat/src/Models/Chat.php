@@ -4,19 +4,13 @@ namespace Livechat\Models;
 
 use App\Models\User;
 use Helpdesk\Models\Conversation;
-use Helpdesk\Models\ConversationItem;
-use Helpdesk\Models\Group;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Livechat\Actions\DistributeActiveChatsToAvailableAgents;
-use Livechat\Events\ChatMessageCreated;
 use Livechat\Factories\ChatFactory;
 
 class Chat extends Conversation
@@ -24,14 +18,13 @@ class Chat extends Conversation
     use HasFactory;
 
     const MODEL_TYPE = 'chat';
-    const CONTENT_MODEL_TYPE = ChatMessage::MODEL_TYPE;
 
     // agent is actively chatting with visitor
-    const STATUS_OPEN = parent::STATUS_OPEN;
+    const STATUS_ACTIVE = 'active';
     // agent is chatting with visitor, but visitor is not responding for some time
-    const STATUS_IDLE = parent::STATUS_PENDING;
+    const STATUS_IDLE = 'idle';
     // chat is closed and archived
-    const STATUS_CLOSED = parent::STATUS_CLOSED;
+    const STATUS_CLOSED = 'closed';
     // all agents are busy or auto assigning is disabled, waiting for agent to pick chat from queue
     const STATUS_QUEUED = 'queued';
     // chat was started while no agents were online or from different channel then chat widget
@@ -43,8 +36,7 @@ class Chat extends Conversation
     const EVENT_VISITOR_IDLE = 'visitor.idle';
     const EVENT_VISITOR_LEFT_CHAT = 'visitor.leftChat';
     const EVENT_AGENT_LEFT_CHAT = 'agent.leftChat';
-    const EVENT_AGENT_CHANGED = 'agent.changed';
-    const EVENT_GROUP_CHANGED = 'group.changed';
+    const EVENT_AGENT_REASSIGNED = 'agent.reassigned';
 
     protected $hidden = ['last_message_id', 'subject', 'received_at_email'];
 
@@ -75,51 +67,6 @@ class Chat extends Conversation
     public function visits(): HasMany
     {
         return $this->hasMany(ChatVisit::class);
-    }
-
-    public function summary(): HasOne
-    {
-        return $this->hasOne(ConversationSummary::class);
-    }
-
-    public static function changeStatus(
-        string $status,
-        iterable $conversations,
-        bool $fireEvent = true,
-    ): iterable {
-        $conversations = parent::changeStatus(
-            $status,
-            $conversations,
-            $fireEvent,
-        );
-
-        if ($status === Chat::STATUS_CLOSED) {
-            foreach ($conversations as $conversation) {
-                $conversation->createClosedByAgentEvent(auth()->user());
-            }
-
-            // if chat is closed, run chat distribution cycle
-            (new DistributeActiveChatsToAvailableAgents())->execute();
-        }
-
-        return $conversations;
-    }
-
-    public function createNote(array $data): ConversationItem
-    {
-        $chatMessage = $this->createMessage(
-            [
-                'body' => $data['body'],
-                'author' => 'agent',
-                'user_id' => $data['user_id'] ?? Auth::id(),
-                'type' => 'note',
-            ],
-            [
-                'status' => Chat::STATUS_OPEN,
-            ],
-        );
-
-        event(new ChatMessageCreated($this, $chatMessage));
     }
 
     public function truncateLastMessage(): static
@@ -169,17 +116,11 @@ class Chat extends Conversation
         return $this->createEvent(Chat::EVENT_CLOSED_INACTIVITY);
     }
 
-    public function createAgentChangedEvent(User|array $newAgent): ChatMessage
-    {
-        return $this->createEvent(Chat::EVENT_AGENT_CHANGED, [
+    public function createAgentReassignedEvent(
+        User|array $newAgent,
+    ): ChatMessage {
+        return $this->createEvent(Chat::EVENT_AGENT_REASSIGNED, [
             'newAgent' => $newAgent['name'],
-        ]);
-    }
-
-    public function createGroupChangedEvent(Group|array $newGroup): ChatMessage
-    {
-        return $this->createEvent(Chat::EVENT_GROUP_CHANGED, [
-            'newGroup' => $newGroup['name'],
         ]);
     }
 
@@ -207,41 +148,16 @@ class Chat extends Conversation
         ]);
     }
 
-    public function storePreChatFormData(array $data): ChatMessage
-    {
-        $visitorData = collect($data)
-            ->mapWithKeys(fn($item) => [$item['name'] => $item['value']])
-            ->filter(
-                fn($value, $name) => $name === 'email' || $name === 'name',
-            );
-        if ($visitorData->isNotEmpty()) {
-            $this->visitor()->update($visitorData->toArray());
-        }
-
-        return $this->createMessage([
-            'type' => 'preChatFormData',
-            'body' => $data,
-            'author' => 'visitor',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-    }
-
     public function createMessage(
         array $data,
         array $chatData = [],
     ): ChatMessage {
-        $isInitialMessage = $this->last_message_id === null;
         $message = $this->messages()->create([
             'body' => $data['body'],
             'type' => $data['type'] ?? 'message',
             'author' => $data['author'] ?? 'visitor',
-            'user_id' =>
-                $data['author'] !== 'visitor' &&
-                $isInitialMessage &&
-                $this->assigned_to
-                    ? $this->assigned_to
-                    : Auth::id(),
+            // todo: set user id for initial message to the agent that new chat is assigned to
+            'user_id' => $data['userId'] ?? Auth::id(),
             'created_at' => $data['created_at'] ?? now(),
             'updated_at' => $data['updated_at'] ?? now(),
         ]);
@@ -276,18 +192,13 @@ class Chat extends Conversation
     {
         return [
             'id' => $this->id,
-            'messages' => $this->messages
-                ->filter(
-                    fn(ChatMessage $message) => $message->type === 'message',
-                )
-                ->map(fn(ChatMessage $message) => $message->toSearchableArray())
-                ->slice(0, 50),
+            'messages' => $this->messages->map(
+                fn(ChatMessage $message) => $message->toSearchableArray(),
+            ),
             'tags' => $this->tags->pluck('id'),
             'user' => $this->user ? $this->user->toSearchableArray() : null,
-            'user_id' => $this->user ? $this->user->id : null,
-            'group' => $this->group ? $this->group->toSearchableArray() : null,
-            'group_id' => $this->group ? $this->group->id : null,
             'country' => $this->user?->country ?? $this->visitor?->country,
+            'user_id' => $this->user ? $this->user->id : null,
             'status' => $this->status,
             'assigned_to' => $this->assigned_to,
             'closed_at' => $this->closed_at->timestamp ?? '_null',
@@ -296,26 +207,11 @@ class Chat extends Conversation
         ];
     }
 
-    public function makeSearchableUsing(Collection $models)
-    {
-        return $models->load([
-            'visitor',
-            'user',
-            'group',
-            'messages' => fn(HasMany $builder) => $builder->where(
-                'type',
-                'message',
-            ),
-            'tags',
-        ]);
-    }
-
     protected function makeAllSearchableUsing($query)
     {
         return $query->with([
             'visitor',
             'user',
-            'group',
             'messages' => fn(HasMany $builder) => $builder->where(
                 'type',
                 'message',

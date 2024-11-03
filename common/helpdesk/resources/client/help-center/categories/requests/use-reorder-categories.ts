@@ -44,7 +44,7 @@ export function useReorderCategories(type?: 'section' | 'category') {
       return {previousResponse};
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({queryKey: ['categories']});
+      await queryClient.invalidateQueries({queryKey: ['hc', 'categories']});
     },
     onError: (err, _, context) => {
       showHttpErrorToast(err);

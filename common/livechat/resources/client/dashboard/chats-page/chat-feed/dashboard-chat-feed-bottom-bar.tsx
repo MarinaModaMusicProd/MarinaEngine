@@ -1,4 +1,4 @@
-import {Chat, ChatVisitor} from '@livechat/widget/chat/chat';
+import {Chat} from '@livechat/widget/chat/chat';
 import {Trans} from '@ui/i18n/trans';
 import {Button} from '@ui/buttons/button';
 import {ReactElement, ReactNode} from 'react';
@@ -16,14 +16,7 @@ interface Props {
 export function DashboardChatFeedBottomBar({chat}: Props) {
   const isArchivePage = useIsArchivePage();
 
-  if ((chat.visitor as ChatVisitor | null)?.banned_at) {
-    return (
-      <ChatActionLayout>
-        <Trans message="This customer is suspended." />
-      </ChatActionLayout>
-    );
-  }
-
+  // todo: check if should check for chat.group_id here
   if (!isArchivePage) {
     if (chat.status === 'queued') {
       return <PickFromQueueAction chat={chat} />;
@@ -141,7 +134,7 @@ function ViewActiveChat({chat}: Props) {
         variant="flat"
         color="primary"
         elementType={Link}
-        to={`/agent/chats/${chat.id}`}
+        to={`/dashboard/chats/${chat.id}`}
       >
         <Trans message="View chat" />
       </Button>

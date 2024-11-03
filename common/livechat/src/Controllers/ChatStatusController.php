@@ -3,7 +3,8 @@
 namespace Livechat\Controllers;
 
 use Common\Core\BaseController;
-use Helpdesk\Events\ConversationsUpdated;
+use Helpdesk\Events\ConversationStatusChanged;
+use Livechat\Actions\DistributeActiveChatsToAvailableAgents;
 use Livechat\Models\Chat;
 
 class ChatStatusController extends BaseController
@@ -14,15 +15,22 @@ class ChatStatusController extends BaseController
 
         $this->authorize('update', $chat);
 
-        $updatedEvent = new ConversationsUpdated([$chat]);
-
         $data = request()->validate([
             'status' => 'required|in:active,closed',
         ]);
 
-        Chat::changeStatus($data['status'], [$chat]);
+        $chat->update([
+            'status' => $data['status'],
+        ]);
 
-        $updatedEvent->dispatch([$chat]);
+        if ($data['status'] === Chat::STATUS_CLOSED) {
+            $chat->createClosedByAgentEvent(auth()->user());
+
+            // if chat is closed, run chat distribution cycle
+            (new DistributeActiveChatsToAvailableAgents())->execute();
+        }
+
+        event(new ConversationStatusChanged(collect([$chat])));
 
         return $this->success();
     }

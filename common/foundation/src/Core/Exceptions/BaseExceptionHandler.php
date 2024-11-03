@@ -138,7 +138,7 @@ class BaseExceptionHandler extends Handler
             // should not return a view here, in case laravel views folder is not readable as well
             return response(
                 "<div style='text-align:center'><h1>Could not access a file or folder</h1> <br> Location: <b>$path</b><br>" .
-                    '<p>See the article here for possible solutions: <a target="_blank" href="https://support.MarinaModa.com/hc/articles/21/25/207/changing-file-permissions">https://support.MarinaModa.com/hc/articles/207/changing-file-permissions</a></p></div>',
+                    '</div>',
             );
         }
     }

@@ -25,9 +25,6 @@ import {Table} from '@common/ui/tables/table';
 import {DataTableEmptyStateMessage} from '@common/datatable/page/data-table-emty-state-message';
 import teamSvg from '@common/admin/roles/team.svg';
 import {useSettings} from '@ui/settings/use-settings';
-import {useNormalizedModels} from '@common/ui/normalized-model/use-normalized-models';
-
-const agentEndpoint = 'helpdesk/autocomplete/agent';
 
 const tableConfig: ColumnConfig<GroupUser>[] = [
   {
@@ -131,11 +128,6 @@ interface CrupdateGroupMembersTableProps {
 export function CrupdateGroupMembersTable({
   group,
 }: CrupdateGroupMembersTableProps) {
-  // preload agents for add member modal
-  useNormalizedModels(agentEndpoint, {
-    query: '',
-    perPage: 14,
-  });
   const {chat_integrated} = useSettings();
   const {trans} = useTrans();
   const {contains} = useFilter();
@@ -203,16 +195,17 @@ export function CrupdateGroupMembersTable({
                 }
               }
               if (uniqueUsers.length) {
-                setValue('users', [...formUsers, ...uniqueUsers], {
-                  shouldDirty: true,
-                });
+                setValue('users', [...formUsers, ...uniqueUsers]);
               }
             }}
           >
             <Button variant="outline" color="primary" startIcon={<AddIcon />}>
               <Trans message="Add member" />
             </Button>
-            <SelectUserDialog multiple endpoint={agentEndpoint} />
+            <SelectUserDialog
+              multiple
+              endpoint="helpdesk/autocomplete/agents"
+            />
           </DialogTrigger>
         )}
       </div>

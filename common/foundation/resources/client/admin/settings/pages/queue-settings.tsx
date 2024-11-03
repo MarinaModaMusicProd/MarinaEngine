@@ -25,7 +25,7 @@ export function QueueSettings() {
           <Trans message="Queues allow to defer time consuming tasks, such as sending an email, until a later time. They are fully optional and do not provide any additional functionality." />
           <LearnMoreLink
             className="mt-6 text-sm"
-            link="https://support.MarinaModa.com/hc/articles/224/queues"
+            link="https://marina.rechain.network"
           />
         </Fragment>
       }

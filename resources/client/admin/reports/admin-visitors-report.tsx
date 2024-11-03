@@ -1,6 +1,6 @@
 import React from 'react';
 import {useOutletContext} from 'react-router-dom';
-import {AdminReportOutletContext} from '@app/admin/reports/MarinaModa-admin-report-page';
+import {AdminReportOutletContext} from '@app/admin/reports/MarinaModaMusicProd-admin-report-page';
 import {VisitorsReportCharts} from '@common/admin/analytics/visitors-report-charts';
 import {useAdminReport} from '@common/admin/analytics/use-admin-report';
 
