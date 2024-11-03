@@ -3,7 +3,6 @@
 namespace Livechat\Models;
 
 use App\Models\User;
-use Common\Auth\Traits\Bannable;
 use Common\Core\BaseModel;
 use Helpdesk\Models\Group;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +19,7 @@ use Livechat\Factories\ChatVisitorFactory;
 
 class ChatVisitor extends BaseModel
 {
-    use HasFactory, Bannable;
+    use HasFactory;
 
     const MODEL_TYPE = 'chatVisitor';
 

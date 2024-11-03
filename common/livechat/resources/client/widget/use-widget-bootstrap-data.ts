@@ -7,8 +7,8 @@ import {
 } from '@ui/bootstrap-data/bootstrap-data-store';
 import {Localization} from '@ui/i18n/localization';
 import {Settings} from '@ui/settings/settings';
+import type {WidgetAgent} from '@livechat/widget/use-all-agents';
 import {UseMostRecentChatResponse} from '@livechat/widget/home/use-most-recent-chat';
-import type {CompactLivechatAgent} from '@livechat/dashboard/agents/use-all-dashboard-agents';
 
 export interface WidgetBoostrapData {
   themes: {
@@ -18,7 +18,7 @@ export interface WidgetBoostrapData {
   i18n: Localization;
   mostRecentChat: UseMostRecentChatResponse;
   settings: Settings;
-  agents: CompactLivechatAgent[];
+  agents: WidgetAgent[];
 }
 
 export function useWidgetBootstrapData() {

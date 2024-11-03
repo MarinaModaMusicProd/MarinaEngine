@@ -1,4 +1,4 @@
-import {useWidgetAgentsAcceptingChats} from '@livechat/widget/use-all-widget-agents';
+import {useAgentsAcceptingChats} from '@livechat/widget/use-all-agents';
 import {useSettings} from '@ui/settings/use-settings';
 import {useAppearanceEditorMode} from '@common/admin/appearance/commands/use-appearance-editor-mode';
 import React, {Fragment, ReactNode} from 'react';
@@ -10,7 +10,7 @@ interface Props {
   data?: UseWidgetChatResponse;
 }
 export function ActiveChatStatusMessage({data}: Props) {
-  const agents = useWidgetAgentsAcceptingChats();
+  const agents = useAgentsAcceptingChats();
   const {chatWidget} = useSettings();
   const {isAppearanceEditorActive} = useAppearanceEditorMode();
   let message: ReactNode;

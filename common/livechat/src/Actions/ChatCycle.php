@@ -124,7 +124,7 @@ class ChatCycle
                 $this->agentsAcceptingChats->isNotEmpty()
             ) {
                 $chat->update([
-                    'status' => Chat::STATUS_OPEN,
+                    'status' => Chat::STATUS_ACTIVE,
                     'assigned_to' => $newAgent['id'],
                 ]);
                 $chat->createAgentLeftChatEvent($oldAgent, $newAgent);
@@ -142,7 +142,7 @@ class ChatCycle
 
         // if there has been no activity for a while, mark chat as idle
         if (
-            $chat->status === Chat::STATUS_OPEN &&
+            $chat->status === Chat::STATUS_ACTIVE &&
             $chat->lastMessage->created_at->diffInMinutes(now()) >
                 settings('lc.timeout.inactive')
         ) {

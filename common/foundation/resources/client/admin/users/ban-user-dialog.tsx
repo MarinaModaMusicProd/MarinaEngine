@@ -6,25 +6,25 @@ import {DialogFooter} from '@ui/overlays/dialog/dialog-footer';
 import {Button} from '@ui/buttons/button';
 import {useDialogContext} from '@ui/overlays/dialog/dialog-context';
 import {Form} from '@ui/forms/form';
+import {useForm} from 'react-hook-form';
+import {
+  BanUserPayload,
+  useBanUser,
+} from '@common/admin/users/requests/use-ban-user';
 import {FormDatePicker} from '@ui/forms/input-field/date/date-picker/date-picker';
+import {User} from '@ui/types/user';
 import {FormTextField} from '@ui/forms/input-field/text-field/text-field';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
 import {FormSwitch} from '@ui/forms/toggle/switch';
-import {
-  CreateBanPayload,
-  useBanUser,
-} from '@common/admin/users/requests/use-ban-user';
-import {CompactUser} from '@ui/types/user';
-import {useForm} from 'react-hook-form';
 
 interface Props {
-  user: CompactUser;
+  user: User;
 }
 export function BanUserDialog({user}: Props) {
   const {trans} = useTrans();
   const {close, formId} = useDialogContext();
-  const form = useForm<CreateBanPayload>({
+  const form = useForm<BanUserPayload>({
     defaultValues: {
       permanent: true,
     },
@@ -41,9 +41,7 @@ export function BanUserDialog({user}: Props) {
           id={formId}
           form={form}
           onSubmit={values =>
-            banUser.mutate(values, {
-              onSuccess: () => close(true),
-            })
+            banUser.mutate(values, {onSuccess: () => close()})
           }
         >
           <FormDatePicker

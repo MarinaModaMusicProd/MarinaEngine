@@ -4,13 +4,14 @@ namespace Common\Core\Install;
 
 use Carbon\Carbon;
 use Common\Settings\Setting;
+use Exception;
 
 class InsertDefaultSettings
 {
     public function execute(): void
     {
         if (Setting::count() > 0) {
-            return;
+            throw new Exception('Settings already inserted');
         }
 
         $defaultSettings = config('common.default-settings');

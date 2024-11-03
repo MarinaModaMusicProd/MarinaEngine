@@ -66,11 +66,6 @@
     "content": "You're welcome! If you need a step-by-step guide to download your invoices, I can provide that as well."
   },
   {
-    "type": "event",
-    "author": "system",
-    "content": "group.changed"
-  },
-  {
     "type": "message",
     "author": "visitor",
     "content": "That would be great, actually. I want to make sure I get everything."
@@ -98,7 +93,7 @@
   {
     "type": "event",
     "author": "system",
-    "content": "agent.changed"
+    "content": "agent.reassigned"
   },
   {
     "type": "message",

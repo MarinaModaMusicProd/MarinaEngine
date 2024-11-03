@@ -1,11 +1,11 @@
 import {apiClient} from '@common/http/query-client';
 import {AgentRolesResponse} from '@livechat/dashboard/agents/use-available-agent-roles';
+import {AgentGroupsResponse} from '@livechat/dashboard/agents/use-available-agent-groups';
 import {useQuery} from '@tanstack/react-query';
-import {AgentGroupsResponse} from '@helpdesk/groups/requests/use-helpdesk-groups-autocomplete';
 
 export function useRoleGroupAutocomplete() {
   return useQuery({
-    queryKey: ['groups', 'roles'],
+    queryKey: ['helpdesk', 'groups', 'roles'],
     queryFn: () => fetchGroupsAndRoles(),
   });
 }

@@ -15,7 +15,7 @@ export {ArtistDatatablePage} from '@app/admin/artist-datatable-page/artist-datat
 export {CreateArtistPageWithExternalFields} from '@app/admin/artist-datatable-page/create-artist-page';
 export {UpdateArtistPageWithExternalFields} from '@app/admin/artist-datatable-page/update-artist-page';
 export {CommentsDatatablePage} from '@common/comments/comments-datatable-page/comments-datatable-page';
-export {MarinaModaAdminReportPage} from '@app/admin/reports/MarinaModa-admin-report-page';
+export {MarinaModaMusicProdAdminReportPage} from '@app/admin/reports/MarinaModaMusicProd-admin-report-page';
 export {AdminInsightsReport} from '@app/admin/reports/admin-insights-report';
 export {AdminVisitorsReport} from '@app/admin/reports/admin-visitors-report';
 export {NestedBackstageArtistInsights} from '@app/web-player/backstage/insights/backstage-artist-insights';

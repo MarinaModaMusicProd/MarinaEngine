@@ -45,7 +45,7 @@ export function useSearchArticles(
   };
 
   return useQuery({
-    queryKey: ['articles', 'search', params],
+    queryKey: ['hc', 'search', 'articles', params],
     queryFn: ({signal}) => searchArticles(params, options, signal),
     placeholderData: enabled ? keepPreviousData : undefined,
     enabled,

@@ -27,7 +27,7 @@ export function PickFromQueueButton({
       onClick={() => {
         assignToAgent.mutate(
           {agentId: user!.id},
-          {onSuccess: () => navigate(`/agent/chats/${chatId}`)},
+          {onSuccess: () => navigate(`/dashboard/chats/${chatId}`)},
         );
       }}
     >

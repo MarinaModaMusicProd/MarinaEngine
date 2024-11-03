@@ -4,9 +4,9 @@ import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {toast} from '@ui/toast/toast';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
+import {DatatableDataQueryKey} from '@common/datatable/requests/paginated-resources';
 import {Group} from '@helpdesk/groups/group';
 import {showHttpErrorToast} from '@common/http/show-http-error-toast';
-import {BaseAgentsQueryKey} from '@livechat/dashboard/agents/base-agents-query-key';
 
 interface Response extends BackendResponse {
   group: Group;
@@ -24,7 +24,7 @@ export function useSendAgentInvites() {
     mutationFn: (payload: Payload) => sendInvites(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [...BaseAgentsQueryKey, 'invites'],
+        queryKey: DatatableDataQueryKey('helpdesk/agents/invites'),
       });
       toast(trans(message('Agents invited')));
     },

@@ -8,7 +8,7 @@ use Common\Admin\CacheController;
 use Common\Admin\ImpersonateUserController;
 use Common\Admin\Sitemap\SitemapController;
 use Common\Auth\Controllers\AccessTokenController;
-use Common\Auth\Controllers\BanUserController;
+use Common\Auth\Controllers\BanController;
 use Common\Auth\Controllers\EmailVerificationController;
 use Common\Auth\Controllers\MobileAuthController;
 use Common\Auth\Controllers\SocialAuthController;
@@ -138,9 +138,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('users/{user}/avatar', [UserAvatarController::class, 'store']);
         Route::delete('users/{user}/avatar', [UserAvatarController::class, 'destroy']);
 
-        // USER BANS
-        Route::post('users/ban/{id}', [BanUserController::class, 'store']);
-        Route::delete('users/unban/{id}', [BanUserController::class, 'destroy']);
+        //USER BANS
+        Route::post('users/{user}/ban', [BanController::class, 'store']);
+        Route::delete('users/{user}/unban', [BanController::class, 'destroy']);
 
         // USER SESSIONS
         Route::get('user-sessions', [UserSessionsController::class, 'index'])->middleware('auth');
@@ -156,7 +156,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('taggable/{taggableType}/{taggableId}/list-tags', [TaggableController::class, 'listTags']);
         Route::post('taggable/attach-tag', [TaggableController::class, 'attachTag']);
         Route::post('taggable/detach-tag', [TaggableController::class, 'detachTag']);
-        Route::post('taggable/sync-tags', [TaggableController::class, 'syncTags']);
 
         // WORKSPACES
         Route::apiResource('workspace', WorkspaceController::class);

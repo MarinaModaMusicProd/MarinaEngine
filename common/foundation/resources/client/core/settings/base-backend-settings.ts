@@ -74,17 +74,17 @@ export interface BaseBackendSettings {
     disable?: boolean;
     policies?: MenuItemConfig[];
   };
-  social?: {
-    envato?: {
+  social: {
+    envato: {
       enable: boolean;
     };
-    google?: {
+    google: {
       enable: boolean;
     };
-    twitter?: {
+    twitter: {
       enable: boolean;
     };
-    facebook?: {
+    facebook: {
       enable: boolean;
     };
     compact_buttons: boolean;

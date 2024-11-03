@@ -81,7 +81,6 @@ if (
 <?php if (!$shouldReload): ?>
     <div class="panel">
         <h1>Could not find .htaccess file</h1>
-        <p>See this article <a href="https://support.MarinaModa.com/hc/articles/21/27/172/site-not-loading">https://support.MarinaModa.com/hc/articles/21/27/172/site-not-loading</a> for possible solutions.</p>
     </div>
 <?php else: ?>
     <script>

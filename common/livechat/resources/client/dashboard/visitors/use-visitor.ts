@@ -1,6 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {apiClient} from '@common/http/query-client';
 import {ChatVisit, ChatVisitor} from '@livechat/widget/chat/chat';
+import {DatatableDataQueryKey} from '@common/datatable/requests/paginated-resources';
 
 interface Response {
   visitor: ChatVisitor;
@@ -15,7 +16,7 @@ interface Options {
 
 export function useVisitor(visitorId: string | number, options: Options = {}) {
   return useQuery<Response>({
-    queryKey: ['visitor', `${visitorId}`],
+    queryKey: DatatableDataQueryKey(`lc/visitors/${visitorId}`),
     queryFn: () => fetchVisitor(visitorId),
     placeholderData: options.placeholderData,
   });

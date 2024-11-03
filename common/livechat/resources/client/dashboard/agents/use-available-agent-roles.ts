@@ -13,7 +13,7 @@ interface Params {
 }
 export function useAvailableAgentRoles(params?: Params) {
   return useQuery({
-    queryKey: ['users', 'agents', 'roles', params],
+    queryKey: ['helpdesk', 'roles', params],
     queryFn: () => fetchRoles(params),
   });
 }

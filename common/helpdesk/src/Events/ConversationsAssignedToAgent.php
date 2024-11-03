@@ -27,7 +27,7 @@ class ConversationsAssignedToAgent implements ShouldBroadcast
 
     public function broadcastAs(): string
     {
-        return HelpDeskChannel::EVENT_CONVERSATIONS_AGENT_CHANGED;
+        return HelpDeskChannel::EVENT_CONVERSATIONS_ASSIGNED;
     }
 
     public function broadcastWith(): array
@@ -41,7 +41,6 @@ class ConversationsAssignedToAgent implements ShouldBroadcast
                     'id' => $conversation->id,
                     'status' => $conversation->status,
                     'assigned_to' => $conversation->assigned_to,
-                    'group_id' => $conversation->group_id,
                     'visitor_id' => $conversation->visitor_id,
                     'user_id' => $conversation->user_id,
                 ];

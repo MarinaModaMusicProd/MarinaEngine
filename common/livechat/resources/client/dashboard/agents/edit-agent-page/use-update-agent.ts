@@ -4,6 +4,7 @@ import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {toast} from '@ui/toast/toast';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
+import {DatatableDataQueryKey} from '@common/datatable/requests/paginated-resources';
 import {onFormQueryError} from '@common/errors/on-form-query-error';
 import {UseFormReturn} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
@@ -11,7 +12,6 @@ import {useNavigate} from '@common/ui/navigation/use-navigate';
 import {AgentSettings, CompactAgent} from '@helpdesk/agents/agent';
 import {NormalizedModel} from '@ui/types/normalized-model';
 import {Permission} from '@common/auth/permission';
-import {BaseAgentsQueryKey} from '@livechat/dashboard/agents/base-agents-query-key';
 
 interface Response extends BackendResponse {
   agent: CompactAgent;
@@ -37,7 +37,7 @@ export function useUpdateAgent(
     mutationFn: (payload: UpdateAgentPayload) => updateAgent(agentId!, payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: BaseAgentsQueryKey,
+        queryKey: DatatableDataQueryKey('helpdesk/agents'),
       });
       toast(trans(message('Updated agent')));
       navigate('../../', {relative: 'path'});

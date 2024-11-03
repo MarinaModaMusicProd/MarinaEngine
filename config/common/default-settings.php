@@ -753,7 +753,7 @@ return [
     [
         'name' => 'homepage.appearance',
         'value' => json_encode([
-            'headerTitle' => 'Connect on MarinaModa',
+            'headerTitle' => 'Connect on MarinaModaMusicProd',
             'headerSubtitle' =>
                 'Discover, stream, and share a constantly expanding mix of music from emerging and major artists around the world.',
             'headerImage' => 'images/landing/landing-header-bg.jpg',
@@ -762,7 +762,7 @@ return [
             'headerImageOpacity' => '0.2',
             'footerTitle' => 'Make music? Create audio?',
             'footerSubtitle' =>
-                'Get on MarinaModa to help you connect with fans and grow your audience.',
+                'Get on MarinaModaMusicProd to help you connect with fans and grow your audience.',
             'footerImage' => 'images/landing/landing-footer-bg.jpg',
             'actions' => [
                 'inputText' => 'Search for artists, albums and tracks...',
@@ -793,11 +793,11 @@ return [
                         'Stream music in the browser, on Phone, Tablet, Smart TVs, Consoles, Chromecast, Apple TV and more.',
                 ],
                 [
-                    'title' => 'Get More From MarinaModa With Pro',
-                    'subtitle' => 'MarinaModa Pro',
+                    'title' => 'Get More From MarinaModaMusicProd With Pro',
+                    'subtitle' => 'MarinaModaMusicProd Pro',
                     'image' => 'images/landing/landing-feature-2.jpg',
                     'description' =>
-                        'Subscribe to MarinaModa pro to hide ads, increase upload time and get access to other exclusive features.',
+                        'Subscribe to MarinaModaMusicProd pro to hide ads, increase upload time and get access to other exclusive features.',
                 ],
             ],
             'pricingTitle' => 'Simple pricing, for everyone.',

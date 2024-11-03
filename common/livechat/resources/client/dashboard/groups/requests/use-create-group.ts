@@ -4,6 +4,7 @@ import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {toast} from '@ui/toast/toast';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
+import {DatatableDataQueryKey} from '@common/datatable/requests/paginated-resources';
 import {onFormQueryError} from '@common/errors/on-form-query-error';
 import {UseFormReturn} from 'react-hook-form';
 import {Group, GroupUser} from '@helpdesk/groups/group';
@@ -26,7 +27,7 @@ export function useCreateGroup(form: UseFormReturn<CreateGroupPayload>) {
     mutationFn: (payload: CreateGroupPayload) => createRole(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['groups'],
+        queryKey: DatatableDataQueryKey('helpdesk/groups'),
       });
       toast(trans(message('Created new group')));
       navigate('..', {relative: 'path'});

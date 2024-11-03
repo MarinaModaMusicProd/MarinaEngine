@@ -19,7 +19,7 @@ class ChatVisitorsController extends BaseController
         $this->authorize('index', User::class);
 
         $s = [
-            Chat::STATUS_OPEN,
+            Chat::STATUS_ACTIVE,
             Chat::STATUS_IDLE,
             Chat::STATUS_QUEUED,
             Chat::STATUS_UNASSIGNED,
@@ -49,7 +49,6 @@ class ChatVisitorsController extends BaseController
                 DB::raw('MAX(conversations.created_at) as chat_created_at'),
             )
             ->where('is_crawler', false)
-            ->where('banned_at', null)
             ->leftJoin(
                 'conversations',
                 fn(JoinClause $join) => $join

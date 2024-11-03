@@ -2,11 +2,7 @@ import {create} from 'zustand';
 import type EchoType from 'laravel-echo';
 import {bootEcho} from '@livechat/widget/chat/broadcasting/boot-echo';
 
-interface DefaultEventPayload {
-  event: string;
-  [key: string]: any;
-}
-type Callback<T = DefaultEventPayload> = (e: T) => void;
+type Callback = (e: {event: string; [key: string]: any}) => void;
 
 interface EchoStoreState {
   presence: Partial<
@@ -19,10 +15,10 @@ interface EchoStoreState {
     >
   >;
   join: (channel: string, key: string) => void;
-  listen: <T>(params: {
+  listen: (params: {
     channel: string;
     events: string[];
-    callback: Callback<T>;
+    callback: Callback;
     type?: 'private' | 'presence' | 'public';
   }) => () => void;
 }
@@ -43,9 +39,6 @@ const channelCache = new Map<
 >();
 
 const callbacks = new Map<string, Map<string, Callback[]>>();
-
-// when using "join" instead of listen no callback will be provided so there's
-// no way to know if the channel is still being used, so we need to keep track
 const presenceKeys = new Map<string, Set<string>>();
 
 const getCallbacksForEvent = (channel: string, event: string) => {
@@ -69,7 +62,7 @@ const getGlobalListener = (channel: string, event: string) => {
 const maybeLeaveChannel = (channel: string) => {
   const channelCallbacks = callbacks.get(channel);
   const keys = presenceKeys.get(channel);
-  const hasCallbacks = !!channelCallbacks && channelCallbacks.size > 0;
+  const hasCallbacks = channelCallbacks && Object.keys(channelCallbacks).length;
   if (!keys?.size && !hasCallbacks) {
     echoInstance?.leave(channel);
     channelCache.delete(channel);
@@ -165,7 +158,7 @@ export const useEchoStore = create<EchoStoreState>(() => ({
 
       events.forEach(event => {
         // add callback to cache
-        addCallback(channelName, event, callback as Callback);
+        addCallback(channelName, event, callback);
 
         //find global listener for this event in cache, or create one
         if (!getGlobalListener(channelName, event)) {

@@ -17,7 +17,6 @@ use Livechat\Models\ChatVisit;
 use Livechat\Models\ChatVisitor;
 use Livechat\Policies\ChatFileEntryPolicy;
 use Livechat\Policies\ChatPolicy;
-use Livechat\Policies\ChatVisitorPolicy;
 use Livechat\Policies\ChatVisitPolicy;
 
 class LiveChatServiceProvider extends ServiceProvider
@@ -52,14 +51,12 @@ class LiveChatServiceProvider extends ServiceProvider
         // Policies
         Gate::policy(Chat::class, ChatPolicy::class);
         Gate::policy(ChatVisit::class, ChatVisitPolicy::class);
-        Gate::policy(ChatVisitor::class, ChatVisitorPolicy::class);
         Gate::policy('chatFileEntry', ChatFileEntryPolicy::class);
 
         // Morph map
         Relation::enforceMorphMap([
             Chat::MODEL_TYPE => Chat::class,
             ChatVisit::MODEL_TYPE => ChatVisit::class,
-            ChatVisitor::MODEL_TYPE => ChatVisitor::class,
         ]);
 
         // Commands

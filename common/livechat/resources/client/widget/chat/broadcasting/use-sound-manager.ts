@@ -1,20 +1,23 @@
-import {useDebouncedCallback} from 'use-debounce';
+import {useCallback} from 'react';
 
-type Sound = 'message' | 'newVisitor' | 'incomingChat' | 'queuedVisitor';
+const audioElCache = new Map<string, HTMLAudioElement>();
 
-const audioCache: Record<string, HTMLAudioElement> = {};
+type Sound = 'message' | 'newVisitor' | 'incomingChat';
+
+// todo: create audio elements from js side, no need to include with initial html from blade template
 
 export function useSoundManager() {
-  // debounce to make sure we don't play the sounds too often
-  const playSound = useDebouncedCallback((sound: Sound) => {
+  const playSound = useCallback((sound: Sound) => {
     const snakeCase = sound.replace(/([A-Z])/g, '-$1').toLowerCase();
-    const audio =
-      audioCache[snakeCase] ?? new Audio(`/sounds/${snakeCase}.mp3`);
-    audioCache[snakeCase] = audio;
-    audio.currentTime = 0;
-    audio.volume = 0.4;
-    audio.play();
-  }, 2000);
+    const id = `sound-${snakeCase}`;
+    let audioEl = audioElCache.get(id);
+    if (!audioEl) {
+      audioElCache.set(id, document.querySelector(`#${id}`)!);
+      audioEl = audioElCache.get(id);
+    }
+    audioEl!.currentTime = 0;
+    audioEl!.play();
+  }, []);
 
   return {playSound};
 }

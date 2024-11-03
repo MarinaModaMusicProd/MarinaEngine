@@ -1,19 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Livechat\Controllers\AgentConversationsController;
-use Livechat\Controllers\BanChatVisitorController;
+use Livechat\Controllers\AvailableAgentsController;
 use Livechat\Controllers\ChatAssigneeController;
-use Livechat\Controllers\ChatGroupController;
 use Livechat\Controllers\ChatMessageController;
 use Livechat\Controllers\ChatStatusController;
-use Livechat\Controllers\ChatSummaryController;
 use Livechat\Controllers\ChatVisitorsController;
 use Livechat\Controllers\ChatVisitsController;
 use Livechat\Controllers\DashboardArchiveController;
 use Livechat\Controllers\DashboardChatController;
 use Livechat\Controllers\DashboardChatMessagesController;
-use Livechat\Controllers\LivechatCompactAgentsController;
 use Livechat\Controllers\MostRecentChatController;
 use Livechat\Controllers\QueuedChatInfoController;
 use Livechat\Controllers\RecentChatsController;
@@ -46,24 +42,13 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('lc/visitors/{visitorId}/visits', [ChatVisitsController::class, 'index']);
         Route::post('lc/visitors/{visitorId}/visits', [ChatVisitsController::class, 'store']);
         Route::get('lc/visitors/{visitorId}/recent-chats', RecentChatsController::class);
-        Route::post('lc/visitors/{visitorId}/ban', [BanChatVisitorController::class, 'store']);
-        Route::delete('lc/visitors/{visitorId}/unban', [BanChatVisitorController::class, 'destroy']);
 
         // widget
         Route::get('lc/widget/help-center-data', [WidgetHelpController::class, 'helpCenterData']);
 
         // agents
-        Route::get('lc/compact-agents', LivechatCompactAgentsController::class);
-        Route::get('lc/agents/{agentId}/conversations', AgentConversationsController::class);
-        Route::post('lc/chats/assign/agent', [ChatAssigneeController::class, 'update']);
-
-        // groups
-        Route::post('lc/chats/assign/group', [ChatGroupController::class, 'update']);
-
-        // AI
-        Route::get('lc/chats/{chatId}/summary', [ChatSummaryController::class, 'show']);
-        Route::post('lc/chats/{chatId}/summary/generate', [ChatSummaryController::class, 'generate']);
-        Route::delete('lc/chats/{chatId}/summary', [ChatSummaryController::class, 'destroy']);
+        Route::get('lc/all-agents', AvailableAgentsController::class);
+        Route::post('lc/chats/assign', [ChatAssigneeController::class, 'update']);
     });
 
     Route::get('livechat-widget-bootstrap-data', WidgetHomeController::class);

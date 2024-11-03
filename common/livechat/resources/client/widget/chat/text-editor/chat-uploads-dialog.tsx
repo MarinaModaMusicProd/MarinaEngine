@@ -141,6 +141,7 @@ function FileGridItem({upload, onClose, uploadCount}: FileGridItemProps) {
 interface InProgressUploadThumbnailProps {
   file: UploadedFile;
 }
+
 function InProgressUploadThumbnail({file}: InProgressUploadThumbnailProps) {
   const fileUpload = useFileUploadStore(s => s.fileUploads.get(file.id));
   const percentage = fileUpload?.percentage || 0;

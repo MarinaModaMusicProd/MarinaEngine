@@ -14,17 +14,14 @@ import {AgentAvatar} from '@livechat/widget/chat/avatars/agent-avatar';
 import {KeyboardArrowRightIcon} from '@ui/icons/material/KeyboardArrowRight';
 import {BulletSeparatedItems} from '@common/ui/other/bullet-seprated-items';
 import {FormattedRelativeTime} from '@ui/i18n/formatted-relative-time';
-import {useAllWidgetAgents} from '@livechat/widget/use-all-widget-agents';
+import {useAllAgents} from '@livechat/widget/use-all-agents';
 import {getCurrentDateTime} from '@ui/i18n/use-current-date-time';
 import {useTrans} from '@ui/i18n/use-trans';
 import {useSettings} from '@ui/settings/use-settings';
 import {useMostRecentChat} from '@livechat/widget/home/use-most-recent-chat';
 import clsx from 'clsx';
-import {UnseenMessagesBadge} from '@livechat/dashboard/unseen-chats/unseen-messages-badge';
-import {useClearUnseenChats} from '@livechat/dashboard/unseen-chats/use-clear-unseen-chats';
 
 export function ConversationsScreen() {
-  useClearUnseenChats();
   const {data} = useWidgetConversations();
   const {data: mostRecentChat} = useMostRecentChat();
   const hasActiveChat =
@@ -66,7 +63,7 @@ interface ConversationListProps {
   items: Chat[];
 }
 function ConversationList({items}: ConversationListProps) {
-  const agents = useAllWidgetAgents();
+  const agents = useAllAgents();
   const {trans} = useTrans();
   const {chatWidget} = useSettings();
   return (
@@ -75,70 +72,56 @@ function ConversationList({items}: ConversationListProps) {
       key="coversations"
       className="compact-scrollbar flex-auto overflow-y-auto"
     >
-      {items.map(conversation => (
-        <ConversationListItem
-          key={conversation.id}
-          conversation={conversation}
-          conversations={items}
-        />
-      ))}
-    </m.div>
-  );
-}
+      {items.map(conversation => {
+        const msg = conversation.last_message!;
+        const isFromVisitor = msg.author === 'visitor';
+        const agent = conversation.assignee ?? agents[0];
+        const user = msg.user;
 
-interface ConversationListItemProps {
-  conversation: Chat;
-  conversations: Chat[];
-}
-function ConversationListItem({
-  conversation,
-  conversations,
-}: ConversationListItemProps) {
-  const agents = useAllWidgetAgents();
-  const {trans} = useTrans();
-  const {chatWidget} = useSettings();
+        const msgText =
+          msg?.type === 'message'
+            ? msg.body
+            : trans({message: chatWidget?.defaultMessage ?? ''});
+        const msgDate =
+          msg?.created_at ?? getCurrentDateTime().toAbsoluteString();
 
-  const msg = conversation.last_message!;
-  const isFromVisitor = msg.author === 'visitor';
-  const agent = conversation.assignee ?? agents[0];
-  const user = msg.user;
-
-  const msgText =
-    msg?.type === 'message'
-      ? msg.body
-      : trans({message: chatWidget?.defaultMessage ?? ''});
-  const msgDate = msg?.created_at ?? getCurrentDateTime().toAbsoluteString();
-  return (
-    <Link
-      to={`/chats/${conversation.id}`}
-      state={{prevPath: '/chats'}}
-      key={conversation.id}
-      className={clsx(
-        'flex items-center gap-8 border-b border-divider-lighter px-20 py-16 transition-button',
-        conversation.status !== 'closed' && conversations.length > 1
-          ? 'bg-primary/8'
-          : 'hover:bg-hover',
-      )}
-    >
-      {isFromVisitor ? (
-        <VisitorAvatar size="lg" visitor={conversation.visitor} user={user} />
-      ) : (
-        <AgentAvatar size="lg" user={user!} />
-      )}
-      <div className="flex-auto text-sm">
-        <div className="flex items-center gap-8">
-          <BulletSeparatedItems className="text-muted">
-            <div>{isFromVisitor ? <Trans message="You" /> : agent.name}</div>
-            <div>
-              <FormattedRelativeTime date={msgDate} style="narrow" />
+        return (
+          <Link
+            to={`/chats/${conversation.id}`}
+            state={{prevPath: '/chats'}}
+            key={conversation.id}
+            className={clsx(
+              'flex items-center gap-8 border-b border-divider-lighter px-20 py-16 transition-button',
+              conversation.status !== 'closed' && items.length > 1
+                ? 'bg-primary/8'
+                : 'hover:bg-hover',
+            )}
+          >
+            {isFromVisitor ? (
+              <VisitorAvatar
+                size="lg"
+                visitor={conversation.visitor}
+                user={user}
+              />
+            ) : (
+              <AgentAvatar size="lg" user={user!} />
+            )}
+            <div className="flex-auto text-sm">
+              <BulletSeparatedItems className="text-muted">
+                <div>
+                  {isFromVisitor ? <Trans message="You" /> : agent.name}
+                </div>
+                <div>
+                  <FormattedRelativeTime date={msgDate} style="narrow" />
+                </div>
+              </BulletSeparatedItems>
+              <div>{msgText}</div>
             </div>
-          </BulletSeparatedItems>
-          <UnseenMessagesBadge chatId={conversation.id} />
-        </div>
-        <div>{msgText}</div>
-      </div>
-      <KeyboardArrowRightIcon className="text-primary" size="sm" />
-    </Link>
+            <KeyboardArrowRightIcon className="text-primary" size="sm" />
+          </Link>
+        );
+      })}
+    </m.div>
   );
 }
 

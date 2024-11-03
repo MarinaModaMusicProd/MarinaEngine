@@ -99,7 +99,7 @@ function SiteUrlSection() {
         value={server.app_url}
         label={<Trans message="Primary site url" />}
         description={
-          <LearnMoreLink link="https://support.MarinaModa.com/hc/articles/35/primary-site-url" />
+          <LearnMoreLink link="https://marina.rechain.network" />
         }
       />
       {append}

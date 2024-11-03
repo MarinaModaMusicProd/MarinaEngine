@@ -15,7 +15,6 @@ interface Props {
   size?: IconButtonProps['size'];
   iconSize?: IconButtonProps['iconSize'];
   maxUploads?: number;
-  disabled?: boolean;
 }
 export function ChatUploadFileButton({
   onSendFiles,
@@ -23,7 +22,6 @@ export function ChatUploadFileButton({
   size,
   iconSize,
   maxUploads = 6,
-  disabled,
 }: Props) {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const uploads = useFileUploadStore(s => s.fileUploads);
@@ -64,7 +62,6 @@ export function ChatUploadFileButton({
                 setDialogIsOpen(true);
               }
             }}
-            disabled={disabled}
             size={size}
             className={className}
             iconSize={iconSize}

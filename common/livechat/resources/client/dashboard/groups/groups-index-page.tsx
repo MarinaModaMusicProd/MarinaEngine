@@ -189,8 +189,6 @@ export function GroupsIndexPage() {
       className="dashboard-stable-scrollbar"
       enableSelection={false}
       endpoint="helpdesk/groups"
-      queryKey={['groups']}
-      queryParams={{with: 'users'}}
       skeletonsWhileLoading={1}
       title={<Trans message="Groups" />}
       columns={columnConfig}

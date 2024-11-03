@@ -25,7 +25,6 @@ import {FullPageLoader} from '@ui/progress/full-page-loader';
 import {TopProgressBar} from '@ui/progress/top-progress-bar';
 import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
 import {PageErrorMessage} from '@common/errors/page-error-message';
-import {userSuspendedRouter} from '@common/auth/ui/user-suspended-page/user-suspended-page';
 
 const mergedConfig = deepMerge(BaseSiteConfig, SiteConfig);
 
@@ -59,15 +58,6 @@ function CommonRouter({router}: CommonRouterProps) {
     return (
       <RouterProvider
         router={verifyEmailRouter}
-        fallbackElement={<FullPageLoader screen />}
-      />
-    );
-  }
-
-  if (user != null && user.banned_at) {
-    return (
-      <RouterProvider
-        router={userSuspendedRouter}
         fallbackElement={<FullPageLoader screen />}
       />
     );

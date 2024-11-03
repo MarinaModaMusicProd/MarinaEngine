@@ -11,7 +11,7 @@ export function useRecentChats(
   initialData?: Chat[],
 ) {
   return useQuery<Response>({
-    queryKey: ['visitors', visitorId, 'chats'],
+    queryKey: ['lc', 'visitors', visitorId, 'chats'],
     queryFn: () => fetchVisits(visitorId),
     initialData: initialData ? () => ({chats: initialData}) : undefined,
   });

@@ -11,18 +11,12 @@ import {Menu, MenuTrigger} from '@ui/menu/menu-trigger';
 import {Item} from '@ui/forms/listbox/item';
 import {Trans} from '@ui/i18n/trans';
 import {useUpdateChatStatus} from '@livechat/dashboard/chats-page/chat-feed/use-update-chat-status';
-import {Chat, ChatVisitor} from '@livechat/widget/chat/chat';
+import {Chat} from '@livechat/widget/chat/chat';
 import {ChatBubbleIcon} from '@livechat/widget/chat/icons/chat-bubble-icon';
 import {CloseIcon} from '@ui/icons/material/Close';
 import {useDialogContext} from '@ui/overlays/dialog/dialog-context';
 import {ConfirmationDialog} from '@ui/overlays/dialog/confirmation-dialog';
 import {DialogTrigger} from '@ui/overlays/dialog/dialog-trigger';
-import {TransferChatDialog} from '@livechat/dashboard/chats-page/assign-chat-dialog/transfer-chat-dialog';
-import {MoveUpIcon} from '@ui/icons/material/MoveUp';
-import {BlockIcon} from '@ui/icons/material/Block';
-import {queryClient} from '@common/http/query-client';
-import {BanVisitorDialog} from '@livechat/dashboard/visitors/ban-visitor-dialog';
-import {useUnbanVisitor} from '@livechat/dashboard/visitors/use-unban-visitor';
 
 interface Props {
   query: ReturnType<typeof useDashboardChat>;
@@ -77,41 +71,16 @@ interface MoreActionsButtonProps {
   chat: Chat;
 }
 function MoreActionsButton({chat}: MoreActionsButtonProps) {
-  const visitor = chat.visitor as ChatVisitor;
   const updateStatus = useUpdateChatStatus(chat.id);
-  const unbanVisitor = useUnbanVisitor(visitor.id, chat.id);
   const [confirmCloseIsOpen, setConfirmCloseIsOpen] = useState(false);
-  const [assignChatIsOpen, setAssignChatIsOpen] = useState(false);
-  const [suspendVisitorIsOpen, setSuspendVisitorIsOpen] = useState(false);
   return (
     <Fragment>
       <DialogTrigger
         type="modal"
         isOpen={confirmCloseIsOpen}
-        onOpenChange={setConfirmCloseIsOpen}
+        onOpenChange={isOpen => setConfirmCloseIsOpen(isOpen)}
       >
         <CloseChatDialog chat={chat} />
-      </DialogTrigger>
-      <DialogTrigger
-        type="modal"
-        isOpen={assignChatIsOpen}
-        onOpenChange={setAssignChatIsOpen}
-      >
-        <TransferChatDialog tab="agent" chat={chat} />
-      </DialogTrigger>
-      <DialogTrigger
-        type="modal"
-        isOpen={suspendVisitorIsOpen}
-        onOpenChange={setSuspendVisitorIsOpen}
-        onClose={async isSuspended => {
-          if (isSuspended) {
-            await queryClient.invalidateQueries({
-              queryKey: ['chats', `${chat.id}`],
-            });
-          }
-        }}
-      >
-        <BanVisitorDialog visitorId={visitor.id} chatId={chat.id} />
       </DialogTrigger>
       <MenuTrigger>
         <IconButton>
@@ -137,30 +106,6 @@ function MoreActionsButton({chat}: MoreActionsButtonProps) {
               <Trans message="Open chat" />
             ) : (
               <Trans message="Close chat" />
-            )}
-          </Item>
-          <Item
-            value="assign"
-            onSelected={() => setAssignChatIsOpen(true)}
-            startIcon={<MoveUpIcon />}
-          >
-            <Trans message="Transfer chat" />
-          </Item>
-          <Item
-            value="suspend"
-            onSelected={() => {
-              if (visitor.banned_at) {
-                unbanVisitor.mutate();
-              } else {
-                setSuspendVisitorIsOpen(true);
-              }
-            }}
-            startIcon={<BlockIcon />}
-          >
-            {visitor.banned_at ? (
-              <Trans message="Unsuspend visitor" />
-            ) : (
-              <Trans message="Suspend visitor" />
             )}
           </Item>
         </Menu>

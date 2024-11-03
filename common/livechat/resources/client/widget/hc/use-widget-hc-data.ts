@@ -8,7 +8,7 @@ interface WidgetHcDataResponse {
 
 export function useWidgetHcData() {
   return useQuery({
-    queryKey: ['articles', 'widget', 'hcData'],
+    queryKey: ['widget', 'hc', 'data'],
     queryFn: () => fetchData(),
   });
 }

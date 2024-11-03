@@ -15,7 +15,7 @@ import {
   useMostRecentChat,
   UseMostRecentChatResponse,
 } from '@livechat/widget/home/use-most-recent-chat';
-import {useAllWidgetAgents} from '@livechat/widget/use-all-widget-agents';
+import {useAllAgents} from '@livechat/widget/use-all-agents';
 import {ResumeChatCard} from '@livechat/widget/home/resume-chat-card';
 
 export function HomeScreen() {
@@ -66,7 +66,7 @@ function Background() {
 }
 
 function TopBar() {
-  const agents = useAllWidgetAgents();
+  const agents = useAllAgents();
   const {chatWidget} = useSettings();
   return (
     <div className="mb-100 flex items-center justify-between gap-12">

@@ -54,10 +54,6 @@ export function ChatWidgetAppearanceForm() {
           defaultScreen: values.settings.chatWidget?.defaultScreen ?? '/',
           hideNavigation: values.settings.chatWidget?.hideNavigation ?? false,
           screens: values.settings.chatWidget?.screens ?? [],
-          forms: values.settings.chatWidget?.forms ?? {
-            preChat: {disabled: false, elements: []},
-            postChat: {disabled: false, elements: []},
-          },
 
           // chat screen
           defaultMessage: values.settings.chatWidget?.defaultMessage ?? '',
@@ -103,9 +99,6 @@ function ChatWidgetBreadcrumb({form}: ChatWidgetBreadcrumbProps) {
       {pathname.includes('links') && <Trans message="Links" />}
       {pathname.includes('launcher') && <Trans message="Launcher" />}
       {pathname.includes('screens') && <Trans message="Screens" />}
-      {pathname.includes('forms') && <Trans message="Forms" />}
-      {pathname.includes('pre-chat') && <Trans message="Pre-chat" />}
-      {pathname.includes('post-chat') && <Trans message="Post-chat" />}
     </AppearanceEditorBreadcrumb>
   );
 }
@@ -127,9 +120,6 @@ export function ChatWidgetSectionGeneral() {
       </AppearanceButton>
       <AppearanceButton to="screens" elementType={Link}>
         <Trans message="Active screens" />
-      </AppearanceButton>
-      <AppearanceButton to="forms" elementType={Link}>
-        <Trans message="Forms" />
       </AppearanceButton>
     </div>
   );

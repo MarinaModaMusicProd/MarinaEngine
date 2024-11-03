@@ -4,24 +4,17 @@ namespace Helpdesk;
 
 use Common\Auth\Events\UserCreated;
 use Common\Auth\Events\UsersDeleted;
-use Common\Tags\TaggableController;
-use Helpdesk\Events\ConversationCreated;
-use Helpdesk\Events\ConversationsUpdated;
 use Helpdesk\Models\AgentInvite;
 use Helpdesk\Models\CannedReply;
 use Helpdesk\Models\Conversation;
 use Helpdesk\Models\Group;
 use Helpdesk\Models\HcArticle;
 use Helpdesk\Models\HcCategory;
-use Helpdesk\Models\Trigger;
 use Helpdesk\Policies\CannedReplyPolicy;
 use Helpdesk\Policies\ConversationPolicy;
 use Helpdesk\Policies\GroupPolicy;
 use Helpdesk\Policies\HcArticlePolicy;
-use Helpdesk\Policies\TriggerPolicy;
-use Helpdesk\Triggers\TriggersCycle;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -55,7 +48,6 @@ class HelpDeskServiceProvider extends ServiceProvider
         Gate::policy(Conversation::class, ConversationPolicy::class);
         Gate::policy(GroupPolicy::class, GroupPolicy::class);
         Gate::policy(CannedReply::class, CannedReplyPolicy::class);
-        Gate::policy(Trigger::class, TriggerPolicy::class);
 
         // Morph map
         Relation::enforceMorphMap([
@@ -65,7 +57,7 @@ class HelpDeskServiceProvider extends ServiceProvider
             AgentInvite::MODEL_TYPE => AgentInvite::class,
         ]);
 
-        // User events
+        // Events
         Event::listen(UserCreated::class, function (UserCreated $e) {
             if ($e->user->isAgent()) {
                 Group::findDefault()
@@ -80,39 +72,5 @@ class HelpDeskServiceProvider extends ServiceProvider
                     ->detach($user);
             }
         });
-
-        // Conversation events
-        Event::listen(ConversationsUpdated::class, function (
-            ConversationsUpdated $e,
-        ) {
-            $cycle = new TriggersCycle();
-            foreach ($e->conversationsAfterUpdate as $conversation) {
-                $cycle->runAgainstConversation(
-                    $conversation,
-                    $e->conversationsDataBeforeUpdate[$conversation->id],
-                );
-            }
-        });
-        Event::listen(ConversationCreated::class, function (
-            ConversationCreated $e,
-        ) {
-            (new TriggersCycle())->runAgainstConversation($e->conversation);
-        });
-
-        $tagEvent = null;
-        TaggableController::$beforeTagChangeCallbacks[] = function (
-            Collection $taggables,
-        ) use(&$tagEvent) {
-            if ($taggables->every(fn($t) => $t->model_type === 'chat' || $t->model_type === 'ticket')) {
-                $tagEvent = new ConversationsUpdated($taggables);
-            }
-        };
-        TaggableController::$afterTagChangeCallbacks[] = function (
-            Collection $taggables,
-        ) use(&$tagEvent) {
-            if ($tagEvent) {
-                $tagEvent->dispatch($taggables);
-            }
-        };
     }
 }

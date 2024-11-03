@@ -49,7 +49,7 @@ class Group extends BaseModel
 
     public static function findDefault(): self|null
     {
-        return static::where('default', true)->first();
+        return self::where('default', true)->first();
     }
 
     public static function filterableFields(): array

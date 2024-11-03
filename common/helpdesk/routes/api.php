@@ -1,5 +1,6 @@
 <?php
 
+//HELP CENTER CATEGORIES
 use Helpdesk\Controllers\AgentInvitesController;
 use Helpdesk\Controllers\AgentsController;
 use Helpdesk\Controllers\CannedRepliesController;
@@ -16,9 +17,7 @@ use Helpdesk\Controllers\HcCategoryController;
 use Helpdesk\Controllers\HcCategoryOrderController;
 use Helpdesk\Controllers\HcLandingPageController;
 use Helpdesk\Controllers\HelpDeskAutocompleteController;
-use Helpdesk\Controllers\ModifyTextWithAIController;
 use Helpdesk\Controllers\NormalizedAgentModelsController;
-use Helpdesk\Controllers\TriggerController;
 
 // prettier-ignore
 Route::group(['prefix' => 'v1'], function () {
@@ -84,16 +83,5 @@ Route::group(['prefix' => 'v1'], function () {
 
         // canned replies
         Route::apiResource('helpdesk/canned-replies', CannedRepliesController::class);
-
-        //TRIGGERS
-        Route::get('triggers', [TriggerController::class, 'index']);
-        Route::get('triggers/config', [TriggerController::class, 'config']);
-        Route::get('triggers/{trigger}', [TriggerController::class, 'show']);
-        Route::post('triggers', [TriggerController::class, 'store']);
-        Route::put('triggers/{trigger}', [TriggerController::class, 'update']);
-        Route::delete('triggers/{ids}', [TriggerController::class, 'destroy']);
-
-        // AI
-        Route::post('ai/modify-text', ModifyTextWithAIController::class);
     });
 });

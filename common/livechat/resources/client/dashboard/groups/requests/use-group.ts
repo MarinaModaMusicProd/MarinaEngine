@@ -11,7 +11,7 @@ interface Response extends BackendResponse {
 export function useGroup() {
   const {groupId} = useParams();
   return useQuery({
-    queryKey: ['groups', groupId],
+    queryKey: ['helpdesk', 'groups', groupId],
     queryFn: () => fetchGroup(groupId!),
   });
 }

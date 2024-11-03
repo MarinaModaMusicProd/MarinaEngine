@@ -15,20 +15,12 @@ import {
 } from '@livechat/widget/widget-store';
 import {WidgetConfig} from '@livechat/widget/widget-config';
 import {useThemeSelector} from '@ui/themes/theme-selector-context';
-import {setUnseenChatsStoreIsForWidget} from '@livechat/dashboard/unseen-chats/unseen-chats-store';
-import {useWidgetWebsocketListener} from '@livechat/widget/use-widget-websocket-listener';
+import {echoStore} from '@livechat/widget/chat/broadcasting/echo-store';
+import {helpdeskChannel} from '@helpdesk/websockets/helpdesk-channel';
 
 const LivechatPopup = lazy(() => import('./livechat-popup'));
 
 export function ChatWidget() {
-  const data = useWidgetBootstrapData();
-  if (data.mostRecentChat.visitor.banned_at) {
-    return null;
-  }
-  return <Content />;
-}
-
-function Content() {
   const isInline = useIsWidgetInline();
   const data = useWidgetBootstrapData();
   const activeSize = useWidgetStore(s => s.activeSize);
@@ -37,16 +29,10 @@ function Content() {
 
   useEffect(() => {
     if (data && !isBootstrapped) {
-      if (data.mostRecentChat.visitor.banned_at) {
-        setIsBootstrapped(true);
-        return;
-      }
-
       setIsBootstrapped(true);
       widgetStore().setActiveSize(isInline ? 'open' : 'closed', true);
       notifyLoaderOfBootstrap(getWidgetBootstrapData().settings.chatWidget);
       trackUserPageVisits();
-      setUnseenChatsStoreIsForWidget();
 
       window.addEventListener('message', async e => {
         if (e.data.source === 'livechat-loader' && e.data.type === 'setTheme') {
@@ -56,7 +42,9 @@ function Content() {
     }
   }, [data, isBootstrapped, isInline, selectThemeTemporarily]);
 
-  useWidgetWebsocketListener();
+  useEffect(() => {
+    return echoStore().join(helpdeskChannel.name, 'chatWidget');
+  }, []);
 
   return (
     <div

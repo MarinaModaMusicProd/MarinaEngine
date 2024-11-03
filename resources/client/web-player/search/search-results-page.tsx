@@ -37,11 +37,11 @@ import {TextField} from '@ui/forms/input-field/text-field/text-field';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
 import {useNavigate} from '@common/ui/navigation/use-navigate';
+import {useIsMobileMediaQuery} from '@ui/utils/hooks/is-mobile-media-query';
 import {SimplePaginationResponse} from '@common/http/backend-response/pagination-response';
 import {InfiniteScrollSentinel} from '@common/ui/infinite-scroll/infinite-scroll-sentinel';
 import {useInfiniteSearchResults} from '@app/web-player/search/requests/use-infinite-search-results';
 import {getScrollParent} from '@react-aria/utils';
-import {useMediaQuery} from '@ui/utils/hooks/use-media-query';
 
 export function SearchResultsPage() {
   const {searchQuery} = useParams();
@@ -62,7 +62,7 @@ function MobileSearchBar() {
   const {searchQuery = ''} = useParams();
   const navigate = useNavigate();
   const {trans} = useTrans();
-  const isMobile = useMediaQuery('(max-width: 1024px)');
+  const isMobile = useIsMobileMediaQuery();
 
   if (!isMobile) {
     return null;

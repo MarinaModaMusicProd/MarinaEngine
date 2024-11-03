@@ -17,11 +17,7 @@ class PlaylistPolicy extends BasePolicy
 
     public function show(?User $user, Playlist $playlist)
     {
-        if ($this->hasPermission($user, 'playlists.update')) {
-            return true;
-        }
-        return ($playlist->public &&
-            $this->hasPermission($user, 'playlists.view')) ||
+        return ($playlist->public && $this->hasPermission($user, 'playlists.view')) ||
             $playlist->editors->contains('id', $user->id);
     }
 

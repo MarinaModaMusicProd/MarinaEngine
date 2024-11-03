@@ -11,7 +11,7 @@ export interface GetHcSidenavResponse extends BackendResponse {
 export function useHcSidenavContent() {
   const {categoryId} = useParams();
   return useQuery({
-    queryKey: ['categories', 'sidenav', `${categoryId}`],
+    queryKey: ['hc', 'sidenav', `${categoryId}`],
     queryFn: () => fetchSidenavContent(categoryId!),
   });
 }

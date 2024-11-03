@@ -19,10 +19,7 @@ class AssignChatToFirstAvailableAgent
 
         $agents = (new AgentsLoader())
             ->getCurrentlyOnlineAgents()
-            ->filter(
-                fn($agent) => $agent['acceptsChats'] &&
-                    $agent['groups']->contains('id', $group->id),
-            );
+            ->filter(fn($agent) => $agent['acceptsChats']);
 
         if ($agents->isNotEmpty()) {
             (new AssignConversationsToAgent())->execute(
@@ -30,8 +27,6 @@ class AssignChatToFirstAvailableAgent
                 $agents->first()['id'],
                 Chat::MODEL_TYPE,
             );
-        } else {
-            $chat->update(['status' => Chat::STATUS_QUEUED]);
         }
 
         return $chat;

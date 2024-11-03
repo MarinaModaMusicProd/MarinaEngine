@@ -5,7 +5,6 @@ namespace Livechat\Controllers;
 use Common\Core\BaseController;
 use Common\Database\Datasource\Datasource;
 use Common\Database\Datasource\DatasourceFilters;
-use Illuminate\Support\Facades\Auth;
 use Livechat\Models\Chat;
 
 class DashboardArchiveController extends BaseController
@@ -17,13 +16,8 @@ class DashboardArchiveController extends BaseController
         $params = request()->all();
         $builder = Chat::query();
 
-        $groupIds = Auth::user()
-            ->groups()
-            ->pluck('groups.id');
-
         $filters = new DatasourceFilters($params['filters'] ?? null);
         $filters->where('status', '=', 'closed');
-        $filters->where('group_id', 'has', $groupIds);
 
         $pagination = (new Datasource(
             $builder,

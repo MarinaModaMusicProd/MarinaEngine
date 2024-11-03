@@ -6,7 +6,6 @@ use App\Models\User;
 use Common\Files\FileEntry;
 use Common\Files\FileEntryUser;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Sanctum\PersonalAccessToken;

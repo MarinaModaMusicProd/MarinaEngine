@@ -8,7 +8,7 @@ interface Response {
 
 export function useWidgetConversations() {
   return useQuery<Response>({
-    queryKey: ['chats', 'conversations'],
+    queryKey: ['widget', 'chats', 'conversations'],
     queryFn: () => fetchConversations(),
   });
 }

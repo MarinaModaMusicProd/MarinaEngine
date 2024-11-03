@@ -18,7 +18,7 @@ export const SiteConfig: Partial<SiteConfigContextValue> = {
   },
   admin: {
     channelsDocsLink:
-      'https://support.MarinaModa.com/hc/articles/28/31/223/channels',
+      'https://marina.rechain.network',
     ads: [
       {
         image: generalTopImage,

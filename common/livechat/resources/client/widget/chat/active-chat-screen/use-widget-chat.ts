@@ -15,7 +15,7 @@ export interface UseWidgetChatResponse {
 }
 
 export function widgetChatQueryKey(chatId: number | string) {
-  return ['chats', `${chatId}`];
+  return ['widget', 'chats', `${chatId}`];
 }
 
 export function setWidgetChatData(data: UseWidgetChatResponse) {

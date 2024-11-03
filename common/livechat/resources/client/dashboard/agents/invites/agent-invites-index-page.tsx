@@ -27,7 +27,6 @@ import {useAuth} from '@common/auth/use-auth';
 import useClipboard from 'react-use-clipboard';
 import {useSettings} from '@ui/settings/use-settings';
 import {toast} from '@ui/toast/toast';
-import {BaseAgentsQueryKey} from '@livechat/dashboard/agents/base-agents-query-key';
 
 const columnConfig: ColumnConfig<AgentInvite>[] = [
   {
@@ -90,7 +89,6 @@ export function AgentInvitesIndexPage() {
       <DataTablePage
         enableSelection={false}
         endpoint="helpdesk/agents/invites"
-        queryKey={[...BaseAgentsQueryKey, 'invites']}
         skeletonsWhileLoading={1}
         title={<Trans message="Invited agents" />}
         columns={columnConfig}

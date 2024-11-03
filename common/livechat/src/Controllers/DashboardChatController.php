@@ -42,9 +42,7 @@ class DashboardChatController extends BaseController
             ? $chats
                 ->groupBy(function (Chat $chat) {
                     if ($chat->assigned_to) {
-                        return $chat->assigned_to === Auth::id()
-                            ? 'myChats'
-                            : 'other';
+                        return 'myChats';
                     } else {
                         return $chat->status;
                     }
@@ -68,29 +66,17 @@ class DashboardChatController extends BaseController
 
     public function show(int $chatId)
     {
-        $chat = Chat::with([
-            'assignee',
-            'group',
-            'tags',
-            'visitor.bans',
-        ])->findOrFail($chatId);
+        $chat = Chat::with(['assignee', 'group', 'tags'])->findOrFail($chatId);
 
         $this->authorize('show', $chat);
 
         $visitor = $chat->visitor;
         $visits = $visitor->getLatestVisits();
 
-        $preChatData = $chat
-            ->messages()
-            ->where('type', 'preChatFormData')
-            ->first();
-
         return $this->success([
             'chat' => $chat,
             'visitor' => $visitor,
             'visits' => $visits,
-            'summary' => $chat->summary,
-            'preChatFormData' => $preChatData?->body,
         ]);
     }
 }

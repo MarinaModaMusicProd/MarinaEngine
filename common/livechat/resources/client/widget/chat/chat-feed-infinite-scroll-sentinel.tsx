@@ -9,7 +9,7 @@ export function ChatFeedInfiniteScrollSentinel({query}: Props) {
   return (
     <InfiniteScrollSentinel
       query={query}
-      className={clsx(query.hasNextPage && 'h-64 py-16')}
+      className={clsx('py-16', query.hasNextPage && 'h-64')}
       loaderMarginTop="m-0"
     />
   );

@@ -6,7 +6,6 @@ import {ChatVisitorName} from '@livechat/dashboard/chats-page/chat-visitor-name'
 import {FormattedRelativeTime} from '@ui/i18n/formatted-relative-time';
 import {useIsArchivePage} from '@livechat/dashboard/chats-page/use-is-archive-page';
 import {Trans} from '@ui/i18n/trans';
-import {UnseenMessagesBadge} from '@livechat/dashboard/unseen-chats/unseen-messages-badge';
 
 interface Props {
   chat: Chat;
@@ -46,13 +45,8 @@ export function ChatListItem({chat, isActive, className}: Props) {
                 />
               </div>
             )}
-            <div className="flex items-center gap-8">
-              <div className="body overflow-hidden overflow-ellipsis whitespace-nowrap text-muted">
-                {chat.last_message?.body}
-              </div>
-              {!isArchive && (
-                <UnseenMessagesBadge className="ml-auto" chatId={chat.id} />
-              )}
+            <div className="overflow-hidden overflow-ellipsis whitespace-nowrap text-muted">
+              {chat.last_message?.body}
             </div>
           </div>
         </div>

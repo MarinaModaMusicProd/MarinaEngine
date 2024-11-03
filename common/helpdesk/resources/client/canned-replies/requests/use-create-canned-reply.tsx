@@ -15,7 +15,7 @@ interface Response {
 export interface CreateCannedReplyPayload {
   name: string;
   body: string | null;
-  attachments?: Omit<FileEntry, 'parent' | 'children'>[];
+  attachments?: FileEntry[];
   shared?: boolean;
   groupId?: number;
   tags?: NormalizedModel[];

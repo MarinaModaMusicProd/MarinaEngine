@@ -5,7 +5,6 @@ use Common\Auth\Notifications\VerifyEmailWithOtp;
 use Common\Auth\Permissions\Permission;
 use Common\Auth\Permissions\Traits\HasPermissionsRelation;
 use Common\Auth\Roles\Role;
-use Common\Auth\Traits\Bannable;
 use Common\Auth\Traits\HasAvatarAttribute;
 use Common\Auth\Traits\HasDisplayNameAttribute;
 use Common\Billing\Billable;
@@ -29,6 +28,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
@@ -55,8 +55,7 @@ abstract class BaseUser extends BaseModel implements
         Authenticatable,
         Authorizable,
         CanResetPassword,
-        MustVerifyEmail,
-        Bannable;
+        MustVerifyEmail;
 
     const MODEL_TYPE = 'user';
 
@@ -217,6 +216,11 @@ abstract class BaseUser extends BaseModel implements
     public function social_profiles(): HasMany
     {
         return $this->hasMany(SocialProfile::class);
+    }
+
+    public function bans(): MorphMany
+    {
+        return $this->morphMany(Ban::class, 'bannable');
     }
 
     /**
@@ -430,6 +434,17 @@ abstract class BaseUser extends BaseModel implements
         return $newToken->plainTextToken;
     }
 
+    public function isBanned(): bool
+    {
+        if (!$this->getAttributeValue('banned_at')) {
+            return false;
+        }
+
+        $bannedUntil = $this->bans->first()->expired_at;
+
+        return !$bannedUntil || $bannedUntil->isFuture();
+    }
+
     public function resolveRouteBinding($value, $field = null): ?self
     {
         if ($value === 'me') {
@@ -463,12 +478,12 @@ abstract class BaseUser extends BaseModel implements
             'name' => $this->name,
             'description' => $this->email,
             'image' => $this->image,
-            'model_type' => static::MODEL_TYPE,
+            'model_type' => self::MODEL_TYPE,
         ];
     }
 
     public static function getModelTypeAttribute(): string
     {
-        return static::MODEL_TYPE;
+        return self::MODEL_TYPE;
     }
 }

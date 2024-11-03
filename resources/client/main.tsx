@@ -39,9 +39,9 @@ declare module '@ui/settings/settings' {
   interface Settings extends Omit<BaseBackendSettings, 'uploads'> {
     spotify_is_setup?: boolean;
     lastfm_is_setup?: boolean;
-    artist_provider?: string | false;
-    album_provider?: string | false;
-    search_provider?: string | false;
+    artist_provider?: string;
+    album_provider?: string;
+    search_provider?: string;
     artist_bio_provider?: string;
     wikipedia_language?: string;
     player?: {

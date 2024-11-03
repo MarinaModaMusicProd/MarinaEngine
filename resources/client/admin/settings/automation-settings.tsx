@@ -34,9 +34,9 @@ function Form({data}: FormProps) {
   const form = useForm<AdminSettings>({
     defaultValues: {
       client: {
-        artist_provider: data.client.artist_provider ?? false,
-        album_provider: data.client.album_provider ?? false,
-        search_provider: data.client.search_provider ?? false,
+        artist_provider: data.client.artist_provider ?? 'local',
+        album_provider: data.client.album_provider ?? 'local',
+        search_provider: data.client.search_provider ?? 'local',
         artist_bio_provider: data.client.artist_bio_provider ?? 'local',
         wikipedia_language: data.client.wikipedia_language ?? 'en',
         player: {
@@ -201,7 +201,7 @@ function SpotifyFields() {
               label={<Trans message="Spotify secret" />}
               required
               description={
-                <LearnMoreLink link="https://support.MarinaModa.com/help-center/articles/28/34/165/spotify-credentials" />
+                <LearnMoreLink link="https://marina.rechain.network" />
               }
             />
           </Fragment>
@@ -212,7 +212,7 @@ function SpotifyFields() {
         name="server.lastfm_api_key"
         label={<Trans message="LastFM Api Key" />}
         description={
-          <LearnMoreLink link="https://support.MarinaModa.com/help-center/articles/28/34/166/lastfm-credentials" />
+          <LearnMoreLink link="https://marina.rechain.network" />
         }
       />
     </Fragment>

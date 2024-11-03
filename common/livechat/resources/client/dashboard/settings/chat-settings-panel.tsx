@@ -19,10 +19,6 @@ import {
   AdminSettingsLayout,
 } from '@common/admin/settings/form/admin-settings-form';
 import {AdminSettings} from '@common/admin/settings/admin-settings';
-import {Link} from 'react-router-dom';
-import {LinkStyle} from '@ui/buttons/external-link';
-import {RouteIcon} from '@ui/icons/material/Route';
-import {StyleIcon} from '@ui/icons/material/Style';
 
 const agentTimeoutLabel = message(
   'When agent has not responded for :minutes minutes, transfer visitor to another agent.',
@@ -39,25 +35,7 @@ export function ChatSettingsPanel() {
     <AdminSettingsLayout
       title={<Trans message="Chat settings" />}
       description={
-        <div>
-          <Trans message="Configure settings related to chat assignment, routing, inactivity and file sharing." />
-          <div className="mt-14 flex items-center gap-8">
-            <RouteIcon size="sm" className="text-primary" />
-            <Link to="/admin/triggers" className={LinkStyle} target="_blank">
-              <Trans message="Route chats to groups by creating a trigger" />
-            </Link>
-          </div>
-          <div className="mt-14 flex items-center gap-8">
-            <StyleIcon size="sm" className="text-primary" />
-            <Link
-              to="/admin/appearance/chat-widget"
-              className={LinkStyle}
-              target="_blank"
-            >
-              <Trans message="Edit chat widget appearance" />
-            </Link>
-          </div>
-        </div>
+        <Trans message="Configure settings related to chat assignment, routing, inactivity and file sharing." />
       }
     >
       {data => <Form data={data} />}
@@ -68,7 +46,6 @@ export function ChatSettingsPanel() {
 interface FormProps {
   data: AdminSettings;
 }
-
 function Form({data}: FormProps) {
   const form = useForm<AdminSettings>({
     defaultValues: {

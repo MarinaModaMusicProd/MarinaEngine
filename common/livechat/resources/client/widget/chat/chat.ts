@@ -46,26 +46,15 @@ export interface ChatEvent extends BaseChatContentItem {
       | 'visitor.idle'
       | 'visitor.leftChat'
       | 'agent.leftChat'
-      | 'agent.changed'
-      | 'group.changed';
+      | 'agent.reassigned';
     oldAgent?: string;
     newAgent?: string;
-    newGroup?: string;
     closedBy?: string;
     status?: string;
   };
 }
 
-export interface PreChatFormData extends BaseChatContentItem {
-  type: 'preChatFormData';
-  body: {id: string; label: string; value: string | string[]}[];
-}
-
-export type ChatContentItem =
-  | ChatMessage
-  | PlaceholderChatMessage
-  | ChatEvent
-  | PreChatFormData;
+export type ChatContentItem = ChatMessage | PlaceholderChatMessage | ChatEvent;
 
 export interface ChatMessageAttachment {
   id: number;
@@ -93,18 +82,12 @@ export interface ChatVisitor {
   data: {
     //
   };
-  bans?: {
-    id: number;
-    comment: string;
-    expired_at?: string;
-  }[];
   country: string;
   city: string;
   platform: string;
   browser: string;
   device: 'desktop' | 'mobile' | 'tablet' | 'robot' | 'other';
   timezone: string;
-  banned_at?: string;
 }
 
 export interface ChatVisit {
@@ -113,18 +96,4 @@ export interface ChatVisit {
   ended_at?: string;
   url: string;
   title: string;
-}
-
-export interface ChatSummary {
-  id: number;
-  conversation_id: number;
-  created_at: string;
-  updated_at: string;
-  content: {
-    sentiment: string;
-    summary: string[];
-    keywords: string[];
-  };
-  generated_by: number;
-  user?: CompactUserWithEmail;
 }

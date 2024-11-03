@@ -8,10 +8,6 @@ class CreateDefaultCustomPages
 {
     public function execute(): void
     {
-        if (CustomPage::count() > 0) {
-            return;
-        }
-
         CustomPage::firstOrCreate(
             [
                 'slug' => 'privacy-policy',

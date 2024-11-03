@@ -116,7 +116,7 @@ export function LoginPage({onTwoFactorChallenge}: Props) {
       </Form>
       <SocialAuthSection
         dividerMessage={
-          social?.compact_buttons ? (
+          social.compact_buttons ? (
             <Trans message="Or sign in with" />
           ) : (
             <Trans message="OR" />

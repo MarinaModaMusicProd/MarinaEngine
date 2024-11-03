@@ -4,8 +4,6 @@ import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 interface Payload {
   agentId: number;
-  shouldSummarize?: boolean;
-  privateNote?: string;
 }
 
 export function useAssignChatToAgent(chatId: string | number) {
@@ -13,7 +11,7 @@ export function useAssignChatToAgent(chatId: string | number) {
     mutationFn: (payload: Payload) => assignChat(chatId, payload),
     onSuccess: async () => {
       return await queryClient.invalidateQueries({
-        queryKey: ['chats'],
+        queryKey: ['dashboard', 'chats'],
       });
     },
     onError: err => showHttpErrorToast(err),
@@ -25,11 +23,9 @@ function assignChat(
   payload: Payload,
 ): Promise<Response> {
   return apiClient
-    .post(`lc/chats/assign/agent`, {
+    .post(`lc/chats/assign`, {
       chatIds: [chatId],
       userId: payload.agentId,
-      shouldSummarize: payload.shouldSummarize,
-      privateNote: payload.privateNote,
     })
     .then(r => r.data);
 }

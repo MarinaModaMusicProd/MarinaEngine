@@ -6,6 +6,7 @@ import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {Article} from '@helpdesk/help-center/articles/article';
 
 export const fetchArticlesQueryKey = (params: UseArticlesParams) => [
+  'hc',
   'articles',
   'admin',
   params,

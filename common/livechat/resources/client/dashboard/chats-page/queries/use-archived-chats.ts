@@ -1,8 +1,8 @@
+import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {apiClient} from '@common/http/query-client';
 import {Chat} from '@livechat/widget/chat/chat';
 import {PaginatedBackendResponse} from '@common/http/backend-response/pagination-response';
 import {BackendFiltersUrlKey} from '@common/datatable/filters/backend-filters-url-key';
-import {useInfiniteData} from '@common/ui/infinite-scroll/use-infinite-data';
 
 interface Params {
   order?: string;
@@ -11,13 +11,13 @@ interface Params {
 }
 
 export function useArchivedChats(params?: Params) {
-  return useInfiniteData<Chat>({
-    queryKey: ['chats', 'archived', params],
-    preserveQueryKey: true,
-    endpoint: 'lc/dashboard/archived-chats',
-    willSortOrFilter: true,
-    paginate: 'simple',
-    queryParams: params as any,
+  return useQuery({
+    queryKey: ['dashboard', 'chats', 'archived', params],
+    queryFn: () => fetchChats(params),
+    placeholderData:
+      params?.query || params?.[BackendFiltersUrlKey] || params?.order
+        ? keepPreviousData
+        : undefined,
   });
 }
 

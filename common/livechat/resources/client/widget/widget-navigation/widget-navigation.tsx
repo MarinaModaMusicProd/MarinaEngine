@@ -3,7 +3,7 @@ import {HomeIcon} from '@ui/icons/material/Home';
 import {Trans} from '@ui/i18n/trans';
 import {ChatIcon} from '@ui/icons/material/Chat';
 import {HelpIcon} from '@ui/icons/material/Help';
-import React, {ReactNode, useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 import clsx from 'clsx';
 import {message} from '@ui/i18n/message';
 import {HomeFilledIcon} from '@livechat/widget/widget-navigation/home-filled-icon';
@@ -11,8 +11,6 @@ import {ChatFilledIcon} from '@livechat/widget/widget-navigation/chat-filled-ico
 import {HelpOutlineIcon} from '@ui/icons/material/HelpOutline';
 import {Link, useLocation} from 'react-router-dom';
 import {useSettings} from '@ui/settings/use-settings';
-import {useUnseenChatsStore} from '@livechat/dashboard/unseen-chats/unseen-chats-store';
-import {Badge} from '@ui/badge/badge';
 
 export const widgetNavigationTabs: {
   route: string;
@@ -89,7 +87,7 @@ function ButtonLayout({children, route, icon, isActive}: ButtonLayoutProps) {
       replace
       display="flex"
       className={clsx(
-        'relative min-w-0 flex-1 flex-col items-center gap-6 overflow-hidden py-18 transition-all hover:bg-hover dark:bg-alt',
+        'min-w-0 flex-1 flex-col items-center gap-6 overflow-hidden py-18 transition-all hover:bg-hover dark:bg-alt',
         isActive ? 'font-semibold' : 'text-muted',
       )}
     >
@@ -97,19 +95,6 @@ function ButtonLayout({children, route, icon, isActive}: ButtonLayoutProps) {
       <div className="overflow-hidden whitespace-nowrap text-sm leading-normal">
         {children}
       </div>
-      {route === 'chats' && <ChatsMenuItemBadge />}
     </ButtonBase>
-  );
-}
-
-function ChatsMenuItemBadge() {
-  const unseenChats = useUnseenChatsStore(s => s.chats.filter(c => c.unseen));
-
-  if (!unseenChats.length) return null;
-
-  return (
-    <Badge top="top-6" right="right-6">
-      {unseenChats.length}
-    </Badge>
   );
 }

@@ -9,7 +9,7 @@ interface Params {
 
 export function useArticles(params: Params) {
   return useQuery({
-    queryKey: ['articles', 'widget', params],
+    queryKey: ['widget', 'articles', params],
     queryFn: ({signal}) => fetchArticles(params, signal),
     placeholderData: params.query ? keepPreviousData : undefined,
   });

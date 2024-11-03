@@ -9,7 +9,7 @@ class DistributeActiveChatsToAvailableAgents
     public function execute(): void
     {
         $chatsWaitingForAgent = Chat::whereIn('status', [
-            Chat::STATUS_OPEN,
+            Chat::STATUS_ACTIVE,
             Chat::STATUS_IDLE,
             Chat::STATUS_QUEUED,
         ])

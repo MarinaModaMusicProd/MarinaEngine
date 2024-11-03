@@ -7,7 +7,7 @@ import {SvgImage} from '@ui/images/svg-image';
 import chatSvg from '@livechat/dashboard/chats-page/chat-feed/chat.svg';
 import {Trans} from '@ui/i18n/trans';
 import {DashboardChatInfoSidebar} from '@livechat/dashboard/chats-page/visitor-sidebar/dashboard-chat-info-sidebar';
-import React, {Fragment} from 'react';
+import React from 'react';
 import {useActiveDashboardChat} from '@livechat/dashboard/chats-page/queries/use-active-dashboard-chat';
 import {useArchivedChats} from '@livechat/dashboard/chats-page/queries/use-archived-chats';
 import {ArchivePageAside} from '@livechat/dashboard/archive-page/archive-page-aside';
@@ -15,7 +15,6 @@ import {useArchiveSort} from '@livechat/dashboard/archive-page/use-archive-sort'
 import {useBackendFilterUrlParams} from '@common/datatable/filters/backend-filter-url-params';
 import {BackendFiltersUrlKey} from '@common/datatable/filters/backend-filters-url-key';
 import {useArchivePageFilters} from '@livechat/dashboard/archive-page/archive-page-filters';
-import {StaticPageTitle} from '@common/seo/static-page-title';
 
 export function ArchivePage() {
   const {chatId} = useParams();
@@ -28,7 +27,6 @@ export function ArchivePage() {
     query: searchParams.get('query'),
     [BackendFiltersUrlKey]: encodedFilters,
   });
-
   const activeChatQuery = useActiveDashboardChat();
 
   const [rightSidebarOpen, setRightSidebarOpen] = useLocalStorage(
@@ -36,50 +34,48 @@ export function ArchivePage() {
     true,
   );
 
-  if (!chatId && chatListQuery.items.length) {
+  if (!chatId && !!chatListQuery.data?.pagination.data.length) {
     return (
-      <Navigate to={`/agent/archive/${chatListQuery.items[0].id}`} replace />
+      <Navigate
+        to={`/dashboard/archive/${chatListQuery.data.pagination.data[0].id}`}
+        replace
+      />
     );
   }
 
   return (
-    <Fragment>
-      <StaticPageTitle>
-        <Trans message="Archive" />
-      </StaticPageTitle>
-      <ChatPageLayout
-        leftSidebar={
-          <ArchivePageAside
-            chatsQuery={chatListQuery}
-            activeChatQuery={activeChatQuery}
-          />
-        }
-        chatFeed={
-          <DashboardChatFeedColumn
-            query={activeChatQuery}
-            rightSidebarOpen={rightSidebarOpen}
-            onRightSidebarOpen={() => setRightSidebarOpen(true)}
-            noResultsMessage={
-              <IllustratedMessage
-                size="sm"
-                image={<SvgImage src={chatSvg} />}
-                title={<Trans message="No archived chats yet" />}
-                description={
-                  <Trans message="Archives hold all chats closed by you or your team." />
-                }
-              />
-            }
-          />
-        }
-        rightSidebar={
-          rightSidebarOpen ? (
-            <DashboardChatInfoSidebar
-              query={activeChatQuery}
-              onClose={() => setRightSidebarOpen(false)}
+    <ChatPageLayout
+      leftSidebar={
+        <ArchivePageAside
+          chatsQuery={chatListQuery}
+          activeChatQuery={activeChatQuery}
+        />
+      }
+      chatFeed={
+        <DashboardChatFeedColumn
+          query={activeChatQuery}
+          rightSidebarOpen={rightSidebarOpen}
+          onRightSidebarOpen={() => setRightSidebarOpen(true)}
+          noResultsMessage={
+            <IllustratedMessage
+              size="sm"
+              image={<SvgImage src={chatSvg} />}
+              title={<Trans message="No archived chats yet" />}
+              description={
+                <Trans message="Archives hold all chats closed by you or your team." />
+              }
             />
-          ) : null
-        }
-      />
-    </Fragment>
+          }
+        />
+      }
+      rightSidebar={
+        rightSidebarOpen ? (
+          <DashboardChatInfoSidebar
+            query={activeChatQuery}
+            onClose={() => setRightSidebarOpen(false)}
+          />
+        ) : null
+      }
+    />
   );
 }

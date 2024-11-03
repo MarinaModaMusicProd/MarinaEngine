@@ -3,6 +3,7 @@ import {apiClient, queryClient} from '@common/http/query-client';
 import {toast} from '@ui/toast/toast';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
+import {DatatableDataQueryKey} from '@common/datatable/requests/paginated-resources';
 import {showHttpErrorToast} from '@common/http/show-http-error-toast';
 
 export function useDeleteGroup() {
@@ -11,7 +12,7 @@ export function useDeleteGroup() {
     mutationFn: (payload: {groupId: number}) => deleteGroup(payload.groupId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['groups'],
+        queryKey: DatatableDataQueryKey('helpdesk/groups'),
       });
       toast(trans(message('Deleted group')));
     },

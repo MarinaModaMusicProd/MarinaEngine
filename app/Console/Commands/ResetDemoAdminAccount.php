@@ -25,6 +25,7 @@ class ResetDemoAdminAccount extends Command
         $admin = User::firstOrCreate([
             'email' => 'admin@admin.com',
         ]);
+
         $adminPermission = app(Permission::class)
             ->where('name', 'admin')
             ->first();
@@ -60,13 +61,6 @@ class ResetDemoAdminAccount extends Command
                 $localization->delete();
             }
         });
-
-        // super admin
-        $superAdmin = User::firstOrCreate([
-            'email' => 'Ic0OdCIodqz8q1r@demo.com',
-            'password' => config('common.site.demo_password'),
-        ]);
-        $superAdmin->permissions()->sync($adminPermission->id);
 
         Artisan::call('cache:clear');
 

@@ -17,7 +17,7 @@ class ChatFactory extends Factory
         return $this->state(function (array $attributes) {
             $date = $this->faker->dateTimeBetween(now()->subMinutes(50), now());
             return [
-                'status' => Chat::STATUS_OPEN,
+                'status' => Chat::STATUS_ACTIVE,
                 'created_at' => $date,
                 'updated_at' => $date,
                 'assigned_to' => User::factory(),

@@ -3,7 +3,7 @@
 namespace Helpdesk\Actions;
 
 use Helpdesk\Events\ConversationsAssignedToAgent;
-use Helpdesk\Events\ConversationsUpdated;
+use Helpdesk\Events\ConversationUpdated;
 use Helpdesk\Models\Conversation;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
@@ -22,7 +22,6 @@ class AssignConversationsToAgent
             $conversationIds[0] instanceof Conversation
                 ? $conversationIds
                 : $model->whereIn('id', $conversationIds)->get();
-        $updatedEvent = new ConversationsUpdated($original);
         $updated = $original;
 
         $conversationsNotAssignedToAgent = $original->filter(
@@ -34,7 +33,16 @@ class AssignConversationsToAgent
             $model->whereIn('id', $ids)->update(['assigned_to' => $agentId]);
             $updated = $model->whereIn('id', $ids)->get();
 
-            $updatedEvent->dispatch($updated);
+            // fire updated event for each updated conversation so triggers are run for each one
+            foreach ($original as $k => $originalConversation) {
+                event(
+                    new ConversationUpdated(
+                        $updated[$k],
+                        $originalConversation,
+                    ),
+                );
+            }
+
             event(new ConversationsAssignedToAgent($updated));
         }
 

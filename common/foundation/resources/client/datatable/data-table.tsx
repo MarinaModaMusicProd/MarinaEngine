@@ -38,7 +38,6 @@ export interface DataTableProps<T extends TableDataItem> {
   searchPlaceholder?: MessageDescriptor;
   queryParams?: Record<string, string | number | undefined | null>;
   endpoint: string;
-  queryKey?: string[];
   skeletonsWhileLoading?: number;
   resourceName?: ReactNode;
   emptyStateMessage: ReactElement<{isFiltering: boolean}>;
@@ -61,7 +60,6 @@ export function DataTable<T extends TableDataItem>({
   searchPlaceholder,
   queryParams,
   endpoint,
-  queryKey,
   actions,
   selectedActions,
   emptyStateMessage,
@@ -87,7 +85,7 @@ export function DataTable<T extends TableDataItem>({
       ...queryParams,
       [BackendFiltersUrlKey]: encodedFilters,
     },
-    {queryKey},
+    undefined,
     () => setSelectedRows([]),
   );
 

@@ -3,8 +3,8 @@ import {apiClient, queryClient} from '@common/http/query-client';
 import {toast} from '@ui/toast/toast';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
+import {DatatableDataQueryKey} from '@common/datatable/requests/paginated-resources';
 import {showHttpErrorToast} from '@common/http/show-http-error-toast';
-import {BaseAgentsQueryKey} from '@livechat/dashboard/agents/base-agents-query-key';
 
 export function useRevokeAgentInvite() {
   const {trans} = useTrans();
@@ -12,7 +12,7 @@ export function useRevokeAgentInvite() {
     mutationFn: (payload: {inviteId: number}) => revokeInvite(payload.inviteId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [...BaseAgentsQueryKey, 'invites'],
+        queryKey: DatatableDataQueryKey('helpdesk/agents/invites'),
       });
       toast(trans(message('Invite revoked')));
     },
