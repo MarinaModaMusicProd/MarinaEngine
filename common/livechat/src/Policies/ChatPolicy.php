@@ -22,9 +22,4 @@ class ChatPolicy extends BasePolicy
     {
         return $this->hasPermission($user, 'conversations.update');
     }
-
-    public function destroy(User $user, array $chatIds = []): bool|Response
-    {
-        return $this->hasPermission($user, 'conversations.delete');
-    }
 }

@@ -28,7 +28,7 @@ export function useCreateCategory(form: UseFormReturn<CreateCategoryPayload>) {
   return useMutation({
     mutationFn: (props: CreateCategoryPayload) => createCategory(props),
     onSuccess: async response => {
-      await queryClient.invalidateQueries({queryKey: ['categories']});
+      await queryClient.invalidateQueries({queryKey: ['hc', 'categories']});
       const part = response.category.is_section ? 'sections' : 'categories';
       navigate(`../../hc/arrange/${part}/${response.category.id}`);
       toast(

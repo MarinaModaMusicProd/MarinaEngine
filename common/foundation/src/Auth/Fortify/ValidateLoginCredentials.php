@@ -3,6 +3,7 @@
 namespace Common\Auth\Fortify;
 
 use App\Models\User;
+use Common\Auth\Fortify\FortifyRegisterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -19,6 +20,16 @@ class ValidateLoginCredentials
             $this->throwFailedAuthenticationException(
                 $request,
                 __('This domain is blacklisted.'),
+            );
+        }
+
+        if ($user?->isBanned()) {
+            $comment = $user->bans()->first()->comment;
+            $this->throwFailedAuthenticationException(
+                $request,
+                $comment
+                    ? __('Banned: :reason', ['reason' => $comment])
+                    : __('This user is banned.'),
             );
         }
 

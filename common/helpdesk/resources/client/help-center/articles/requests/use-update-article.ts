@@ -23,8 +23,8 @@ export function useUpdateArticle(form?: UseFormReturn<UpdateArticlePayload>) {
     mutationFn: (payload: UpdateArticlePayload) => updateArticle(payload),
     onSuccess: async () => {
       await Promise.allSettled([
-        queryClient.invalidateQueries({queryKey: ['categories']}),
-        queryClient.invalidateQueries({queryKey: ['articles']}),
+        queryClient.invalidateQueries({queryKey: ['hc', 'categories']}),
+        queryClient.invalidateQueries({queryKey: ['hc', 'articles']}),
       ]);
     },
     onError: err =>

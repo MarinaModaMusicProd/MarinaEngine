@@ -24,15 +24,7 @@ export function useTaggableTags(params: Params) {
 }
 
 function getQueryKey(params: Params) {
-  const {taggableType, taggableId, type, notType} = params;
-  const key = ['tags', 'taggable', taggableType, `${taggableId}`];
-  if (type != null) {
-    key.push(type);
-  }
-  if (notType != null) {
-    key.push(notType);
-  }
-  return key;
+  return ['tags', 'taggable', params];
 }
 
 export function invalidateTaggableTagsQuery({

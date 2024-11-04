@@ -23,7 +23,7 @@ class ChatMessageController extends BaseController
         }
 
         $chatMessage = $chat->createMessage($data, [
-            'status' => Chat::STATUS_OPEN,
+            'status' => Chat::STATUS_ACTIVE,
         ]);
 
         event(new ChatMessageCreated($chat, $chatMessage));

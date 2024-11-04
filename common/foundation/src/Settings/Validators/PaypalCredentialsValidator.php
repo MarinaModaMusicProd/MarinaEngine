@@ -4,6 +4,7 @@ namespace Common\Settings\Validators;
 
 use Common\Billing\Gateways\Paypal\Paypal;
 use Common\Settings\Settings;
+use Common\Settings\Validators\SettingsValidator;
 use Config;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Arr;

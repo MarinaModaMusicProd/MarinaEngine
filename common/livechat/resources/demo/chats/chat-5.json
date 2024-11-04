@@ -40,11 +40,6 @@
     "content": "Render-blocking resources can definitely slow down page loading. These are typically CSS and JavaScript files that delay the rendering of the page. Do you use many plugins or third-party scripts on your site?"
   },
   {
-    "type": "event",
-    "author": "system",
-    "content": "group.changed"
-  },
-  {
     "type": "message",
     "author": "visitor",
     "content": "I do use a few plugins and have some third-party scripts for analytics and ads."

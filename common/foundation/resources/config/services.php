@@ -101,7 +101,4 @@ return [
     'slack' => [
         'webhook_url' => env('SLACK_WEBHOOK_URL'),
     ],
-    'openai' => [
-        'api_key' => env('OPENAI_API_KEY'),
-    ],
 ];

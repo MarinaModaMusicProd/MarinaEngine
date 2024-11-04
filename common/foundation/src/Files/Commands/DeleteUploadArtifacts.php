@@ -68,7 +68,7 @@ class DeleteUploadArtifacts extends Command
             'column' => 'thumbnail',
         ],
 
-        // MarinaModa
+        // MarinaModaMusicProd
         'track_image_media' => [
             'type' => 'model',
             'table' => 'tracks',

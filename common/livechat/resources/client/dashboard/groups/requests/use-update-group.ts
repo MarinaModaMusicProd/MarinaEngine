@@ -4,6 +4,7 @@ import {BackendResponse} from '@common/http/backend-response/backend-response';
 import {toast} from '@ui/toast/toast';
 import {useTrans} from '@ui/i18n/use-trans';
 import {message} from '@ui/i18n/message';
+import {DatatableDataQueryKey} from '@common/datatable/requests/paginated-resources';
 import {onFormQueryError} from '@common/errors/on-form-query-error';
 import {UseFormReturn} from 'react-hook-form';
 import {Group} from '@helpdesk/groups/group';
@@ -27,7 +28,7 @@ export function useUpdateGroup(
     mutationFn: (payload: UpdateGroupPayload) => updateGroup(groupId!, payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['groups'],
+        queryKey: DatatableDataQueryKey('helpdesk/groups'),
       });
       toast(trans(message('Updated group')));
       navigate('../../', {relative: 'path'});

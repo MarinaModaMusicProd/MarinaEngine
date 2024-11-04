@@ -6,7 +6,7 @@ import {DeleteSelectedItemsAction} from '@common/datatable/page/delete-selected-
 import onlineArticlesImg from './online-articles.svg';
 import {Link} from 'react-router-dom';
 import {ArticleDatatableColumns} from '@helpdesk/help-center/articles/article-datatable/article-datatable-columns';
-import {ArticleDatatableFilters} from '@helpdesk/help-center/articles/article-datatable/article-datatable-filters';
+import {ArticleDatatableFilters} from '@helpdesk/help-center/articles/article-datatable/canned-replies-datatable-filters';
 
 export function ArticleDatatablePage() {
   return (

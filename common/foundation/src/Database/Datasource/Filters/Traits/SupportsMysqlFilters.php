@@ -24,9 +24,8 @@ trait SupportsMysqlFilters
                 $filter['value'] = true;
             }
 
-            $method = 'where' . ucfirst(str_replace('_id', '', $filter['key']));
-            if ($query->hasNamedScope($method)) {
-                $query->$method(
+            if ($query->hasNamedScope('where' . ucfirst($filter['key']))) {
+                $query->{'where' . ucfirst($filter['key'])}(
                     $filter['value'],
                     $filter['operator'],
                     $filter['key'],

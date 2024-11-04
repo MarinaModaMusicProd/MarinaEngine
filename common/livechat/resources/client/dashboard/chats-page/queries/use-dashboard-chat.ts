@@ -1,20 +1,12 @@
 import {useQuery} from '@tanstack/react-query';
-import {apiClient} from '@common/http/query-client';
-import {
-  Chat,
-  ChatSummary,
-  ChatVisit,
-  ChatVisitor,
-  PreChatFormData,
-} from '@livechat/widget/chat/chat';
+import {apiClient, queryClient} from '@common/http/query-client';
+import {Chat, ChatVisit, ChatVisitor} from '@livechat/widget/chat/chat';
 import {BackendResponse} from '@common/http/backend-response/backend-response';
 
 export interface UseDashboardChatResponse extends BackendResponse {
   chat: Chat;
   visitor: ChatVisitor;
   visits: ChatVisit[];
-  summary: ChatSummary | null;
-  preChatFormData?: PreChatFormData['body'];
 }
 
 interface Props {
@@ -25,10 +17,31 @@ interface Props {
 
 export function useDashboardChat({chatId, disabled}: Props) {
   return useQuery({
-    queryKey: ['chats', `${chatId}`],
+    queryKey: ['dashboard', 'chats', chatId],
     queryFn: () => fetchChat(chatId!),
     enabled: !disabled,
   });
+}
+
+export function updateDashboardChat(
+  chatId: number | string,
+  data: Partial<Chat>,
+) {
+  queryClient.setQueryData<UseDashboardChatResponse>(
+    ['dashboard', 'chats', `${chatId}`],
+    old => {
+      if (!old) {
+        return old;
+      }
+      return {
+        ...old,
+        chat: {
+          ...old.chat,
+          ...data,
+        },
+      };
+    },
+  );
 }
 
 function fetchChat(chatId: number | string) {

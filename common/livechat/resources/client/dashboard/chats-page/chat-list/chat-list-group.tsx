@@ -7,10 +7,9 @@ import {KeyboardArrowDownIcon} from '@ui/icons/material/KeyboardArrowDown';
 import {Trans} from '@ui/i18n/trans';
 import {useMemo} from 'react';
 import clsx from 'clsx';
-import {DashboardChatGroup} from '@livechat/dashboard/chats-page/queries/use-dashboard-chats';
 
 interface ChatListGroupProps {
-  name: DashboardChatGroup;
+  name: 'myChats' | 'queued' | 'unassigned';
   chats: Chat[];
 }
 export function ChatListGroup({name, chats}: ChatListGroupProps) {
@@ -77,7 +76,7 @@ export function ChatListGroup({name, chats}: ChatListGroupProps) {
 }
 
 interface GroupLabelProps {
-  name: DashboardChatGroup;
+  name: ChatListGroupProps['name'];
 }
 function GroupLabel({name}: GroupLabelProps) {
   switch (name) {
@@ -85,8 +84,6 @@ function GroupLabel({name}: GroupLabelProps) {
       return <Trans message="Queued" />;
     case 'unassigned':
       return <Trans message="Unassigned" />;
-    case 'other':
-      return <Trans message="Other" />;
     default:
       return <Trans message="My chats" />;
   }

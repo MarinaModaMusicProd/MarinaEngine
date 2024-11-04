@@ -13,12 +13,12 @@ export function useUpdateChatStatus(chatId: string | number) {
     mutationFn: (payload: Payload) => changeStatus(chatId, payload),
     onSuccess: async (r, payload) => {
       if (payload.status === 'closed') {
-        navigate(`/agent/archive/${chatId}`);
+        navigate(`/dashboard/archive/${chatId}`);
       } else {
-        navigate(`/agent/chats/${chatId}`);
+        navigate(`/dashboard/chats/${chatId}`);
       }
       return await queryClient.invalidateQueries({
-        queryKey: ['chats'],
+        queryKey: ['dashboard', 'chats'],
       });
     },
     onError: err => showHttpErrorToast(err),

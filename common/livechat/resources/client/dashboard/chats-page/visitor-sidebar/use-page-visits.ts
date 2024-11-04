@@ -7,7 +7,7 @@ interface Response {
 }
 
 export function pageVisitsQueryKey(visitorId: number | string) {
-  return ['visits', `${visitorId}`];
+  return ['lc', 'visits', `${visitorId}`];
 }
 
 export function usePageVisits(

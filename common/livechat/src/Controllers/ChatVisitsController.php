@@ -7,6 +7,9 @@ use Livechat\Events\ChatVisitCreated;
 use Livechat\Models\ChatVisit;
 use Livechat\Models\ChatVisitor;
 
+// todo: fire event when visit is updated or created, listen with echo, update frontend, same as on livechat
+// todo: maybe automatically update duration in frontend, same as on livechat
+
 class ChatVisitsController extends BaseController
 {
     public function index(int $visitorId)

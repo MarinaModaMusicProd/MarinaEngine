@@ -9,14 +9,12 @@ import {Trans} from '@ui/i18n/trans';
 import {IconButton} from '@ui/buttons/icon-button';
 import {SendIcon} from '@ui/icons/material/Send';
 import {useSettings} from '@ui/settings/use-settings';
-import {useAppearanceEditorMode} from '@common/admin/appearance/commands/use-appearance-editor-mode';
 
 interface Props {
   isLoading: boolean;
   onSubmit: (data: {body: string; files: FileEntry[]}) => void;
 }
 export function WidgetChatTextEditor({isLoading, onSubmit}: Props) {
-  const {isAppearanceEditorActive} = useAppearanceEditorMode();
   const {chatWidget} = useSettings();
   const completedUploadsCount = useFileUploadStore(
     s => s.completedUploadsCount,
@@ -31,12 +29,10 @@ export function WidgetChatTextEditor({isLoading, onSubmit}: Props) {
   const {trans} = useTrans();
 
   const handleSubmit = () => {
-    if (!isAppearanceEditorActive) {
-      onSubmit({
-        body: value,
-        files: getCompletedUploads(),
-      });
-    }
+    onSubmit({
+      body: value,
+      files: getCompletedUploads(),
+    });
     setValue('');
     clearInactiveUploads();
   };
@@ -55,7 +51,7 @@ export function WidgetChatTextEditor({isLoading, onSubmit}: Props) {
         ref={inputContainerRef}
         className="flex items-start justify-center gap-2 border-t p-6 shadow-[0px_41px_20px_40px_rgba(0,0,0,0.05)]"
       >
-        <div className="relative max-h-[6em] min-h-36 min-w-0 flex-auto">
+        <div className="relative flex max-h-[6em] min-h-36 flex-auto">
           <textarea
             disabled={isLoading}
             required={!completedUploadsCount}
@@ -88,11 +84,10 @@ export function WidgetChatTextEditor({isLoading, onSubmit}: Props) {
           className="text-muted"
           size="sm"
           iconSize="md"
-          disabled={isAppearanceEditorActive}
         />
         <Tooltip label={<Trans message="Submit" />}>
           <IconButton
-            disabled={isLoading || isAppearanceEditorActive}
+            disabled={isLoading}
             type="submit"
             size="sm"
             color="primary"

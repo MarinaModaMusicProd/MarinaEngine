@@ -66,17 +66,6 @@ export const ChatWidgetSectionConfig: AppearanceEditorSection = {
           path: 'themes/:themeIndex/radius',
           lazy: () => lazyAdminRoute('ThemeRadiusPanel'),
         },
-
-        // forms
-        {
-          path: 'forms',
-          lazy: () => lazyAdminRoute('ChatWidgetFormEditorList'),
-        },
-        {
-          path: 'forms/pre-chat',
-          lazy: () => lazyAdminRoute('PreChatFormEditor'),
-          handle: {previewRoute: 'chats/new'},
-        },
       ],
     },
   ],

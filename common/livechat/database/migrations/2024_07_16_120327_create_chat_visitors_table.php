@@ -73,10 +73,6 @@ return new class extends Migration {
                 ->nullable()
                 ->index();
             $table->timestamps();
-            $table
-                ->timestamp('banned_at')
-                ->nullable()
-                ->index();
         });
     }
 

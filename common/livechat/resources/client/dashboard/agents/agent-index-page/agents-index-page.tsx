@@ -27,9 +27,6 @@ import {DeleteUserDialog} from '@common/admin/users/update-user-page/update-user
 import {useSettings} from '@ui/settings/use-settings';
 import {InviteAgentsDialog} from '@livechat/dashboard/agents/invites/invite-agents-dialog';
 import {AgentIndexPageTabs} from '@livechat/dashboard/agents/agent-index-page/agent-index-page-tabs';
-import {BanUserDialog} from '@common/admin/users/ban-user-dialog';
-import {useUnbanUser} from '@common/admin/users/requests/use-unban-user';
-import {BaseAgentsQueryKey} from '@livechat/dashboard/agents/base-agents-query-key';
 
 const columnConfig: ColumnConfig<CompactAgent>[] = [
   {
@@ -91,13 +88,6 @@ interface AgentStatusColumnProps {
 function AgentStatusColumn({agent}: AgentStatusColumnProps) {
   const {chat_integrated} = useSettings();
   const isAgentOnline = useIsAgentOnline(agent.id);
-  if (agent.banned_at) {
-    return (
-      <StatusMessage color="bg-danger">
-        <Trans message="Suspended" />
-      </StatusMessage>
-    );
-  }
   if (!isAgentOnline) {
     return (
       <StatusMessage color="bg-chip">
@@ -140,11 +130,8 @@ interface AgentOptionsTriggerProps {
   agent: CompactAgent;
 }
 function AgentOptionsTrigger({agent}: AgentOptionsTriggerProps) {
-  const unban = useUnbanUser(agent.id);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [banDialogOpen, setBanDialogOpen] = useState(false);
   const {canEditAgent, canDeleteAgent} = useAgentPermissions(agent.id);
-
   return (
     <Fragment>
       <DialogTrigger
@@ -153,13 +140,6 @@ function AgentOptionsTrigger({agent}: AgentOptionsTriggerProps) {
         onOpenChange={setDeleteDialogOpen}
       >
         <DeleteUserDialog userId={agent.id} />
-      </DialogTrigger>
-      <DialogTrigger
-        type="modal"
-        isOpen={banDialogOpen}
-        onOpenChange={setBanDialogOpen}
-      >
-        <BanUserDialog user={agent} />
       </DialogTrigger>
       <MenuTrigger>
         <IconButton size="md" className="text-muted">
@@ -178,21 +158,13 @@ function AgentOptionsTrigger({agent}: AgentOptionsTriggerProps) {
           >
             <Trans message="View reports" />
           </Item>
-          {canDeleteAgent &&
-            (agent.banned_at ? (
-              <Item value="suspend" onSelected={() => unban.mutate()}>
-                <Trans message="Reactivate" />
-              </Item>
-            ) : (
-              <Item value="suspend" onSelected={() => setBanDialogOpen(true)}>
-                <Trans message="Suspend" />
-              </Item>
-            ))}
           {canDeleteAgent && (
             <Item
               value="delete"
               className="text-danger"
-              onSelected={() => setDeleteDialogOpen(true)}
+              onSelected={() => {
+                setDeleteDialogOpen(true);
+              }}
             >
               <Trans message="Delete" />
             </Item>
@@ -213,7 +185,6 @@ export function AgentsIndexPage() {
         className="dashboard-stable-scrollbar"
         enableSelection={false}
         endpoint="helpdesk/agents"
-        queryKey={BaseAgentsQueryKey}
         skeletonsWhileLoading={1}
         title={<Trans message="Agents" />}
         columns={columnConfig}

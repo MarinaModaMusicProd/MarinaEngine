@@ -12,7 +12,7 @@ class AgentsLoader
     public function getAllAgents(): Collection
     {
         return User::whereAgent()
-            ->with(['agentSettings', 'groups'])
+            ->with('agentSettings')
             ->withCount('activeAssignedChats')
             ->get()
             ->map(function (User $agent) {
@@ -22,9 +22,6 @@ class AgentsLoader
                     'name' => $agent->name,
                     'image' => $agent->image,
                     'acceptsChats' => $acceptsChats,
-                    'activeAssignedChatsCount' =>
-                        $agent->active_assigned_chats_count,
-                    'groups' => $agent->groups->map->only(['id', 'name']),
                 ];
             });
     }

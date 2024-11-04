@@ -41,10 +41,8 @@ export const FormattedDuration = memo(
     const {trans} = useTrans();
 
     const initialMs = useMemo(() => {
-      if (propsStartDate || propsEndDate) {
-        const startDate = propsStartDate
-          ? parseAbsoluteToLocal(propsStartDate)
-          : getCurrentDateTime();
+      if (propsStartDate) {
+        const startDate = parseAbsoluteToLocal(propsStartDate);
         const endDate = propsEndDate
           ? parseAbsoluteToLocal(propsEndDate)
           : getCurrentDateTime();

@@ -2,13 +2,13 @@
 
 namespace Livechat\Events;
 
-use Helpdesk\Websockets\HelpDeskChannel;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Livechat\Models\ChatVisit;
+use Livechat\Websockets\ChatVisitorChannel;
 
 class ChatVisitCreated implements ShouldBroadcast
 {
@@ -21,12 +21,14 @@ class ChatVisitCreated implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return [new PresenceChannel(HelpDeskChannel::NAME)];
+        return [
+            new Channel(ChatVisitorChannel::NAME($this->visit->visitor_id)),
+        ];
     }
 
     public function broadcastAs(): string
     {
-        return HelpDeskChannel::EVENT_VISITORS_VISIT_CREATED;
+        return ChatVisitorChannel::EVENT_VISIT_CREATED;
     }
 
     public function broadcastWith(): array

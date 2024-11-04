@@ -4,7 +4,7 @@ import {GetArticleResponse} from '@helpdesk/help-center/articles/requests/use-ar
 
 export function useWidgetArticle(articleId: number | string) {
   return useQuery<GetArticleResponse>({
-    queryKey: ['articles', 'widget', articleId],
+    queryKey: ['widget', 'articles', articleId],
     queryFn: () => fetchArticle(articleId),
     staleTime: Infinity,
   });

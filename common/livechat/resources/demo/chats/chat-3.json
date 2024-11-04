@@ -35,11 +35,6 @@
     "content": "I just checked in the dashboard. The key is active and has all the required permissions."
   },
   {
-    "type": "event",
-    "author": "system",
-    "content": "group.changed"
-  },
-  {
     "type": "message",
     "author": "agent",
     "content": "In that case, it might be related to the API endpoint or the request format. Are you sending the request to the correct endpoint, and is the request body formatted properly?"
@@ -113,7 +108,7 @@
   {
     "type": "event",
     "author": "system",
-    "content": "agent.changed"
+    "content": "agent.reassigned"
   },
   {
     "type": "message",

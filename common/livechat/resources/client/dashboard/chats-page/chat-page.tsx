@@ -1,8 +1,4 @@
-import {
-  DashboardChatGroup,
-  useDashboardChats,
-  UseDashboardChatsResponse,
-} from '@livechat/dashboard/chats-page/queries/use-dashboard-chats';
+import {useDashboardChats} from '@livechat/dashboard/chats-page/queries/use-dashboard-chats';
 import {Trans} from '@ui/i18n/trans';
 import {Navigate, useParams} from 'react-router-dom';
 import {useDashboardChat} from '@livechat/dashboard/chats-page/queries/use-dashboard-chat';
@@ -13,19 +9,30 @@ import {DashboardChatFeedColumn} from '@livechat/dashboard/chats-page/chat-feed/
 import {IllustratedMessage} from '@ui/images/illustrated-message';
 import {SvgImage} from '@ui/images/svg-image';
 import chatSvg from '@livechat/dashboard/chats-page/chat-feed/chat.svg';
-import {Fragment, useMemo} from 'react';
+import {Fragment} from 'react';
 import {ChatPageLayout} from '@livechat/dashboard/chats-page/chat-page-layout';
 import {useActiveDashboardChat} from '@livechat/dashboard/chats-page/queries/use-active-dashboard-chat';
 import {AnimatePresence, m} from 'framer-motion';
 import {ChatListGroup} from '@livechat/dashboard/chats-page/chat-list/chat-list-group';
 import {ChatListSkeleton} from '@livechat/dashboard/chats-page/chat-list/chat-list-skeleton';
 import {opacityAnimation} from '@ui/animation/opacity-animation';
-import {Chat} from '@livechat/widget/chat/chat';
-import {StaticPageTitle} from '@common/seo/static-page-title';
-import {useClearUnseenChats} from '@livechat/dashboard/unseen-chats/use-clear-unseen-chats';
+
+// todo: create new chat via sockets when customer starts a chat and it does not exist yet
+// todo: show chat event text in left sidebar as well
+// todo: show pick from queue, assign to me, un-archive etc button instead of text editor, same as livechat
+// todo: send ticket status and agent change via sockets, test with two different browsers/agents
+
+// todo: maybe add "users", "roles", "suspended users" tabs in agents index page, same as intercom, or maybe just have a link to common admin area, if there's enough stuff to show there that is not in dashboard (localizations, etc)
+
+// todo: fire all events into echo "agents" channel and invalidate queries, instead of editing the cache directly. Refactor all currents echo events into the agents channel and query resetting as well (except for widget new message event maybe)
+// todo: listen for chat status changes as well and invalidate queries
+// todo: set chat assignment (auto/manual) per department, save as livechat
+// todo: add margin between separate chat list groups
+// todo: add other conversations to the right sidebar, show conversation in modal or drawer on click, same as intercom
+// todo: update right sidebar skeleton to match new layout
+// todo: when chat is not assigned to current agent, lock text editor to only allow notes and not replies
 
 export function ChatPage() {
-  useClearUnseenChats();
   const {chatId} = useParams();
   const chatListQuery = useDashboardChats();
   const activeChatQuery = useActiveDashboardChat();
@@ -38,57 +45,46 @@ export function ChatPage() {
   if (!chatId && chatListQuery.data?.firstChatId) {
     return (
       <Navigate
-        to={`/agent/chats/${chatListQuery.data?.firstChatId}`}
+        to={`/dashboard/chats/${chatListQuery.data?.firstChatId}`}
         replace
       />
     );
   }
 
-  if (activeChatQuery.data?.chat.status === 'closed') {
-    return (
-      <Navigate to={`/agent/archive/${activeChatQuery.data.chat.id}`} replace />
-    );
-  }
-
   return (
-    <Fragment>
-      <StaticPageTitle>
-        <Trans message="Chats" />
-      </StaticPageTitle>
-      <ChatPageLayout
-        leftSidebar={
-          <AllChatsAside
-            chatsQuery={chatListQuery}
-            activeChatQuery={activeChatQuery}
-          />
-        }
-        chatFeed={
-          <DashboardChatFeedColumn
-            query={activeChatQuery}
-            rightSidebarOpen={rightSidebarOpen}
-            onRightSidebarOpen={() => setRightSidebarOpen(true)}
-            noResultsMessage={
-              <IllustratedMessage
-                size="sm"
-                image={<SvgImage src={chatSvg} />}
-                title={<Trans message="No active chats currently" />}
-                description={
-                  <Trans message="Chats assigned to you and unassigned chats will appear here." />
-                }
-              />
-            }
-          />
-        }
-        rightSidebar={
-          rightSidebarOpen ? (
-            <DashboardChatInfoSidebar
-              query={activeChatQuery}
-              onClose={() => setRightSidebarOpen(false)}
+    <ChatPageLayout
+      leftSidebar={
+        <AllChatsAside
+          chatsQuery={chatListQuery}
+          activeChatQuery={activeChatQuery}
+        />
+      }
+      chatFeed={
+        <DashboardChatFeedColumn
+          query={activeChatQuery}
+          rightSidebarOpen={rightSidebarOpen}
+          onRightSidebarOpen={() => setRightSidebarOpen(true)}
+          noResultsMessage={
+            <IllustratedMessage
+              size="sm"
+              image={<SvgImage src={chatSvg} />}
+              title={<Trans message="No active chats currently" />}
+              description={
+                <Trans message="Chats assigned to you and unassigned chats will appear here." />
+              }
             />
-          ) : null
-        }
-      />
-    </Fragment>
+          }
+        />
+      }
+      rightSidebar={
+        rightSidebarOpen ? (
+          <DashboardChatInfoSidebar
+            query={activeChatQuery}
+            onClose={() => setRightSidebarOpen(false)}
+          />
+        ) : null
+      }
+    />
   );
 }
 
@@ -97,23 +93,16 @@ interface AllChatsAsideProps {
   activeChatQuery: ReturnType<typeof useDashboardChat>;
 }
 function AllChatsAside({chatsQuery, activeChatQuery}: AllChatsAsideProps) {
-  const groupedChats: UseDashboardChatsResponse['groupedChats'] =
-    useMemo(() => {
-      const activeChat = activeChatQuery.data?.chat;
-      const chats =
-        chatsQuery.data?.groupedChats ||
-        ({} as UseDashboardChatsResponse['groupedChats']);
+  const {chatId} = useParams();
+  const groupedChats = chatsQuery.data?.groupedChats;
+  const activeChat = activeChatQuery.data?.chat;
 
-      // make sure active chat is always shown in left sidebar,
-      // even if it does not exist in pagination
-      if (activeChat && !chatsQuery.isLoading) {
-        const allChats = Object.values(chats).flat() as Chat[];
-        if (!allChats.some(chat => chat.id === activeChat.id)) {
-          chats['other'] = [activeChat];
-        }
-      }
-      return chats;
-    }, [chatsQuery, activeChatQuery]);
+  // make sure active chat is always shown in left sidebar,
+  // even if it does not exist in pagination
+  // todo:
+  // if (activeChat && !allChats.some(chat => chat.id === activeChat.id)) {
+  //   allChats.unshift(activeChat);
+  // }
 
   return (
     <Fragment>
@@ -127,11 +116,7 @@ function AllChatsAside({chatsQuery, activeChatQuery}: AllChatsAsideProps) {
           {groupedChats ? (
             <m.div key="grouped-chats" {...opacityAnimation}>
               {Object.entries(groupedChats).map(([name, chats]) => (
-                <ChatListGroup
-                  key={name}
-                  name={name as DashboardChatGroup}
-                  chats={chats}
-                />
+                <ChatListGroup key={name} name={name as any} chats={chats} />
               ))}
             </m.div>
           ) : (

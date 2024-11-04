@@ -4,9 +4,6 @@ use Common\Core\BaseController;
 
 class TaggableController extends BaseController
 {
-    public static array $beforeTagChangeCallbacks = [];
-    public static array $afterTagChangeCallbacks = [];
-
     public function listTags(string $taggableType, int $taggableId)
     {
         $taggable = app(modelTypeToNamespace($taggableType))::findOrFail(
@@ -49,10 +46,6 @@ class TaggableController extends BaseController
                 : [$taggable::class, $taggables],
         );
 
-        foreach (self::$beforeTagChangeCallbacks as $callback) {
-            $callback($taggables);
-        }
-
         $tag = app(Tag::class)->insertOrRetrieve(
             [$data['tagName']],
             $data['tagType'] ?? null,
@@ -64,10 +57,6 @@ class TaggableController extends BaseController
             $data['taggableIds'],
             $data['userId'] ?? null,
         );
-
-        foreach (self::$afterTagChangeCallbacks as $callback) {
-            $callback($taggables);
-        }
 
         return $this->success([
             'tag' => $tag,
@@ -91,53 +80,7 @@ class TaggableController extends BaseController
                 : [$taggable::class, $taggables],
         );
 
-        foreach (self::$beforeTagChangeCallbacks as $callback) {
-            $callback($taggables);
-        }
-
         $taggable->detachTag($data['tagId'], $data['taggableIds']);
-
-        foreach (self::$afterTagChangeCallbacks as $callback) {
-            $callback($taggables);
-        }
-
-        return $this->success();
-    }
-
-    public function syncTags()
-    {
-        $data = $this->validate(request(), [
-            'taggableIds' => 'required|array',
-            'taggableType' => 'required|string',
-            'tagIds' => 'required|array',
-            'userId' => 'nullable|integer',
-            'detach' => 'nullable|boolean',
-        ]);
-
-        $taggable = app(modelTypeToNamespace($data['taggableType']));
-        $taggables = $taggable->whereIn('id', $data['taggableIds'])->get();
-        $this->authorize(
-            'update',
-            $taggables->count() === 1
-                ? $taggables[0]
-                : [$taggable::class, $taggables],
-        );
-
-        foreach (self::$beforeTagChangeCallbacks as $callback) {
-            $callback($taggables);
-        }
-
-        $ids = collect($data['tagIds'])->mapWithKeys(
-            fn($id) => [$id => ['user_id' => $data['userId'] ?? null]],
-        );
-
-        foreach ($taggables as $taggable) {
-            $taggable->tags()->sync($ids, $data['detach'] ?? false);
-        }
-
-        foreach (self::$afterTagChangeCallbacks as $callback) {
-            $callback($taggables);
-        }
 
         return $this->success();
     }

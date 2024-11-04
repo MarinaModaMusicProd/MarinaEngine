@@ -22,7 +22,7 @@ export function useUpdateCategory(form: UseFormReturn<CreateCategoryPayload>) {
   return useMutation({
     mutationFn: (payload: UpdateCategoryPayload) => updateCategory(payload),
     onSuccess: async response => {
-      await queryClient.invalidateQueries({queryKey: ['categories']});
+      await queryClient.invalidateQueries({queryKey: ['hc', 'categories']});
       const part = response.category.is_section ? 'sections' : 'categories';
       toast(
         trans(

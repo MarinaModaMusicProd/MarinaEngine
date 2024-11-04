@@ -140,7 +140,7 @@ export interface AdminServerSettings {
   tmdb_api_key?: string;
   rating_column?: string;
 
-  // MarinaModa
+  // MarinaModaMusicProd
   spotify_id?: string;
   spotify_secret?: string;
   lastfm_api_key?: string;

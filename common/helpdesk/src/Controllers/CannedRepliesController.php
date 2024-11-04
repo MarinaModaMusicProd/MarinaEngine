@@ -19,13 +19,12 @@ class CannedRepliesController extends BaseController
             $builder->with('user');
         }
 
-        if ($userId = request('forUser')) {
+        if ($userId = request('userId')) {
             $builder->where('user_id', $userId);
 
-            $builder->orWhere(function($query) {
-                $userGroupIds = Auth::user()->groups->pluck('id')->toArray();
-                $query->whereIn('group_id', $userGroupIds)->where('shared', true);
-            });
+            if (request('shared')) {
+                $builder->orWhere('shared', true);
+            }
         }
 
         $pagination = (new Datasource($builder, request()->all()))->paginate();

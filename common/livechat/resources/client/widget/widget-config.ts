@@ -27,40 +27,4 @@ export interface WidgetConfig {
   spacing?: {side: string; bottom: string};
   inheritThemes?: boolean;
   defaultTheme?: 'light' | 'dark' | 'system';
-  forms?: {
-    preChat?: {
-      disabled?: boolean;
-      elements: WidgetFormElementConfig[];
-    };
-    postChat?: {
-      disabled?: boolean;
-      elements: WidgetFormElementConfig[];
-    };
-  };
 }
-
-export interface WidgetFormInformationConfig {
-  id: string;
-  name: 'information';
-  message: string;
-}
-
-interface WidgetFormTextFieldConfig {
-  id: string;
-  name: 'name' | 'email' | 'input';
-  label: string;
-  required?: boolean;
-}
-
-interface WidgetFormChoiceListConfig {
-  id: string;
-  name: 'radio' | 'checkboxes' | 'dropdown' | 'group';
-  label: string;
-  options: {label: string; id: string; value?: string | number}[];
-  required?: boolean;
-}
-
-export type WidgetFormElementConfig =
-  | WidgetFormInformationConfig
-  | WidgetFormTextFieldConfig
-  | WidgetFormChoiceListConfig;

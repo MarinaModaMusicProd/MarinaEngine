@@ -17,7 +17,26 @@ export function useUpdateAdminSettings(
   form: UseFormReturn<AdminSettingsWithFiles>,
 ) {
   return useMutation({
-    mutationFn: (props: AdminSettingsWithFiles) => updateAdminSettings(props),
+    mutationFn: (props: AdminSettingsWithFiles) => {
+      // todo: test these after refactor
+      // if ((props.client as any)?.artistPage?.tabs) {
+      //   (props.client as any).artistPage.tabs = JSON.stringify(
+      //     (props.client as any).artistPage.tabs,
+      //   ) as any;
+      // }
+      // if ((props.client as any)?.title_page?.sections) {
+      //   (props.client as any).title_page.sections = JSON.stringify(
+      //     (props.client as any).title_page.sections,
+      //   ) as any;
+      // }
+      // if ((props.client as any)?.publish?.default_credentials) {
+      //   (props.client as any).publish.default_credentials = JSON.stringify(
+      //     (props.client as any).publish.default_credentials,
+      //   ) as any;
+      // }
+
+      return updateAdminSettings(props);
+    },
     onSuccess: response => {
       toast(message('Settings updated'), {
         position: 'bottom-right',

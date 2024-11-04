@@ -1,5 +1,7 @@
 import {useSubmitChatMessage} from '@livechat/widget/chat/use-submit-chat-message';
 import React, {Fragment, ReactElement} from 'react';
+import {useNewMessageEvent} from '@livechat/widget/chat/broadcasting/use-new-message-event';
+import {queryClient} from '@common/http/query-client';
 import {ChatFeedMessage} from '@livechat/widget/chat/feed/chat-feed-message';
 import {Trans} from '@ui/i18n/trans';
 import {FileUploadProvider} from '@common/uploads/uploader/file-upload-provider';
@@ -25,18 +27,11 @@ import {ActiveChatScreenHeader} from '@livechat/widget/chat/active-chat-screen/h
 import {Button} from '@ui/buttons/button';
 import {SendIcon} from '@ui/icons/material/Send';
 import {FormattedDate} from '@ui/i18n/formatted-date';
-import {useAllWidgetAgents} from '@livechat/widget/use-all-widget-agents';
-import {ChatFeedInfiniteScrollSentinel} from '@livechat/widget/chat/chat-feed-infinite-scroll-sentinel';
-import {useClearUnseenChats} from '@livechat/dashboard/unseen-chats/use-clear-unseen-chats';
-import {WidgetPreChatForm} from '@livechat/widget/chat/feed/widget-pre-chat-form';
-import {useSettings} from '@ui/settings/use-settings';
-import {HelpOutlineIcon} from '@ui/icons/material/HelpOutline';
+import {useAllAgents} from '@livechat/widget/use-all-agents';
 
 export function ActiveChatScreen() {
   const {data, fetchStatus} = useWidgetChat();
   const {state} = useLocation();
-
-  useClearUnseenChats();
 
   let content: ReactElement;
   if (data?.chat) {
@@ -69,21 +64,15 @@ export function ActiveChatScreen() {
 function PlaceholderChatFeed() {
   const {messages, handleSubmitMessage, isCreatingChat} =
     usePlaceholderChatFeed();
-  const {chatWidget} = useSettings();
-  const preChatForm = chatWidget?.forms?.preChat;
   return (
     <ChatFeedLayout
       header={<ActiveChatScreenHeader />}
       feed={
-        preChatForm?.disabled || !preChatForm?.elements.length ? (
-          <div className="space-y-12">
-            {messages.map(message => (
-              <WidgetChatFeedMessage key={message.id} message={message} />
-            ))}
-          </div>
-        ) : (
-          <WidgetPreChatForm />
-        )
+        <div className="space-y-12">
+          {messages.map(message => (
+            <WidgetChatFeedMessage key={message.id} message={message} />
+          ))}
+        </div>
       }
       editor={
         <WidgetChatTextEditor
@@ -101,6 +90,17 @@ interface ChatFeedProps {
 function ChatFeed({data}: ChatFeedProps) {
   const chatId = data.chat.id;
   const query = useWidgetChatMessages();
+
+  // todo: use sound manager, maybe put into useNewMessageEvent
+
+  useNewMessageEvent({
+    chat: data.chat,
+    onMessageCreated: () => {
+      queryClient.invalidateQueries({
+        queryKey: widgetChatMessagesQueryKey(chatId),
+      });
+    },
+  });
 
   const submitMessage = useSubmitChatMessage(
     widgetChatMessagesQueryKey(chatId),
@@ -120,21 +120,22 @@ function ChatFeed({data}: ChatFeedProps) {
       header={<ActiveChatScreenHeader data={data} />}
       feed={
         <Fragment>
-          <ChatFeedInfiniteScrollSentinel query={query} />
-          <ChatFeedInfiniteScrollContainer
-            className="my-12 space-y-12"
-            data={query.data?.pages}
-          >
-            {query.data?.pages.map((page, index) =>
-              page.pagination.data.map(message => (
+          {query.data?.pages.map((page, index) => (
+            <ChatFeedInfiniteScrollContainer
+              key={page.pagination.current_page}
+              index={index}
+              totalPages={query.data.pages.length}
+              className="my-12 space-y-12"
+            >
+              {page.pagination.data.map(message => (
                 <WidgetChatFeedMessage
                   key={message.id}
                   message={message}
                   chat={data.chat}
                 />
-              )),
-            )}
-          </ChatFeedInfiniteScrollContainer>
+              ))}
+            </ChatFeedInfiniteScrollContainer>
+          ))}
         </Fragment>
       }
       editor={
@@ -178,25 +179,6 @@ function WidgetChatFeedMessage({message, chat}: WidgetChatFeedMessageProps) {
       </div>
     ) : null;
   }
-  if (message.type === 'preChatFormData') {
-    return (
-      <div className="relative mx-12 mb-24 mt-40 rounded-panel border p-24">
-        <div className="absolute -top-20 left-0 right-0 mx-auto h-40 w-40 rounded-full bg-primary p-8 text-on-primary">
-          <HelpOutlineIcon className="block" />
-        </div>
-        <div className="space-y-8 text-sm">
-          {message.body.map(item => (
-            <div key={item.id}>
-              <div className="text-muted">
-                <Trans message={item.label} />
-              </div>
-              <div>{item.value}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
   return (
     <ChatFeedMessage
       key={message.id}
@@ -215,11 +197,10 @@ interface ChatFeedLayoutProps {
   feed: ReactElement;
   editor: ReactElement;
 }
-
 function ChatFeedLayout({header, feed, editor}: ChatFeedLayoutProps) {
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="compact-scrollbar min-h-0 flex-auto overflow-auto overscroll-contain px-14 pb-14 stable-scrollbar">
+      <div className="compact-scrollbar stable-scrollbar min-h-0 flex-auto overflow-auto overscroll-contain px-14 pb-14">
         {header}
         {feed}
       </div>
@@ -233,7 +214,7 @@ interface EventTextProps {
   chat?: Chat;
 }
 function EventText({event, chat}: EventTextProps) {
-  const agents = useAllWidgetAgents();
+  const agents = useAllAgents();
   switch (event.body.name) {
     case 'visitor.startedChat':
       return <Trans message="You have started the chat" />;
@@ -265,7 +246,7 @@ function EventText({event, chat}: EventTextProps) {
         );
       }
       return null;
-    case 'agent.changed':
+    case 'agent.reassigned':
       if (event.body.newAgent) {
         return (
           <Trans

@@ -41,11 +41,7 @@ class ChatMessage extends ConversationItem
     {
         return Attribute::make(
             get: function (string|null $value) {
-                if (
-                    $value &&
-                    ($this->type === 'event' ||
-                        $this->type === 'preChatFormData')
-                ) {
+                if ($value && $this->type === 'event') {
                     return json_decode($value, true);
                 }
                 return $value;
