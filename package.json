@@ -10,7 +10,7 @@
     "extract": "node ./resources/scripts/extract-translations.js"
   },
   "dependencies": {
-    "@floating-ui/react-dom": "^2.0.2",
+    "@floating-ui/react-dom": "^2.1.2",
     "@internationalized/date": "^3.5.0",
     "@internationalized/number": "^3.3.0",
     "@paypal/paypal-js": "^7.0.3",
