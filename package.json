@@ -76,7 +76,7 @@
     "react-use-clipboard": "^1.0.7",
     "react-use-cookie": "^1.4.0",
     "slugify": "^1.6.5",
-    "swagger-ui-react": "^4.15",
+    "swagger-ui-react": "^5.17",
     "tus-js-client": "^4.2.3",
     "url-regex": "^5.0.0",
     "use-debounce": "^9.0.4",
