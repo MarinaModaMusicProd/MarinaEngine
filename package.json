@@ -42,7 +42,7 @@
     "@tiptap/starter-kit": "^2.1.12",
     "@types/google.visualization": "^0.0.71",
     "@vitejs/plugin-react-swc": "^3.4.0",
-    "ace-builds": "^1.31.0",
+    "ace-builds": "^1.36.3",
     "axios": "^1.7.7",
     "axios-retry": "^3.8.1",
     "chart.js": "^4.4.0",
