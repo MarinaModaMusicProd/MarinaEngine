@@ -80,31 +80,35 @@ export function useDateRangePickerState(
   });
 
   const constrainRange = useCallback(
-    (range: DateRangeValue): DateRangeValue => {
-      let start = range.start;
-      let end = range.end;
+      (range: DateRangeValue): DateRangeValue => {
+        let start: ZonedDateTime = range.start ?? now;
+        let end: ZonedDateTime = range.end ?? now;
 
-      // make sure start date is after min date and before max date/range end
-      if (min) {
-        start = maxDate(start, min);
-      }
-      const startMax = max ? minDate(max, end) : end;
-      start = minDate(start, startMax);
+        // Убедимся, что начальная дата больше минимальной и меньше конечной
+        if (min) {
+          start = (maxDate(start, min) as ZonedDateTime) ?? start;
+        }
+        const startMax = max ? minDate(max, end) : end;
+        if (startMax) {
+          start = (minDate(start, startMax) as ZonedDateTime) ?? start;
+        }
 
-      // make sure end date is after min date/range start and before max date
-      const endMin = min ? maxDate(min, start) : start;
-      end = maxDate(end, endMin);
+        // Убедимся, что конечная дата больше минимальной и начальной
+        const endMin = min ? maxDate(min, start) : start;
+        if (endMin) {
+          end = (maxDate(end, endMin) as ZonedDateTime) ?? end;
+        }
 
-      if (max) {
-        end = minDate(end, max);
-      }
+        if (max) {
+          end = (minDate(end, max) as ZonedDateTime) ?? end;
+        }
 
-      return {
-        start: toSafeZoned(start, timezone),
-        end: toSafeZoned(end, timezone),
-      };
-    },
-    [min, max, timezone],
+        return {
+          start: toSafeZoned(start, timezone),
+          end: toSafeZoned(end, timezone),
+        };
+      },
+      [min, max, timezone, now],
   );
 
   const setSelectedValue = useCallback(

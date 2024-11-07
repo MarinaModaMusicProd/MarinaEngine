@@ -175,15 +175,13 @@ export function useInfiniteData<
     items,
     totalItems,
     noResults: query.data?.pages?.[0].pagination.data.length === 0,
-    // can't use "isRefetching", it's true for some reason when changing sorting or filters
     isReloading:
-      query.isFetching && !query.isFetchingNextPage && query.isPlaceholderData,
+        query.isFetching && !query.isFetchingNextPage && query.isPlaceholderData,
     sortDescriptor,
     setSortDescriptor,
     searchQuery,
     setSearchQuery,
-  } as UseInfiniteDataResult<T, E, S>;
-}
+  } as unknown as UseInfiniteDataResult<T, E, S>;}
 
 async function fetchData<T>(
   endpoint: string,
