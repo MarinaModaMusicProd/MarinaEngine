@@ -11,7 +11,7 @@ export interface User {
 
 export interface CompactUser {
   id: number;
-  name: string;
+  name?: string;
   image?: string;
 }
 

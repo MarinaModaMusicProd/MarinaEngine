@@ -28,6 +28,7 @@ import {BaseBackendUser} from '@common/auth/base-backend-user';
 import {getBootstrapData} from '@ui/bootstrap-data/bootstrap-data-store';
 import {rootEl} from '@ui/root-el';
 import {Omit} from 'utility-types';
+import { BrowserTracing } from "@sentry/tracing";
 
 declare module '@common/http/value-lists' {
   interface FetchValueListsResponse {
@@ -153,7 +154,7 @@ const sentryDsn = data.settings.logging.sentry_public;
 if (sentryDsn && import.meta.env.PROD) {
   Sentry.init({
     dsn: sentryDsn,
-    integrations: [new Sentry.BrowserTracing()],
+    integrations: [new BrowserTracing()],
     tracesSampleRate: 0.2,
     ignoreErrors: ignoredSentryErrors,
     release: data.sentry_release,

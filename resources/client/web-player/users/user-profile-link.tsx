@@ -29,5 +29,5 @@ export function UserProfileLink({
 }
 
 export function getUserProfileLink(user: CompactUser): string {
-  return `/user/${user.id}/${slugifyString(user.name)}`;
+  return `/user/${user.id}/${slugifyString(user.name ?? 'User')}`;
 }
