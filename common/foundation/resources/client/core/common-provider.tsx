@@ -26,6 +26,7 @@ import {TopProgressBar} from '@ui/progress/top-progress-bar';
 import {NotFoundPage} from '@common/ui/not-found-page/not-found-page';
 import {PageErrorMessage} from '@common/errors/page-error-message';
 import {userSuspendedRouter} from '@common/auth/ui/user-suspended-page/user-suspended-page';
+import WebApp from '@twa-dev/sdk';
 
 const mergedConfig = deepMerge(BaseSiteConfig, SiteConfig);
 
@@ -54,6 +55,21 @@ interface CommonRouterProps {
 function CommonRouter({router}: CommonRouterProps) {
   const {require_email_confirmation} = useSettings();
   const {user} = useAuth();
+
+  useEffect(() => {
+    if (!window && !WebApp?.initData) return;
+    WebApp.ready();
+    WebApp.expand();
+    WebApp.BackButton.onClick(() => {
+      history.back();
+    });
+
+    if (window.location.pathname === '/') {
+      WebApp.BackButton.hide();
+    } else {
+      WebApp.BackButton.show();
+    }
+  });
 
   if (user != null && require_email_confirmation && !user.email_verified_at) {
     return (
