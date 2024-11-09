@@ -1,41 +1,41 @@
 {
-  "_CalendarToday-15f5fabe.js": {
-    "file": "assets/CalendarToday-15f5fabe.js",
+  "_CalendarToday-7aca926b.js": {
+    "file": "assets/CalendarToday-7aca926b.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_Edit-e4199750.js": {
-    "file": "assets/Edit-e4199750.js",
+  "_Edit-0dc78c79.js": {
+    "file": "assets/Edit-0dc78c79.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_History-b40ad984.js": {
-    "file": "assets/History-b40ad984.js",
+  "_History-42b414ab.js": {
+    "file": "assets/History-42b414ab.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_MoreHoriz-685b90bb.js": {
-    "file": "assets/MoreHoriz-685b90bb.js",
+  "_MoreHoriz-1cb235b0.js": {
+    "file": "assets/MoreHoriz-1cb235b0.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_TaskAlt-3625afba.js": {
-    "file": "assets/TaskAlt-3625afba.js",
+  "_TaskAlt-04e9c8b3.js": {
+    "file": "assets/TaskAlt-04e9c8b3.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_TrendingUp-387a1dd2.js": {
-    "file": "assets/TrendingUp-387a1dd2.js",
+  "_TrendingUp-3abdbe01.js": {
+    "file": "assets/TrendingUp-3abdbe01.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_app-admin-routes.lazy-c59cd1f5.js": {
+  "_app-admin-routes.lazy-b3247644.js": {
     "assets": [
       "assets/team-de984127.svg",
       "assets/dropdown-menu-c9b3bd6a.svg",
@@ -59,61 +59,61 @@
       "common/foundation/resources/client/article-editor/article-body-editor.tsx",
       "common/foundation/resources/client/article-editor/article-body-editor.tsx"
     ],
-    "file": "assets/app-admin-routes.lazy-c59cd1f5.js",
+    "file": "assets/app-admin-routes.lazy-b3247644.js",
     "imports": [
       "resources/client/main.tsx",
-      "_slider-75fbadb8.js",
-      "_use-resume-subscription-decd2ec8.js",
-      "_geo-chart-7554eae9.js",
-      "_backstage-track-insights-fb0ed899.js",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_theme-value-to-hex-d6363659.js",
-      "_Edit-e4199750.js",
-      "_use-admin-report-bcd42c1d.js"
+      "_slider-0526c320.js",
+      "_use-resume-subscription-58e7c496.js",
+      "_geo-chart-3a6ba31f.js",
+      "_backstage-track-insights-40e48e04.js",
+      "_play-arrow-filled-9a857e36.js",
+      "_theme-value-to-hex-d087b0db.js",
+      "_Edit-0dc78c79.js",
+      "_use-admin-report-90708a9b.js"
     ],
     "isDynamicEntry": true
   },
-  "_backstage-track-insights-fb0ed899.js": {
+  "_backstage-track-insights-40e48e04.js": {
     "assets": [
       "assets/music-7a11c2fe.svg",
       "assets/light-bg-8c37cb47.svg",
       "assets/dark-bg-38ecc414.svg",
       "assets/album-border-b5dd7d9f.png"
     ],
-    "file": "assets/backstage-track-insights-fb0ed899.js",
+    "file": "assets/backstage-track-insights-40e48e04.js",
     "imports": [
       "resources/client/main.tsx",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_theme-value-to-hex-d6363659.js",
-      "_geo-chart-7554eae9.js",
-      "_Edit-e4199750.js"
+      "_play-arrow-filled-9a857e36.js",
+      "_theme-value-to-hex-d087b0db.js",
+      "_geo-chart-3a6ba31f.js",
+      "_Edit-0dc78c79.js"
     ]
   },
-  "_billing-redirect-message-b876575f.js": {
-    "file": "assets/billing-redirect-message-b876575f.js",
+  "_billing-redirect-message-b664963e.js": {
+    "file": "assets/billing-redirect-message-b664963e.js",
     "imports": [
       "resources/client/main.tsx",
-      "_TaskAlt-3625afba.js"
+      "_TaskAlt-04e9c8b3.js"
     ]
   },
-  "_c-372ebe0b.js": {
-    "file": "assets/c-372ebe0b.js",
+  "_c-bf23b6dc.js": {
+    "file": "assets/c-bf23b6dc.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_geo-chart-7554eae9.js": {
+  "_geo-chart-3a6ba31f.js": {
     "dynamicImports": [
       "common/foundation/resources/client/charts/lazy-chart.tsx"
     ],
-    "file": "assets/geo-chart-7554eae9.js",
+    "file": "assets/geo-chart-3a6ba31f.js",
     "imports": [
       "resources/client/main.tsx",
-      "_theme-value-to-hex-d6363659.js"
+      "_theme-value-to-hex-d087b0db.js"
     ]
   },
-  "_index-c91d555d.js": {
-    "file": "assets/index-c91d555d.js",
+  "_index-d5740235.js": {
+    "file": "assets/index-d5740235.js",
     "imports": [
       "resources/client/main.tsx"
     ]
@@ -121,44 +121,44 @@
   "_linkify.es-7225a065.js": {
     "file": "assets/linkify.es-7225a065.js"
   },
-  "_play-arrow-filled-c2a5dd29.js": {
-    "file": "assets/play-arrow-filled-c2a5dd29.js",
+  "_play-arrow-filled-9a857e36.js": {
+    "file": "assets/play-arrow-filled-9a857e36.js",
     "imports": [
       "resources/client/main.tsx",
-      "_theme-value-to-hex-d6363659.js"
+      "_theme-value-to-hex-d087b0db.js"
     ]
   },
-  "_slider-75fbadb8.js": {
-    "file": "assets/slider-75fbadb8.js",
+  "_slider-0526c320.js": {
+    "file": "assets/slider-0526c320.js",
     "imports": [
       "resources/client/main.tsx",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_theme-value-to-hex-d6363659.js"
+      "_play-arrow-filled-9a857e36.js",
+      "_theme-value-to-hex-d087b0db.js"
     ]
   },
-  "_theme-value-to-hex-d6363659.js": {
-    "file": "assets/theme-value-to-hex-d6363659.js",
+  "_theme-value-to-hex-d087b0db.js": {
+    "file": "assets/theme-value-to-hex-d087b0db.js",
     "imports": [
       "resources/client/main.tsx"
     ]
   },
-  "_use-admin-report-bcd42c1d.js": {
-    "file": "assets/use-admin-report-bcd42c1d.js",
+  "_use-admin-report-90708a9b.js": {
+    "file": "assets/use-admin-report-90708a9b.js",
     "imports": [
       "resources/client/main.tsx",
-      "_TrendingUp-387a1dd2.js",
-      "_geo-chart-7554eae9.js",
-      "_theme-value-to-hex-d6363659.js"
+      "_TrendingUp-3abdbe01.js",
+      "_geo-chart-3a6ba31f.js",
+      "_theme-value-to-hex-d087b0db.js"
     ]
   },
-  "_use-resume-subscription-decd2ec8.js": {
-    "file": "assets/use-resume-subscription-decd2ec8.js",
+  "_use-resume-subscription-58e7c496.js": {
+    "file": "assets/use-resume-subscription-58e7c496.js",
     "imports": [
       "resources/client/main.tsx",
-      "_MoreHoriz-685b90bb.js"
+      "_MoreHoriz-1cb235b0.js"
     ]
   },
-  "_web-player-routes.lazy-f268c23a.js": {
+  "_web-player-routes.lazy-39a8fa82.js": {
     "assets": [
       "assets/equalizer-white-29f31645.gif",
       "assets/equalizer-black-498817c4.gif",
@@ -168,17 +168,17 @@
       "common/foundation/resources/client/player/providers/hls-provider.tsx",
       "common/foundation/resources/client/player/providers/dash-provider.tsx"
     ],
-    "file": "assets/web-player-routes.lazy-f268c23a.js",
+    "file": "assets/web-player-routes.lazy-39a8fa82.js",
     "imports": [
       "resources/client/main.tsx",
-      "_slider-75fbadb8.js",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_MoreHoriz-685b90bb.js",
-      "_History-b40ad984.js",
-      "_theme-value-to-hex-d6363659.js",
-      "_TrendingUp-387a1dd2.js",
+      "_slider-0526c320.js",
+      "_play-arrow-filled-9a857e36.js",
+      "_MoreHoriz-1cb235b0.js",
+      "_History-42b414ab.js",
+      "_theme-value-to-hex-d087b0db.js",
+      "_TrendingUp-3abdbe01.js",
       "_linkify.es-7225a065.js",
-      "_Edit-e4199750.js"
+      "_Edit-0dc78c79.js"
     ],
     "isDynamicEntry": true
   },
@@ -189,22 +189,22 @@
       "assets/worker-php-47e5dfe7.js",
       "assets/worker-javascript-c4599136.js"
     ],
-    "file": "assets/ace-editor-adb208d8.js",
+    "file": "assets/ace-editor-12576847.js",
     "imports": [
       "resources/client/main.tsx",
-      "_index-c91d555d.js"
+      "_index-d5740235.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/ace-editor/ace-editor.tsx"
   },
   "common/foundation/resources/client/admin/analytics/admin-report-page.tsx": {
-    "file": "assets/admin-report-page-2575344d.js",
+    "file": "assets/admin-report-page-043b0208.js",
     "imports": [
       "resources/client/main.tsx",
-      "_use-admin-report-bcd42c1d.js",
-      "_geo-chart-7554eae9.js",
-      "_TrendingUp-387a1dd2.js",
-      "_theme-value-to-hex-d6363659.js"
+      "_use-admin-report-90708a9b.js",
+      "_geo-chart-3a6ba31f.js",
+      "_TrendingUp-3abdbe01.js",
+      "_theme-value-to-hex-d087b0db.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/admin/analytics/admin-report-page.tsx"
@@ -261,11 +261,11 @@
     "css": [
       "assets/article-body-editor-c0ff5600.css"
     ],
-    "file": "assets/article-body-editor-79a6eae9.js",
+    "file": "assets/article-body-editor-e6da6f54.js",
     "imports": [
       "resources/client/main.tsx",
       "_linkify.es-7225a065.js",
-      "_c-372ebe0b.js"
+      "_c-bf23b6dc.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/article-editor/article-body-editor.tsx"
@@ -286,31 +286,31 @@
     "assets": [
       "assets/paypal-c2a77c63.svg"
     ],
-    "file": "assets/billing-page-routes.lazy-be128497.js",
+    "file": "assets/billing-page-routes.lazy-f0a583b3.js",
     "imports": [
       "resources/client/main.tsx",
-      "_CalendarToday-15f5fabe.js",
-      "_use-resume-subscription-decd2ec8.js",
-      "_Edit-e4199750.js",
-      "_billing-redirect-message-b876575f.js",
-      "_MoreHoriz-685b90bb.js",
-      "_TaskAlt-3625afba.js"
+      "_CalendarToday-7aca926b.js",
+      "_use-resume-subscription-58e7c496.js",
+      "_Edit-0dc78c79.js",
+      "_billing-redirect-message-b664963e.js",
+      "_MoreHoriz-1cb235b0.js",
+      "_TaskAlt-04e9c8b3.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/billing/billing-page/routes/billing-page-routes.lazy.tsx"
   },
   "common/foundation/resources/client/billing/checkout/routes/checkout-routes.lazy.tsx": {
-    "file": "assets/checkout-routes.lazy-61a4e1f9.js",
+    "file": "assets/checkout-routes.lazy-42937300.js",
     "imports": [
       "resources/client/main.tsx",
-      "_billing-redirect-message-b876575f.js",
-      "_TaskAlt-3625afba.js"
+      "_billing-redirect-message-b664963e.js",
+      "_TaskAlt-04e9c8b3.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/billing/checkout/routes/checkout-routes.lazy.tsx"
   },
   "common/foundation/resources/client/charts/lazy-chart.tsx": {
-    "file": "assets/lazy-chart-990c4d4c.js",
+    "file": "assets/lazy-chart-30511344.js",
     "imports": [
       "resources/client/main.tsx"
     ],
@@ -326,35 +326,35 @@
     "src": "common/foundation/resources/client/notifications/empty-state/notify.svg"
   },
   "common/foundation/resources/client/player/providers/dash-provider.tsx": {
-    "file": "assets/dash-provider-2685033f.js",
+    "file": "assets/dash-provider-59d2f59b.js",
     "imports": [
       "resources/client/main.tsx",
-      "_web-player-routes.lazy-f268c23a.js",
-      "_slider-75fbadb8.js",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_theme-value-to-hex-d6363659.js",
-      "_MoreHoriz-685b90bb.js",
-      "_History-b40ad984.js",
-      "_TrendingUp-387a1dd2.js",
+      "_web-player-routes.lazy-39a8fa82.js",
+      "_slider-0526c320.js",
+      "_play-arrow-filled-9a857e36.js",
+      "_theme-value-to-hex-d087b0db.js",
+      "_MoreHoriz-1cb235b0.js",
+      "_History-42b414ab.js",
+      "_TrendingUp-3abdbe01.js",
       "_linkify.es-7225a065.js",
-      "_Edit-e4199750.js"
+      "_Edit-0dc78c79.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/player/providers/dash-provider.tsx"
   },
   "common/foundation/resources/client/player/providers/hls-provider.tsx": {
-    "file": "assets/hls-provider-3cca4fb9.js",
+    "file": "assets/hls-provider-d7081ec3.js",
     "imports": [
       "resources/client/main.tsx",
-      "_web-player-routes.lazy-f268c23a.js",
-      "_slider-75fbadb8.js",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_theme-value-to-hex-d6363659.js",
-      "_MoreHoriz-685b90bb.js",
-      "_History-b40ad984.js",
-      "_TrendingUp-387a1dd2.js",
+      "_web-player-routes.lazy-39a8fa82.js",
+      "_slider-0526c320.js",
+      "_play-arrow-filled-9a857e36.js",
+      "_theme-value-to-hex-d087b0db.js",
+      "_MoreHoriz-1cb235b0.js",
+      "_History-42b414ab.js",
+      "_TrendingUp-3abdbe01.js",
       "_linkify.es-7225a065.js",
-      "_Edit-e4199750.js"
+      "_Edit-0dc78c79.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/player/providers/hls-provider.tsx"
@@ -367,10 +367,10 @@
     "css": [
       "assets/swagger-api-docs-page-34ffaf07.css"
     ],
-    "file": "assets/swagger-api-docs-page-40be3ddf.js",
+    "file": "assets/swagger-api-docs-page-379053a9.js",
     "imports": [
       "resources/client/main.tsx",
-      "_index-c91d555d.js"
+      "_index-d5740235.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/swagger/swagger-api-docs-page.tsx"
@@ -383,9 +383,9 @@
     "css": [
       "assets/highlight-b5e2c008.css"
     ],
-    "file": "assets/highlight-a791842b.js",
+    "file": "assets/highlight-0c650203.js",
     "imports": [
-      "_c-372ebe0b.js",
+      "_c-bf23b6dc.js",
       "resources/client/main.tsx"
     ],
     "isDynamicEntry": true,
@@ -396,23 +396,23 @@
     "src": "common/foundation/resources/client/ui/font-selector/font.svg"
   },
   "common/foundation/resources/client/ui/icon-picker/icon-list.tsx": {
-    "file": "assets/icon-list-6021145c.js",
+    "file": "assets/icon-list-a4612d80.js",
     "imports": [
       "resources/client/main.tsx",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_geo-chart-7554eae9.js",
-      "_History-b40ad984.js",
-      "_app-admin-routes.lazy-c59cd1f5.js",
-      "_CalendarToday-15f5fabe.js",
-      "_use-resume-subscription-decd2ec8.js",
-      "_backstage-track-insights-fb0ed899.js",
-      "_slider-75fbadb8.js",
-      "_Edit-e4199750.js",
-      "_theme-value-to-hex-d6363659.js",
-      "_MoreHoriz-685b90bb.js",
-      "_TaskAlt-3625afba.js",
-      "_use-admin-report-bcd42c1d.js",
-      "_TrendingUp-387a1dd2.js"
+      "_play-arrow-filled-9a857e36.js",
+      "_geo-chart-3a6ba31f.js",
+      "_History-42b414ab.js",
+      "_app-admin-routes.lazy-b3247644.js",
+      "_CalendarToday-7aca926b.js",
+      "_use-resume-subscription-58e7c496.js",
+      "_backstage-track-insights-40e48e04.js",
+      "_slider-0526c320.js",
+      "_Edit-0dc78c79.js",
+      "_theme-value-to-hex-d087b0db.js",
+      "_MoreHoriz-1cb235b0.js",
+      "_TaskAlt-04e9c8b3.js",
+      "_use-admin-report-90708a9b.js",
+      "_TrendingUp-3abdbe01.js"
     ],
     "isDynamicEntry": true,
     "src": "common/foundation/resources/client/ui/icon-picker/icon-list.tsx"
@@ -499,15 +499,15 @@
     ],
     "dynamicImports": [
       "common/foundation/resources/client/text-editor/highlight/highlight.ts",
-      "_app-admin-routes.lazy-c59cd1f5.js",
+      "_app-admin-routes.lazy-b3247644.js",
       "common/foundation/resources/client/admin/analytics/admin-report-page.tsx",
       "common/foundation/resources/client/billing/checkout/routes/checkout-routes.lazy.tsx",
       "common/foundation/resources/client/billing/billing-page/routes/billing-page-routes.lazy.tsx",
       "resources/client/web-player/backstage/routes/backstage-routes.lazy.ts",
-      "_web-player-routes.lazy-f268c23a.js",
+      "_web-player-routes.lazy-39a8fa82.js",
       "common/foundation/resources/client/swagger/swagger-api-docs-page.tsx"
     ],
-    "file": "assets/main-09d2a8d7.js",
+    "file": "assets/main-6fa2784c.js",
     "isEntry": true,
     "src": "resources/client/main.tsx"
   },
@@ -532,14 +532,14 @@
       "assets/claim-label-9a476d72.jpg",
       "assets/claim-artist-c781927a.jpg"
     ],
-    "file": "assets/backstage-routes.lazy-681c34fa.js",
+    "file": "assets/backstage-routes.lazy-6e91d9cd.js",
     "imports": [
       "resources/client/main.tsx",
-      "_play-arrow-filled-c2a5dd29.js",
-      "_backstage-track-insights-fb0ed899.js",
-      "_theme-value-to-hex-d6363659.js",
-      "_geo-chart-7554eae9.js",
-      "_Edit-e4199750.js"
+      "_play-arrow-filled-9a857e36.js",
+      "_backstage-track-insights-40e48e04.js",
+      "_theme-value-to-hex-d087b0db.js",
+      "_geo-chart-3a6ba31f.js",
+      "_Edit-0dc78c79.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/client/web-player/backstage/routes/backstage-routes.lazy.ts"

@@ -57,6 +57,8 @@ function CommonRouter({router}: CommonRouterProps) {
   const {user} = useAuth();
 
   useEffect(() => {
+    console.log(WebApp);
+    console.log(window.location.pathname);
     if (!window && !WebApp?.initData) return;
     WebApp.ready();
     WebApp.expand();
