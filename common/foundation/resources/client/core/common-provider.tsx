@@ -35,7 +35,6 @@ interface Props {
   router: Router;
 }
 export function CommonProvider({router}: Props) {
-  console.log('CommonProvider');
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
