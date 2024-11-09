@@ -59,15 +59,16 @@ function CommonRouter({router}: CommonRouterProps) {
   const {user} = useAuth();
 
   useEffect(() => {
+    console.log(router);
     if (!window && !WebApp?.initData) return;
     WebApp.ready();
     WebApp.expand();
     WebApp.BackButton.onClick(() => {
       history.back();
     });
-    console.log(router);
 
-    if (location.pathname === '/') {
+
+    if (window.location.pathname === '/') {
       WebApp.BackButton.hide();
     } else {
       WebApp.BackButton.show();
