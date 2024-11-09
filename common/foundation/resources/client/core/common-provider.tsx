@@ -57,7 +57,6 @@ interface CommonRouterProps {
 function CommonRouter({router}: CommonRouterProps) {
   const {require_email_confirmation} = useSettings();
   const {user} = useAuth();
-  const location = useLocation();
 
   useEffect(() => {
     if (!window && !WebApp?.initData) return;
@@ -66,7 +65,7 @@ function CommonRouter({router}: CommonRouterProps) {
     WebApp.BackButton.onClick(() => {
       history.back();
     });
-    console.log(location);
+    console.log(router);
 
     if (location.pathname === '/') {
       WebApp.BackButton.hide();
