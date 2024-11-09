@@ -57,23 +57,6 @@ function CommonRouter({router}: CommonRouterProps) {
   const {require_email_confirmation} = useSettings();
   const {user} = useAuth();
 
-  useEffect(() => {
-    console.log(router);
-    if (!window && !WebApp?.initData) return;
-    WebApp.ready();
-    WebApp.expand();
-    WebApp.BackButton.onClick(() => {
-      history.back();
-    });
-
-
-    if (window.location.pathname === '/') {
-      WebApp.BackButton.hide();
-    } else {
-      WebApp.BackButton.show();
-    }
-  });
-
   if (user != null && require_email_confirmation && !user.email_verified_at) {
     return (
       <RouterProvider
@@ -125,6 +108,23 @@ export function GlobalTopLoadingBar() {
   const [bar] = useState(() => new TopProgressBar());
   const {state} = useNavigation();
   const timeoutRef = useRef<any>(null);
+  console.log('GlobalTopLoadingBar');
+
+  useEffect(() => {
+    if (!window && !WebApp?.initData) return;
+    WebApp.ready();
+    WebApp.expand();
+    WebApp.BackButton.onClick(() => {
+      history.back();
+    });
+
+
+    if (window.location.pathname === '/') {
+      WebApp.BackButton.hide();
+    } else {
+      WebApp.BackButton.show();
+    }
+  });
 
   useEffect(() => {
     // react router will always set loading to true when "lazy" is set on route, even if that router is already loaded, this will result in loading bar showing for a few milliseconds
