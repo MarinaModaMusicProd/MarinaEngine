@@ -63,7 +63,7 @@ function CommonRouter({router}: CommonRouterProps) {
     WebApp.BackButton.onClick(() => {
       history.back();
     });
-    console.log(window.location.pathname === '/');
+    console.log(router);
 
     if (window.location.pathname === '/') {
       WebApp.BackButton.hide();
