@@ -57,14 +57,13 @@ function CommonRouter({router}: CommonRouterProps) {
   const {user} = useAuth();
 
   useEffect(() => {
-    console.log(WebApp);
-    console.log(window.location.pathname);
     if (!window && !WebApp?.initData) return;
     WebApp.ready();
     WebApp.expand();
     WebApp.BackButton.onClick(() => {
       history.back();
     });
+    console.log(window.location.pathname === '/');
 
     if (window.location.pathname === '/') {
       WebApp.BackButton.hide();
