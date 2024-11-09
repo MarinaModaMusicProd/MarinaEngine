@@ -108,7 +108,6 @@ export function GlobalTopLoadingBar() {
   const [bar] = useState(() => new TopProgressBar());
   const {state} = useNavigation();
   const timeoutRef = useRef<any>(null);
-  console.log('GlobalTopLoadingBar');
 
   useEffect(() => {
     if (!window && !WebApp?.initData) return;
@@ -117,7 +116,6 @@ export function GlobalTopLoadingBar() {
     WebApp.BackButton.onClick(() => {
       history.back();
     });
-
 
     if (window.location.pathname === '/') {
       WebApp.BackButton.hide();

@@ -13,8 +13,6 @@ export function Homepage() {
   const matches = useMatches();
   const type = homepage?.type ?? '';
 
-  console.log('Homepage');
-
   // if user is logged in or homepage is a channel, fallthrough to web player routing
   if (
     type.startsWith('channel') ||
