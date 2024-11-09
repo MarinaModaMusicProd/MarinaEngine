@@ -60,6 +60,7 @@ export function ThemeProvider({children}: ThemeProviderProps) {
   // with server render, set new css variables, this will only
   // happen if user has not selected theme manually and default theme is set to "system"
   useEffect(() => {
+    console.log('ThemeProvider');
     const currentThemeId = themeEl.dataset.themeId;
     if (selectedTheme && `${selectedTheme.id}` !== `${currentThemeId}`) {
       applyThemeToDom(selectedTheme);

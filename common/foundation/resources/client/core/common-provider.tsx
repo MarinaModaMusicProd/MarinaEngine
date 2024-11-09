@@ -20,6 +20,7 @@ import {
   RouterProvider,
   useNavigation,
   useRouteError,
+  useLocation
 } from 'react-router-dom';
 import {FullPageLoader} from '@ui/progress/full-page-loader';
 import {TopProgressBar} from '@ui/progress/top-progress-bar';
@@ -34,6 +35,7 @@ interface Props {
   router: Router;
 }
 export function CommonProvider({router}: Props) {
+  console.log('CommonProvider');
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
@@ -55,6 +57,7 @@ interface CommonRouterProps {
 function CommonRouter({router}: CommonRouterProps) {
   const {require_email_confirmation} = useSettings();
   const {user} = useAuth();
+  const location = useLocation();
 
   useEffect(() => {
     if (!window && !WebApp?.initData) return;
@@ -63,9 +66,9 @@ function CommonRouter({router}: CommonRouterProps) {
     WebApp.BackButton.onClick(() => {
       history.back();
     });
-    console.log(router);
+    console.log(location);
 
-    if (window.location.pathname === '/') {
+    if (location.pathname === '/') {
       WebApp.BackButton.hide();
     } else {
       WebApp.BackButton.show();
