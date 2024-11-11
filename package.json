@@ -12,7 +12,7 @@
   "dependencies": {
     "@floating-ui/react-dom": "^2.1.2",
     "@internationalized/date": "^3.5.0",
-    "@internationalized/number": "^3.3.0",
+    "@internationalized/number": "^3.5.4",
     "@paypal/paypal-js": "^7.0.3",
     "@react-aria/focus": "^3.14.3",
     "@react-aria/interactions": "^3.19.1",
