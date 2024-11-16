@@ -16,10 +16,11 @@ class Documentation
         }
         $pool->internalAddGeneratedFile(
             '
-ê
+ÔøΩ
 google/api/documentation.proto
-google.api"ª
-Documentation
+google.api"ÔøΩ
+
+Documentation
 summary (	
 pages (2.google.api.Page,
 rules (2.google.api.DocumentationRule
@@ -34,7 +35,7 @@ google.api"ª
 name (	
 content (	"
 subpages (2.google.api.PageBt
-com.google.apiBDocumentationProtoPZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;serviceconfig¢GAPIbproto3'
+com.google.apiBDocumentationProtoPZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;serviceconfigÔøΩGAPIbproto3'
         , true);
 
         static::$is_initialized = true;

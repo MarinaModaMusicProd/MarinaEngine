@@ -21,14 +21,14 @@ class AnalyticsDataApi
         \GPBMetadata\Google\Api\Resource::initOnce();
         $pool->internalAddGeneratedFile(
             '
-”,
-6google/analytics/data/v1alpha/analytics_data_api.protogoogle.analytics.data.v1alphagoogle/api/annotations.protogoogle/api/client.protogoogle/api/field_behavior.protogoogle/api/resource.proto"ê
+ï¿½,
+6google/analytics/data/v1alpha/analytics_data_api.protogoogle.analytics.data.v1alphagoogle/api/annotations.protogoogle/api/client.protogoogle/api/field_behavior.protogoogle/api/resource.proto"ï¿½
 Metadata
 name (	D
 
 dimensions (20.google.analytics.data.v1alpha.DimensionMetadata>
-metrics (2-.google.analytics.data.v1alpha.MetricMetadata:JêAG
-%analyticsdata.googleapis.com/Metadataproperties/{property}/metadata"É
+metrics (2-.google.analytics.data.v1alpha.MetricMetadata:Jï¿½AG
+%analyticsdata.googleapis.com/Metadataproperties/{property}/metadata"ï¿½
 RunReportRequest5
 entity (2%.google.analytics.data.v1alpha.Entity<
 
@@ -39,13 +39,16 @@ dimensions (2(.google.analytics.data.v1alpha.Dimension6
 limit (M
 metric_aggregations (20.google.analytics.data.v1alpha.MetricAggregationI
 dimension_filter (2/.google.analytics.data.v1alpha.FilterExpressionF
-metric_filter	 (2/.google.analytics.data.v1alpha.FilterExpression9
+
+metric_filter	 (2/.google.analytics.data.v1alpha.FilterExpression9
 	order_bys
  (2&.google.analytics.data.v1alpha.OrderBy
-currency_code (	>
+
+currency_code (	>
 cohort_spec (2).google.analytics.data.v1alpha.CohortSpec
-keep_empty_rows (
-return_property_quota ("‘
+keep_empty_rows
+ (
+return_property_quota ("ï¿½
 RunReportResponseI
 dimension_headers (2..google.analytics.data.v1alpha.DimensionHeaderC
 metric_headers (2+.google.analytics.data.v1alpha.MetricHeader0
@@ -56,43 +59,47 @@ dimensions (2(.google.analytics.data.v1alpha.Dimension6
  (2".google.analytics.data.v1alpha.Row
 	row_count (A
 metadata (2/.google.analytics.data.v1alpha.ResponseMetaDataD
-property_quota (2,.google.analytics.data.v1alpha.PropertyQuota"Û
+property_quota (2,.google.analytics.data.v1alpha.PropertyQuota"ï¿½
 RunPivotReportRequest5
 entity (2%.google.analytics.data.v1alpha.Entity<
 
 dimensions (2(.google.analytics.data.v1alpha.Dimension6
 metrics (2%.google.analytics.data.v1alpha.MetricI
 dimension_filter (2/.google.analytics.data.v1alpha.FilterExpressionF
-metric_filter (2/.google.analytics.data.v1alpha.FilterExpression4
+
+metric_filter (2/.google.analytics.data.v1alpha.FilterExpression4
 pivots (2$.google.analytics.data.v1alpha.Pivot=
 date_ranges (2(.google.analytics.data.v1alpha.DateRange
-currency_code (	>
+
+currency_code (	>
 cohort_spec	 (2).google.analytics.data.v1alpha.CohortSpec
 keep_empty_rows
  (
-return_property_quota ("Þ
+return_property_quota ("ï¿½
 RunPivotReportResponseA
-pivot_headers (2*.google.analytics.data.v1alpha.PivotHeaderI
+
+pivot_headers (2*.google.analytics.data.v1alpha.PivotHeaderI
 dimension_headers (2..google.analytics.data.v1alpha.DimensionHeaderC
 metric_headers (2+.google.analytics.data.v1alpha.MetricHeader0
 rows (2".google.analytics.data.v1alpha.Row6
 
 aggregates (2".google.analytics.data.v1alpha.RowA
 metadata (2/.google.analytics.data.v1alpha.ResponseMetaDataD
-property_quota (2,.google.analytics.data.v1alpha.PropertyQuota"’
+property_quota (2,.google.analytics.data.v1alpha.PropertyQuota"ï¿½
 BatchRunReportsRequest5
 entity (2%.google.analytics.data.v1alpha.EntityA
 requests (2/.google.analytics.data.v1alpha.RunReportRequest"\\
 BatchRunReportsResponseA
-reports (20.google.analytics.data.v1alpha.RunReportResponse"œ
+reports (20.google.analytics.data.v1alpha.RunReportResponse"ï¿½
 BatchRunPivotReportsRequest5
 entity (2%.google.analytics.data.v1alpha.EntityF
 requests (24.google.analytics.data.v1alpha.RunPivotReportRequest"l
 BatchRunPivotReportsResponseL
-pivot_reports (25.google.analytics.data.v1alpha.RunPivotReportResponse"Q
+
+pivot_reports (25.google.analytics.data.v1alpha.RunPivotReportResponse"Q
 GetMetadataRequest;
-name (	B-àAúA\'
-%analyticsdata.googleapis.com/Metadata"í
+name (	B-ï¿½Aï¿½A\'
+%analyticsdata.googleapis.com/Metadata"ï¿½
 RunRealtimeReportRequest
 property (	<
 
@@ -100,10 +107,11 @@ dimensions (2(.google.analytics.data.v1alpha.Dimension6
 metrics (2%.google.analytics.data.v1alpha.Metric
 limit (I
 dimension_filter (2/.google.analytics.data.v1alpha.FilterExpressionF
-metric_filter (2/.google.analytics.data.v1alpha.FilterExpressionM
+
+metric_filter (2/.google.analytics.data.v1alpha.FilterExpressionM
 metric_aggregations (20.google.analytics.data.v1alpha.MetricAggregation9
 	order_bys (2&.google.analytics.data.v1alpha.OrderBy
-return_property_quota	 ("Ö
+return_property_quota	 ("ï¿½
 RunRealtimeReportResponseI
 dimension_headers (2..google.analytics.data.v1alpha.DimensionHeaderC
 metric_headers (2+.google.analytics.data.v1alpha.MetricHeader0
@@ -112,14 +120,14 @@ dimensions (2(.google.analytics.data.v1alpha.Dimension6
 maximums (2".google.analytics.data.v1alpha.Row4
 minimums (2".google.analytics.data.v1alpha.Row
 	row_count (D
-property_quota (2,.google.analytics.data.v1alpha.PropertyQuota2–	
-AlphaAnalyticsData
-	RunReport/.google.analytics.data.v1alpha.RunReportRequest0.google.analytics.data.v1alpha.RunReportResponse"‚Óä“"/v1alpha:runReport:*¡
-RunPivotReport4.google.analytics.data.v1alpha.RunPivotReportRequest5.google.analytics.data.v1alpha.RunPivotReportResponse""‚Óä“"/v1alpha:runPivotReport:*¥
-BatchRunReports5.google.analytics.data.v1alpha.BatchRunReportsRequest6.google.analytics.data.v1alpha.BatchRunReportsResponse"#‚Óä“"/v1alpha:batchRunReports:*¹
-BatchRunPivotReports:.google.analytics.data.v1alpha.BatchRunPivotReportsRequest;.google.analytics.data.v1alpha.BatchRunPivotReportsResponse"(‚Óä“""/v1alpha:batchRunPivotReports:*Ÿ
-GetMetadata1.google.analytics.data.v1alpha.GetMetadataRequest\'.google.analytics.data.v1alpha.Metadata"4‚Óä“\'%/v1alpha/{name=properties/*/metadata}ÚAnameÅ
-RunRealtimeReport7.google.analytics.data.v1alpha.RunRealtimeReportRequest8.google.analytics.data.v1alpha.RunRealtimeReportResponse"=‚Óä“7"2/v1alpha/{property=properties/*}:runRealtimeReport:*~ÊAanalyticsdata.googleapis.comÒA\\https://www.googleapis.com/auth/analytics,https://www.googleapis.com/auth/analytics.readonlyB
+property_quota (2,.google.analytics.data.v1alpha.PropertyQuota2ï¿½	
+AlphaAnalyticsDataï¿½
+	RunReport/.google.analytics.data.v1alpha.RunReportRequest0.google.analytics.data.v1alpha.RunReportResponse"ï¿½ï¿½ï¿½"/v1alpha:runReport:*ï¿½
+RunPivotReport4.google.analytics.data.v1alpha.RunPivotReportRequest5.google.analytics.data.v1alpha.RunPivotReportResponse""ï¿½ï¿½ï¿½"/v1alpha:runPivotReport:*ï¿½
+BatchRunReports5.google.analytics.data.v1alpha.BatchRunReportsRequest6.google.analytics.data.v1alpha.BatchRunReportsResponse"#ï¿½ï¿½ï¿½"/v1alpha:batchRunReports:*ï¿½
+BatchRunPivotReports:.google.analytics.data.v1alpha.BatchRunPivotReportsRequest;.google.analytics.data.v1alpha.BatchRunPivotReportsResponse"(ï¿½ï¿½ï¿½""/v1alpha:batchRunPivotReports:*ï¿½
+GetMetadata1.google.analytics.data.v1alpha.GetMetadataRequest\'.google.analytics.data.v1alpha.Metadata"4ï¿½ï¿½ï¿½\'%/v1alpha/{name=properties/*/metadata}ï¿½Anameï¿½
+RunRealtimeReport7.google.analytics.data.v1alpha.RunRealtimeReportRequest8.google.analytics.data.v1alpha.RunRealtimeReportResponse"=ï¿½ï¿½ï¿½7"2/v1alpha/{property=properties/*}:runRealtimeReport:*~ï¿½Aanalyticsdata.googleapis.comï¿½A\\https://www.googleapis.com/auth/analytics,https://www.googleapis.com/auth/analytics.readonlyB
 !com.google.analytics.data.v1alphaBAnalyticsDataApiProtoPZAgoogle.golang.org/genproto/googleapis/analytics/data/v1alpha;databproto3'
         , true);
 

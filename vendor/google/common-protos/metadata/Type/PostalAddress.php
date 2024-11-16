@@ -16,23 +16,26 @@ class PostalAddress
         }
         $pool->internalAddGeneratedFile(
             '
-±
- google/type/postal_address.protogoogle.type"ý
-PostalAddress
+ï¿½
+ google/type/postal_address.protogoogle.type"ï¿½
+
+PostalAddress
 revision (
 region_code (	
-language_code (	
+
+language_code (	
 postal_code (	
 sorting_code (	
 administrative_area (	
 locality (	
 sublocality (	
-address_lines	 (	
+
+address_lines	 (	
 
 recipients
  (	
 organization (	Bx
-com.google.typeBPostalAddressProtoPZFgoogle.golang.org/genproto/googleapis/type/postaladdress;postaladdressø¢GTPbproto3'
+com.google.typeBPostalAddressProtoPZFgoogle.golang.org/genproto/googleapis/type/postaladdress;postaladdressï¿½ï¿½GTPbproto3'
         , true);
 
         static::$is_initialized = true;

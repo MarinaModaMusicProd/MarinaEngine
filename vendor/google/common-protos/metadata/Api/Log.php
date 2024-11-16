@@ -17,15 +17,16 @@ class Log
         \GPBMetadata\Google\Api\Label::initOnce();
         $pool->internalAddGeneratedFile(
             '
-ç
+ÔøΩ
 google/api/log.proto
 google.api"u
-LogDescriptor
+
+LogDescriptor
 name (	+
 labels (2.google.api.LabelDescriptor
 description (	
 display_name (	Bj
-com.google.apiBLogProtoPZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;serviceconfig¢GAPIbproto3'
+com.google.apiBLogProtoPZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;serviceconfigÔøΩGAPIbproto3'
         , true);
 
         static::$is_initialized = true;

@@ -21,25 +21,26 @@ class AnalyticsDataApi
         \GPBMetadata\Google\Api\Resource::initOnce();
         $pool->internalAddGeneratedFile(
             '
-²2
-5google/analytics/data/v1beta/analytics_data_api.protogoogle.analytics.data.v1betagoogle/api/annotations.protogoogle/api/client.protogoogle/api/field_behavior.protogoogle/api/resource.proto"ý
+ï¿½2
+5google/analytics/data/v1beta/analytics_data_api.protogoogle.analytics.data.v1betagoogle/api/annotations.protogoogle/api/client.protogoogle/api/field_behavior.protogoogle/api/resource.proto"ï¿½
 CheckCompatibilityRequest
 property (	;
 
 dimensions (2\'.google.analytics.data.v1beta.Dimension5
 metrics (2$.google.analytics.data.v1beta.MetricH
 dimension_filter (2..google.analytics.data.v1beta.FilterExpressionE
-metric_filter (2..google.analytics.data.v1beta.FilterExpressionI
-compatibility_filter (2+.google.analytics.data.v1beta.Compatibility"È
+
+metric_filter (2..google.analytics.data.v1beta.FilterExpressionI
+compatibility_filter (2+.google.analytics.data.v1beta.Compatibility"ï¿½
 CheckCompatibilityResponseW
 dimension_compatibilities (24.google.analytics.data.v1beta.DimensionCompatibilityQ
-metric_compatibilities (21.google.analytics.data.v1beta.MetricCompatibility"è
+metric_compatibilities (21.google.analytics.data.v1beta.MetricCompatibility"ï¿½
 Metadata
 name (	C
 
 dimensions (2/.google.analytics.data.v1beta.DimensionMetadata=
-metrics (2,.google.analytics.data.v1beta.MetricMetadata:JêAG
-%analyticsdata.googleapis.com/Metadataproperties/{property}/metadata"œ
+metrics (2,.google.analytics.data.v1beta.MetricMetadata:Jï¿½AG
+%analyticsdata.googleapis.com/Metadataproperties/{property}/metadata"ï¿½
 RunReportRequest
 property (	;
 
@@ -47,16 +48,19 @@ dimensions (2\'.google.analytics.data.v1beta.Dimension5
 metrics (2$.google.analytics.data.v1beta.Metric<
 date_ranges (2\'.google.analytics.data.v1beta.DateRangeH
 dimension_filter (2..google.analytics.data.v1beta.FilterExpressionE
-metric_filter (2..google.analytics.data.v1beta.FilterExpression
+
+metric_filter (2..google.analytics.data.v1beta.FilterExpression
 offset (
 limit (L
 metric_aggregations	 (2/.google.analytics.data.v1beta.MetricAggregation8
 	order_bys
  (2%.google.analytics.data.v1beta.OrderBy
-currency_code (	=
+
+currency_code (	=
 cohort_spec (2(.google.analytics.data.v1beta.CohortSpec
-keep_empty_rows (
-return_property_quota ("—
+keep_empty_rows
+ (
+return_property_quota ("ï¿½
 RunReportResponseH
 dimension_headers (2-.google.analytics.data.v1beta.DimensionHeaderB
 metric_headers (2*.google.analytics.data.v1beta.MetricHeader/
@@ -68,7 +72,7 @@ dimensions (2\'.google.analytics.data.v1beta.Dimension5
 metadata (2..google.analytics.data.v1beta.ResponseMetaDataC
 property_quota	 (2+.google.analytics.data.v1beta.PropertyQuota
 kind
- (	"¯
+ (	"ï¿½
 RunPivotReportRequest
 property (	;
 
@@ -77,14 +81,17 @@ dimensions (2\'.google.analytics.data.v1beta.Dimension5
 date_ranges (2\'.google.analytics.data.v1beta.DateRange3
 pivots (2#.google.analytics.data.v1beta.PivotH
 dimension_filter (2..google.analytics.data.v1beta.FilterExpressionE
-metric_filter (2..google.analytics.data.v1beta.FilterExpression
-currency_code (	=
+
+metric_filter (2..google.analytics.data.v1beta.FilterExpression
+
+currency_code (	=
 cohort_spec	 (2(.google.analytics.data.v1beta.CohortSpec
 keep_empty_rows
  (
-return_property_quota ("å
+return_property_quota ("ï¿½
 RunPivotReportResponse@
-pivot_headers (2).google.analytics.data.v1beta.PivotHeaderH
+
+pivot_headers (2).google.analytics.data.v1beta.PivotHeaderH
 dimension_headers (2-.google.analytics.data.v1beta.DimensionHeaderB
 metric_headers (2*.google.analytics.data.v1beta.MetricHeader/
 rows (2!.google.analytics.data.v1beta.Row5
@@ -103,24 +110,27 @@ aggregates (2!.google.analytics.data.v1beta.Row@
 property (	E
 requests (23.google.analytics.data.v1beta.RunPivotReportRequest"y
 BatchRunPivotReportsResponseK
-pivot_reports (24.google.analytics.data.v1beta.RunPivotReportResponse
+
+pivot_reports (24.google.analytics.data.v1beta.RunPivotReportResponse
 kind (	"Q
 GetMetadataRequest;
-name (	B-àAúA\'
-%analyticsdata.googleapis.com/Metadata"©
+name (	B-ï¿½Aï¿½A\'
+%analyticsdata.googleapis.com/Metadata"ï¿½
 RunRealtimeReportRequest
 property (	;
 
 dimensions (2\'.google.analytics.data.v1beta.Dimension5
 metrics (2$.google.analytics.data.v1beta.MetricH
 dimension_filter (2..google.analytics.data.v1beta.FilterExpressionE
-metric_filter (2..google.analytics.data.v1beta.FilterExpression
+
+metric_filter (2..google.analytics.data.v1beta.FilterExpression
 limit (L
 metric_aggregations (2/.google.analytics.data.v1beta.MetricAggregation8
 	order_bys (2%.google.analytics.data.v1beta.OrderBy
 return_property_quota	 (@
-minute_ranges
- (2).google.analytics.data.v1beta.MinuteRange"Ý
+
+minute_ranges
+ (2).google.analytics.data.v1beta.MinuteRange"ï¿½
 RunRealtimeReportResponseH
 dimension_headers (2-.google.analytics.data.v1beta.DimensionHeaderB
 metric_headers (2*.google.analytics.data.v1beta.MetricHeader/
@@ -130,15 +140,15 @@ dimensions (2\'.google.analytics.data.v1beta.Dimension5
 minimums (2!.google.analytics.data.v1beta.Row
 	row_count (C
 property_quota (2+.google.analytics.data.v1beta.PropertyQuota
-kind	 (	2¬
-BetaAnalyticsData¢
-	RunReport..google.analytics.data.v1beta.RunReportRequest/.google.analytics.data.v1beta.RunReportResponse"4‚Óä“.")/v1beta/{property=properties/*}:runReport:*¶
-RunPivotReport3.google.analytics.data.v1beta.RunPivotReportRequest4.google.analytics.data.v1beta.RunPivotReportResponse"9‚Óä“3"./v1beta/{property=properties/*}:runPivotReport:*º
-BatchRunReports4.google.analytics.data.v1beta.BatchRunReportsRequest5.google.analytics.data.v1beta.BatchRunReportsResponse":‚Óä“4"//v1beta/{property=properties/*}:batchRunReports:*Î
-BatchRunPivotReports9.google.analytics.data.v1beta.BatchRunPivotReportsRequest:.google.analytics.data.v1beta.BatchRunPivotReportsResponse"?‚Óä“9"4/v1beta/{property=properties/*}:batchRunPivotReports:*œ
-GetMetadata0.google.analytics.data.v1beta.GetMetadataRequest&.google.analytics.data.v1beta.Metadata"3‚Óä“&$/v1beta/{name=properties/*/metadata}ÚAnameÂ
-RunRealtimeReport6.google.analytics.data.v1beta.RunRealtimeReportRequest7.google.analytics.data.v1beta.RunRealtimeReportResponse"<‚Óä“6"1/v1beta/{property=properties/*}:runRealtimeReport:*Æ
-CheckCompatibility7.google.analytics.data.v1beta.CheckCompatibilityRequest8.google.analytics.data.v1beta.CheckCompatibilityResponse"=‚Óä“7"2/v1beta/{property=properties/*}:checkCompatibility:*~ÊAanalyticsdata.googleapis.comÒA\\https://www.googleapis.com/auth/analytics,https://www.googleapis.com/auth/analytics.readonlyB}
+kind	 (	2ï¿½
+BetaAnalyticsDataï¿½
+	RunReport..google.analytics.data.v1beta.RunReportRequest/.google.analytics.data.v1beta.RunReportResponse"4ï¿½ï¿½ï¿½.")/v1beta/{property=properties/*}:runReport:*ï¿½
+RunPivotReport3.google.analytics.data.v1beta.RunPivotReportRequest4.google.analytics.data.v1beta.RunPivotReportResponse"9ï¿½ï¿½ï¿½3"./v1beta/{property=properties/*}:runPivotReport:*ï¿½
+BatchRunReports4.google.analytics.data.v1beta.BatchRunReportsRequest5.google.analytics.data.v1beta.BatchRunReportsResponse":ï¿½ï¿½ï¿½4"//v1beta/{property=properties/*}:batchRunReports:*ï¿½
+BatchRunPivotReports9.google.analytics.data.v1beta.BatchRunPivotReportsRequest:.google.analytics.data.v1beta.BatchRunPivotReportsResponse"?ï¿½ï¿½ï¿½9"4/v1beta/{property=properties/*}:batchRunPivotReports:*ï¿½
+GetMetadata0.google.analytics.data.v1beta.GetMetadataRequest&.google.analytics.data.v1beta.Metadata"3ï¿½ï¿½ï¿½&$/v1beta/{name=properties/*/metadata}ï¿½Anameï¿½
+RunRealtimeReport6.google.analytics.data.v1beta.RunRealtimeReportRequest7.google.analytics.data.v1beta.RunRealtimeReportResponse"<ï¿½ï¿½ï¿½6"1/v1beta/{property=properties/*}:runRealtimeReport:*ï¿½
+CheckCompatibility7.google.analytics.data.v1beta.CheckCompatibilityRequest8.google.analytics.data.v1beta.CheckCompatibilityResponse"=ï¿½ï¿½ï¿½7"2/v1beta/{property=properties/*}:checkCompatibility:*~ï¿½Aanalyticsdata.googleapis.comï¿½A\\https://www.googleapis.com/auth/analytics,https://www.googleapis.com/auth/analytics.readonlyB}
  com.google.analytics.data.v1betaBAnalyticsDataApiProtoPZ@google.golang.org/genproto/googleapis/analytics/data/v1beta;databproto3'
         , true);
 

@@ -16,17 +16,18 @@ class Policy
         }
         $pool->internalAddGeneratedFile(
             '
-ë
+ï¿½
 google/api/policy.proto
 google.api google/protobuf/descriptor.proto"S
 FieldPolicy
 selector (	
 resource_permission (	
-resource_type (	"S
+
+resource_type (	"S
 MethodPolicy
 selector	 (	1
 request_policies (2.google.api.FieldPolicyBp
-com.google.apiBPolicyProtoPZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;serviceconfigø¢GAPIbproto3'
+com.google.apiBPolicyProtoPZEgoogle.golang.org/genproto/googleapis/api/serviceconfig;serviceconfigï¿½ï¿½GAPIbproto3'
         , true);
 
         static::$is_initialized = true;
