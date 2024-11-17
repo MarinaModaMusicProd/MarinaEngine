@@ -86,7 +86,7 @@
     "zustand": "^4.4.4"
   },
   "devDependencies": {
-    "@prettier/plugin-php": "^0.21.0",
+    "@prettier/plugin-php": "^0.22.2",
     "@rollup/plugin-replace": "^5.0",
     "@tailwindcss/typography": "^0.5.10",
     "@types/dot-object": "^2.1.4",
