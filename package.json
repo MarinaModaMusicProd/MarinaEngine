@@ -38,7 +38,7 @@
     "@tiptap/extension-text-align": "^2.1.12",
     "@tiptap/extension-text-style": "^2.1.12",
     "@tiptap/extension-underline": "^2.1.12",
-    "@tiptap/react": "^2.1.12",
+    "@tiptap/react": "^2.9.1",
     "@tiptap/starter-kit": "^2.1.12",
     "@twa-dev/sdk": "^7.10.1",
     "@types/google.visualization": "^0.0.71",
