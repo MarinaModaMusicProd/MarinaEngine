@@ -20,7 +20,7 @@
     "@react-aria/ssr": "^3.8.0",
     "@react-aria/utils": "^3.21.1",
     "@react-stately/color": "^3.4.4",
-    "@react-stately/utils": "^3.8.0",
+    "@react-stately/utils": "^3.10.4",
     "@sentry/react": "^7.0.0",
     "@sentry/tracing": "^7.0.0",
     "@stripe/react-stripe-js": "^2.3.1",
