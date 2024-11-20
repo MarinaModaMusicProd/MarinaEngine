@@ -12,6 +12,7 @@ vendor
 dist
 dist-ssr
 *.local
+*.lock
 *.sql
 
 # Editor directories and files
