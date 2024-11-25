@@ -82,7 +82,7 @@
     "tus-js-client": "^3.0.1",
     "url-regex": "^5.0.0",
     "use-debounce": "^9.0.4",
-    "use-immer": "^0.9.0",
+    "use-immer": "^0.10.0",
     "zustand": "^4.4.4"
   },
   "devDependencies": {
