@@ -30,7 +30,7 @@
     "@tanstack/react-query-devtools": "^5.4.2",
     "@tanstack/react-virtual": "^3.0.0-beta.68",
     "@tiptap/extension-code-block-lowlight": "^2.1.12",
-    "@tiptap/extension-color": "^2.1.12",
+    "@tiptap/extension-color": "^2.10.3",
     "@tiptap/extension-image": "^2.1.12",
     "@tiptap/extension-link": "^2.10.3",
     "@tiptap/extension-subscript": "^2.1.12",
