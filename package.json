@@ -39,7 +39,7 @@
     "@tiptap/extension-text-style": "^2.1.12",
     "@tiptap/extension-underline": "^2.1.12",
     "@tiptap/react": "^2.1.12",
-    "@tiptap/starter-kit": "^2.1.12",
+    "@tiptap/starter-kit": "^2.11.0",
     "@twa-dev/sdk": "^8.0.1",
     "@types/google.visualization": "^0.0.71",
     "@vitejs/plugin-react-swc": "^3.4.0",
